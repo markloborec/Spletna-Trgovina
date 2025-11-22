@@ -1,0 +1,22 @@
+header {
+    background-color: #155724;
+    color: #fff;
+    padding: 1.5rem 0 1rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto 1rem auto;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: left;
+}

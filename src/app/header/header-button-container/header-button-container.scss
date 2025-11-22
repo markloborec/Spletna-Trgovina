@@ -1,0 +1,28 @@
+
+.header-button-container {
+	display: flex;
+	gap: 1.5rem;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 0.5rem 1rem;
+}
+
+.icon {
+	cursor: pointer;
+	color: #fff;
+	background: #218838;
+	border-radius: 50%;
+	padding: 0.5rem;
+	transition: background 0.2s, box-shadow 0.2s;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+	outline: none;
+}
+
+.icon:focus, .icon:hover {
+	background: #28a745;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.icon svg {
+	display: block;
+}

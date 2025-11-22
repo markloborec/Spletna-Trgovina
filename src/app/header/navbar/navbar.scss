@@ -1,0 +1,125 @@
+.navbar {
+    width: 100%;
+    background: #218838;
+    padding: 0.75rem 1.25rem;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- LINKS (default desktop) --- */
+.navbar-list {
+    display: flex;
+    gap: 2.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    transition: max-height 0.25s ease-out, padding 0.25s ease-out;
+}
+
+.navbar-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+}
+
+.navbar-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* --- HAMBURGER BUTTON --- */
+.navbar-toggle {
+    display: none;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.navbar-toggle-icon,
+.navbar-toggle-icon::before,
+.navbar-toggle-icon::after {
+    content: "";
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #fff;
+    border-radius: 4px;
+    transition: all 0.25s ease;
+    margin: 0 auto;
+}
+
+.navbar-toggle-icon::before {
+    transform: translateY(-8px);
+}
+
+.navbar-toggle-icon::after {
+    transform: translateY(8px);
+}
+
+/* Cross animation when open */
+.navbar-toggle.open .navbar-toggle-icon {
+    background: transparent;
+}
+
+.navbar-toggle.open .navbar-toggle-icon::before {
+    transform: translateY(0) rotate(45deg);
+}
+
+.navbar-toggle.open .navbar-toggle-icon::after {
+    transform: translateY(0) rotate(-45deg);
+}
+
+/* --- MOBILE --- */
+@media (max-width: 800px) {
+    .navbar {
+        justify-content: flex-start;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #218838;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 1rem;
+        gap: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-list.open {
+        max-height: 500px;
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    .navbar-link {
+        display: block;
+        width: 100%;
+        padding: 0.8rem 0.5rem;
+        font-size: 1.05rem;
+        border-radius: 6px;
+    }
+}
