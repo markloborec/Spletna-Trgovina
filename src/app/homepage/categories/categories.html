@@ -1,0 +1,9 @@
+<div class="category-grid">
+    <article class="category-card" *ngFor="let category of categories">
+        <h3>{{ category.title }}</h3>
+        <p>{{ category.description }}</p>
+        <a [href]="category.href" class="link">
+            {{ category.linkText }}
+        </a>
+    </article>
+</div>
