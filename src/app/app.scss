@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;           // ← zelo pomembno
+  min-height: 0;     // ← prepreči flex overflow bug
+}
+
+.main-content {
+  flex: 1;           // ← to potisne footer dol
+  display: flex;
+  flex-direction: column;
+}
