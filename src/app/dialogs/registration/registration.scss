@@ -1,0 +1,154 @@
+.registration-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: backdropFade 0.18s ease-out;
+}
+
+.registration-dialog {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 1rem;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2rem 2.2rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+  animation: dialogIn 0.22s ease-out;
+  box-sizing: border-box; // padding ne raztegne širine
+
+  h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.6rem;
+    font-weight: 650;
+  }
+
+  .subtitle {
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap; // dovoli zlaganje
+
+    @media (max-width: 520px) {
+      flex-direction: column; // na manjših ekranih vsaka vrstica posebej
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1 1 0;
+    min-width: 0;
+
+    label {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #d2d2d2;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
+
+      &:focus {
+        border-color: #218838;
+        box-shadow: 0 0 0 2px rgba(33, 136, 56, 0.18);
+      }
+    }
+  }
+
+  .error {
+    margin-top: 0.2rem;
+    font-size: 0.85rem;
+    color: #c0392b;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+  }
+
+  .btn {
+    border-radius: 999px;
+    padding: 0.5rem 1.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease,
+      background 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+
+    &.primary {
+      background: #218838;
+      color: #fff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 9px 22px rgba(0, 0, 0, 0.25);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: default;
+        box-shadow: none;
+        transform: none;
+      }
+    }
+
+    &.ghost {
+      background: transparent;
+      color: #444;
+      border: 1px solid #ccc;
+
+      &:hover {
+        background: #f5f5f5;
+      }
+    }
+  }
+}
+
+/* Animacije */
+@keyframes backdropFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

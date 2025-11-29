@@ -1,9 +1,26 @@
-
 <div class="header-button-container">
-	<span class="icon account" title="Account/Registration" tabindex="0" aria-label="Account">
-        <fa-icon [icon]="faUser"/>
+	<span (click)="OpenUser()" class="icon account" tabindex="0" aria-label="Account">
+		<fa-icon [icon]="faUser"></fa-icon>
 	</span>
-	<span class="icon cart" title="Shopping Cart" tabindex="0" aria-label="Shopping Cart">
-		<fa-icon [icon]="faShoppingCart"/>
+	<span (click)="OpenCard()" class="icon cart" tabindex="0" aria-label="Shopping Cart">
+		<fa-icon [icon]="faShoppingCart"></fa-icon>
 	</span>
+
+	<div class="dropdown user-dropdown" *ngIf="isUserMenuOpen">
+		<ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+			<button (click)="openRegistration();">Ustvari račun</button>
+			<button (click)="openLogin();">Vpiši se</button>
+		</ng-container>
+
+		<ng-template #loggedInMenu>
+			<button>Moj profil</button>
+			<button>Pretekli nakupi</button>
+		</ng-template>
+	</div>
+
+	<div class="dropdown cart-dropdown" *ngIf="isCartMenuOpen">
+		<p class="cart-title">Košarica</p>
+		<!-- Nalaganje produktov -->
+		<div class="cart-empty">Košarica je prazna</div>
+	</div>
 </div>

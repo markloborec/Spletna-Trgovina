@@ -1,0 +1,33 @@
+<div class="login-backdrop">
+    <div class="login-dialog">
+        <h2>Prijava</h2>
+        <p class="subtitle">
+            Prijavi se v svoj BiciklStore račun.
+        </p>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+            <div class="field">
+                <label for="email">E-pošta *</label>
+                <input id="email" name="email" type="email" required [(ngModel)]="formData.email"
+                    autocomplete="email" />
+            </div>
+
+            <div class="field">
+                <label for="password">Geslo *</label>
+                <input id="password" name="password" type="password" required [(ngModel)]="formData.password"
+                    autocomplete="current-password" />
+            </div>
+
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+            <div class="actions">
+                <button type="button" class="btn ghost" (click)="onCancel()">
+                    Prekliči
+                </button>
+                <button type="submit" class="btn primary" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Prijava...' : 'Vpiši se' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

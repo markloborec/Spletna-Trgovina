@@ -1,0 +1,53 @@
+<div class="registration-backdrop">
+    <div class="registration-dialog">
+        <h2>Ustvari račun</h2>
+        <p class="subtitle">
+            Ustvari svoj BiciklStore račun za hitrejše nakupe in pregled preteklih naročil.
+        </p>
+
+        <form (ngSubmit)="onSubmit()" #regForm="ngForm" novalidate>
+            <div class="form-row">
+                <div class="field">
+                    <label for="firstName">Ime</label>
+                    <input id="firstName" name="firstName" type="text" [(ngModel)]="formData.firstName"
+                        autocomplete="given-name" />
+                </div>
+
+                <div class="field">
+                    <label for="lastName">Priimek</label>
+                    <input id="lastName" name="lastName" type="text" [(ngModel)]="formData.lastName"
+                        autocomplete="family-name" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="email">E-pošta *</label>
+                <input id="email" name="email" type="email" required [(ngModel)]="formData.email"
+                    autocomplete="email" />
+            </div>
+
+            <div class="field">
+                <label for="password">Geslo *</label>
+                <input id="password" name="password" type="password" required [(ngModel)]="formData.password"
+                    autocomplete="new-password" />
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">Ponovi geslo *</label>
+                <input id="confirmPassword" name="confirmPassword" type="password" required
+                    [(ngModel)]="formData.confirmPassword" autocomplete="new-password" />
+            </div>
+
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+            <div class="actions">
+                <button type="button" class="btn ghost" (click)="onCancel()">
+                    Prekliči
+                </button>
+                <button type="submit" class="btn primary" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Pošiljanje...' : 'Ustvari račun' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

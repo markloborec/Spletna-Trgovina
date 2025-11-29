@@ -1,5 +1,8 @@
-<app-header />
+<app-header (registerClick)="onRegisterClick()" (loginClick)="onLoginClick()" />
 <main class="main-content">
     <router-outlet />
 </main>
 <app-footer />
+
+<app-registration *ngIf="showRegistration" (close)="onRegistrationClose()" />
+<app-login *ngIf="showLogin" (close)="onLoginClose()" />
