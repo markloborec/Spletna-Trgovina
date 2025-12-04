@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
 import { Homepage } from './homepage/homepage';
-import { Registration } from './dialogs/registration/registration';
+import { UserProfileComponent } from './settings/user-profile/user-profile';
 
 export const routes: Routes = [
     { path: '', component: Homepage },
-    //{ path: 'registration', component: Registration },
-
+    { path: 'settings/user-profile', component: UserProfileComponent },
 ];

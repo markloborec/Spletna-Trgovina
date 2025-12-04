@@ -41,4 +41,9 @@ export class Login {
   onCancel() {
     this.close.emit();
   }
+  onForgotPassword() {
+    // TODO: tukaj kasneje odpreš modal / preusmeriš na "reset password" stran
+    console.log('Pozabljeno geslo kliknjeno');
+    // ali: alert('Funkcionalnost za ponastavitev gesla še ni implementirana.');
+  }
 }

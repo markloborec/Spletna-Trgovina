@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: flex-end;
   padding: 0.5rem 1rem;
-  position: relative; // ✨ ključ, da se dropdown sidra na ta container
+  position: relative;
 }
 
 .icon {
@@ -14,24 +14,24 @@
   border-radius: 50%;
   padding: 0.5rem;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
   outline: none;
 }
 
 .icon:focus,
 .icon:hover {
   background: #28a745;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .icon svg {
   display: block;
 }
 
-/* DROPDOWN – osnovni stil, vezan na header-button-container */
+/* DROPDOWN – osnovni stil */
 .dropdown {
   position: absolute;
-  top: calc(100% + 0.5rem); // ✨ vedno tik pod ikonami
+  top: calc(100% + 0.5rem);
   right: 0;
   min-width: 200px;
   border-radius: 12px;
@@ -41,7 +41,7 @@
   animation: fadeIn 0.18s ease-out;
 }
 
-/* USER DROPDOWN – sivo ozadje */
+/* USER DROPDOWN */
 .user-dropdown {
   background: #f2f2f2;
   border: 1px solid #ddd;
@@ -63,7 +63,7 @@
   }
 }
 
-/* CART DROPDOWN – belo ozadje */
+/* CART DROPDOWN */
 .cart-dropdown {
   background: #ffffff;
   border: 1px solid #e7e7e7;
@@ -82,13 +82,113 @@
   }
 }
 
+/* JEZIK – gumb v headerju */
+.language-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: none;
+  background: #ffffff;
+  color: #218838;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+
+  .flag {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .code {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &:hover {
+    background: #eaf7ee;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.13);
+  }
+}
+
+/* LANG DROPDOWN */
+.lang-dropdown {
+  background: #ffffff;
+  border: 1px solid #e7e7e7;
+
+  button {
+    width: 100%;
+    padding: 0.55rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    .flag {
+      font-size: 1.1rem;
+    }
+
+    .label {
+      flex: 1;
+    }
+
+    &.active {
+      background: #dff5e6;
+      color: #218838;
+      font-weight: 600;
+    }
+
+    &:hover:not(.active) {
+      background: #f3f3f3;
+    }
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-5px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.lang-switch {
+  border: none;
+  background-color: #f1f1f1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 8px;
+  transition: 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lang-switch:hover {
+  background-color: #dcdcdc;
+  transform: scale(1.05);
+}
+
+.lang-switch:active {
+  transform: scale(0.95);
 }

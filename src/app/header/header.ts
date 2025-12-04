@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Navbar } from "./navbar/navbar";
 import { HeaderButtonContainer } from "./header-button-container/header-button-container";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [Navbar, HeaderButtonContainer],
+  imports: [Navbar, HeaderButtonContainer, CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -19,4 +20,5 @@ export class Header {
   onLoginClick() {
     this.loginClick.emit();
   }
+
 }

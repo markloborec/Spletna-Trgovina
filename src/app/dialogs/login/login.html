@@ -17,9 +17,9 @@
                 <input id="password" name="password" type="password" required [(ngModel)]="formData.password"
                     autocomplete="current-password" />
             </div>
-
-            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-
+            <p class="forgot-password" (click)="onForgotPassword()">
+                Pozabljeno geslo?
+            </p>
             <div class="actions">
                 <button type="button" class="btn ghost" (click)="onCancel()">
                     Prekliči
@@ -28,6 +28,7 @@
                     {{ isSubmitting ? 'Prijava...' : 'Vpiši se' }}
                 </button>
             </div>
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
         </form>
     </div>
 </div>

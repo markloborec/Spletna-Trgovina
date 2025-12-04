@@ -1,0 +1,56 @@
+<div class="profile-container" *ngIf="profile">
+    <h2>Moj profil</h2>
+
+    <form (ngSubmit)="onSave()" #profileForm="ngForm" novalidate>
+        <div class="form-row">
+            <div class="field">
+                <label for="firstName">Ime *</label>
+                <input id="firstName" name="firstName" type="text" required [(ngModel)]="profile.firstName"
+                    [readonly]="!isEditing" />
+            </div>
+
+            <div class="field">
+                <label for="lastName">Priimek *</label>
+                <input id="lastName" name="lastName" type="text" required [(ngModel)]="profile.lastName"
+                    [readonly]="!isEditing" />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="email">E-pošta *</label>
+            <input id="email" name="email" type="email" required [(ngModel)]="profile.email" [readonly]="!isEditing" />
+        </div>
+
+        <div class="field">
+            <label for="deliveryAddress">Naslov za dostavo *</label>
+            <textarea id="deliveryAddress" name="deliveryAddress" required rows="2"
+                [(ngModel)]="profile.deliveryAddress" [readonly]="!isEditing"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="phone">Telefon *</label>
+            <input id="phone" name="phone" type="tel" required [(ngModel)]="profile.phone" [readonly]="!isEditing" />
+        </div>
+
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+        <div class="actions">
+            <button type="button" class="btn ghost" *ngIf="!isEditing" (click)="onEdit()">
+                Uredi profil
+            </button>
+
+            <button type="button" class="btn ghost" *ngIf="isEditing" (click)="onCancelEdit()">
+                Prekliči
+            </button>
+
+            <button type="submit" class="btn primary" [disabled]="!isEditing || isSaving">
+                {{ isSaving ? 'Shranjevanje...' : 'Shrani spremembe' }}
+            </button>
+        </div>
+    </form>
+</div>
+
+<div class="profile-container" *ngIf="!profile && !loading">
+    <p>Profil ni naložen.</p>
+</div>
