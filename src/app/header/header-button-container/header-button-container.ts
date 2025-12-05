@@ -72,6 +72,7 @@ export class HeaderButtonContainer {
     this.router.navigate(['/settings/user-profile']);
     this.closeAllMenus();
   }
+
   currentLang: 'sl' | 'en' = 'sl';
 
   toggleLanguage() {
@@ -85,4 +86,5 @@ export class HeaderButtonContainer {
     googleCombo.value = this.currentLang;
     googleCombo.dispatchEvent(new Event('change'));
   }
+
 }

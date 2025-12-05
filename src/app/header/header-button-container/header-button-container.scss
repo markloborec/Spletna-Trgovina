@@ -171,24 +171,25 @@
 }
 
 .lang-switch {
-  border: none;
-  background-color: #f1f1f1;
-  padding: 6px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: 8px;
-  transition: 0.2s ease-in-out;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  background-color: #f3f3f3;
+  transition: 0.2s ease-in-out;
 }
 
 .lang-switch:hover {
-  background-color: #dcdcdc;
-  transform: scale(1.05);
+  background-color: #dedede;
+  transform: scale(1.03);
 }
 
-.lang-switch:active {
-  transform: scale(0.95);
+.flag-img {
+  width: 24px;
+  height: 16px;
+  border-radius: 2px;
+  object-fit: cover;
 }
