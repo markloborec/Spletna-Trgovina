@@ -5,11 +5,11 @@
     </button>
 
     <ul class="navbar-list" [class.open]="menuOpen">
-        <li><a href="#" class="navbar-link">Domov</a></li>
-        <li><a href="#" class="navbar-link">Kolesa</a></li>
+ <li><a routerLink="/" (click)="closeMenu()" class="navbar-link">Domov</a></li>
+        <li><a routerLink="/kolesa" (click)="closeMenu()" class="navbar-link">Kolesa</a></li>
         <li><a href="#" class="navbar-link">Oprema</a></li>
         <li><a href="#" class="navbar-link">Oblačila</a></li>
         <li><a href="#" class="navbar-link">Servis</a></li>
-        <li><a href="#" class="navbar-link">Kontakt</a></li>
+        <li><a routerLink="/kontakt" (click)="closeMenu()" class="navbar-link">Kontakt</a></li>
     </ul>
 </nav>

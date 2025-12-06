@@ -16,4 +16,12 @@ export class Navbar {
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
+
+  closeMenu() {
+    // Samo za mobilne naprave zapremo meni
+    if (window.innerWidth <= 800) {
+      this.menuOpen = false;
+    }
+  }
 }
+

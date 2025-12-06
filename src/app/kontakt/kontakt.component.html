@@ -1,0 +1,320 @@
+<div class="kontakt-page">
+    
+    <!-- HERO SEKCIJA -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Kontaktirajte BiciklStore</h1>
+            <p>
+                Potrebujete pomoč pri izbiri kolesa, servisu ali imate vprašanje o naročilu?
+                Naš prijazni tim je vam na voljo vsak dan.
+            </p>
+            <div class="hero-actions">
+                <a href="tel:+38612345678" class="btn primary">
+                    <i class="fas fa-phone"></i> Pokličite nas
+                </a>
+                <a href="mailto:info@biciklstore.si" class="btn ghost">
+                    <i class="fas fa-envelope"></i> Pošljite e-pošto
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAKTNE INFORMACIJE -->
+    <section class="kontakt-info">
+        <div class="container">
+            <div class="kontakt-grid">
+                <!-- Trgovina -->
+                <div class="kontakt-kartica">
+                    <div class="kontakt-ikona">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Trgovina Ljubljana</h3>
+                    <div class="kontakt-podrobnosti">
+                        <p><i class="fas fa-map-marker-alt"></i> Kolesarska ulica 15, 1000 Ljubljana</p>
+                        <p><i class="fas fa-phone"></i> <a href="tel:+38612345678">01 234 56 78</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:ljubljana@biciklstore.si">ljubljana@biciklstore.si</a></p>
+                    </div>
+                    <div class="delovni-cas">
+                        <h4>Delovni čas:</h4>
+                        <p>Pon-Pet: 9:00 - 19:00</p>
+                        <p>Sobota: 9:00 - 14:00</p>
+                        <p>Nedelja: zaprto</p>
+                    </div>
+                </div>
+
+                <!-- Servis -->
+                <div class="kontakt-kartica">
+                    <div class="kontakt-ikona">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>Servis koles</h3>
+                    <div class="kontakt-podrobnosti">
+                        <p><i class="fas fa-phone"></i> <a href="tel:+38612345679">01 234 56 79</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:servis@biciklstore.si">servis@biciklstore.si</a></p>
+                    </div>
+                    <div class="delovni-cas">
+                        <h4>Delovni čas servisa:</h4>
+                        <p>Pon-Pet: 8:00 - 18:00</p>
+                        <p>Sobota: 9:00 - 13:00</p>
+                        <p>Nedelja: zaprto</p>
+                    </div>
+                    <a href="#" class="btn servis">Naroči se na servis</a>
+                </div>
+
+                <!-- E-trgovina -->
+                <div class="kontakt-kartica">
+                    <div class="kontakt-ikona">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>E-trgovina & podpora</h3>
+                    <div class="kontakt-podrobnosti">
+                        <p><i class="fas fa-headset"></i> Podpora: <a href="tel:+38680123456">080 123 456</a></p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:podpora@biciklstore.si">podpora@biciklstore.si</a></p>
+                        <p><i class="fas fa-truck"></i> Dostava: <a href="mailto:dostava@biciklstore.si">dostava@biciklstore.si</a></p>
+                    </div>
+                    <div class="delovni-cas">
+                        <h4>Delovni čas podpore:</h4>
+                        <p>Pon-Pet: 8:00 - 20:00</p>
+                        <p>Sobota: 9:00 - 15:00</p>
+                        <p>Nedelja: 10:00 - 14:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAKTNI OBRAZEC -->
+    <section class="kontakt-obrazec">
+        <div class="container">
+            <div class="obrazec-wrapper">
+                <div class="obrazec-info">
+                    <h2>Pošljite nam sporočilo</h2>
+                    <p>Izpolnite spodnji obrazec in odgovorili vam bomo v najkrajšem možnem času.</p>
+                    
+                    <div class="nasveti">
+                        <h4>Kako hitro dobite odgovor?</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> E-pošta: v 24 urah</li>
+                            <li><i class="fas fa-check-circle"></i> Telefon: takoj</li>
+                            <li><i class="fas fa-check-circle"></i> Servis: največ 2 delovna dneva</li>
+                        </ul>
+                    </div>
+
+                    <div class="pogosta-vprasanja">
+                        <h4>Pogosta vprašanja</h4>
+                        <div class="vprasanje">
+                            <h5>Kakšen je čas dobave?</h5>
+                            <p>Standardna dobava: 2-3 delovni dneva. Hitra dobava: 1 delovni dan.</p>
+                        </div>
+                        <div class="vprasanje">
+                            <h5>Ali imate možnost prevzema v trgovini?</h5>
+                            <p>Da, vse naročilo lahko prevzamete v naši trgovini v Ljubljani.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="obrazec">
+                    <form (ngSubmit)="onSubmit()" #kontaktForm="ngForm">
+                        <div class="form-group">
+                            <label for="ime">Ime in priimek *</label>
+                            <input type="text" id="ime" name="ime" 
+                                   [(ngModel)]="kontaktData.ime" 
+                                   required
+                                   class="form-control"
+                                   placeholder="Vaše ime in priimek">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-pošta *</label>
+                            <input type="email" id="email" name="email" 
+                                   [(ngModel)]="kontaktData.email" 
+                                   required
+                                   email
+                                   class="form-control"
+                                   placeholder="vas.email@domena.si">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefon">Telefonska številka</label>
+                            <input type="tel" id="telefon" name="telefon" 
+                                   [(ngModel)]="kontaktData.telefon" 
+                                   class="form-control"
+                                   placeholder="041 123 456">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zadeva">Zadeva *</label>
+                            <select id="zadeva" name="zadeva" 
+                                    [(ngModel)]="kontaktData.zadeva" 
+                                    required
+                                    class="form-control">
+                                <option value="" disabled selected>Izberite zadevo</option>
+                                <option value="vprasanje">Splošno vprašanje</option>
+                                <option value="narocilo">Vprašanje o naročilu</option>
+                                <option value="servis">Servis koles</option>
+                                <option value="vracilo">Vračilo izdelka</option>
+                                <option value="garancija">Garancija</option>
+                                <option value="sodelovanje">Ponudba sodelovanja</option>
+                                <option value="drugo">Drugo</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sporocilo">Vaše sporočilo *</label>
+                            <textarea id="sporocilo" name="sporocilo" 
+                                      [(ngModel)]="kontaktData.sporocilo" 
+                                      required
+                                      rows="6"
+                                      class="form-control"
+                                      placeholder="Tu napišite vaše sporočilo..."></textarea>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="novice" name="novice" 
+                                   [(ngModel)]="kontaktData.novice">
+                            <label for="novice">Želim prejemati novice in ponudbe BiciklStore</label>
+                        </div>
+
+                        <button type="submit" 
+                                class="btn primary"
+                                [disabled]="!kontaktForm.form.valid || submitting">
+                            <span *ngIf="!submitting">Pošlji sporočilo</span>
+                            <span *ngIf="submitting">Pošiljam...</span>
+                        </button>
+
+                        <div class="obvestilo" *ngIf="submitted">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Hvala za vaše sporočilo! Odgovorili vam bomo v najkrajšem možnem času.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOKACIJA IN ZEMLJEVID -->
+    <section class="lokacija">
+        <div class="container">
+            <h2>Kje nas najdete?</h2>
+            <div class="lokacija-grid">
+                <div class="lokacija-info">
+                    <div class="lokacija-kartica">
+                        <h3><i class="fas fa-map-marker-alt"></i> Naša lokacija</h3>
+                        <p>Naša trgovina se nahaja v centru Ljubljane, na Kolesarski ulici 15.</p>
+                        
+                        <div class="navodila">
+                            <h4>Kako do nas:</h4>
+                            <p><strong>Z avtobusom:</strong> Postaja "Kolesarska" (linije 1, 3, 6, 9)</p>
+                            <p><strong>Z avtom:</strong> Parkirišče na ulici (plačljivo) ali parkirišče BTC (10 min hoje)</p>
+                            <p><strong>S kolesom:</strong> Na voljo so kolesarski stojala pred trgovino</p>
+                        </div>
+
+                        <div class="parkiranje">
+                            <h4>Parkiranje:</h4>
+                            <p><i class="fas fa-car"></i> Parkirišče BTC: 200m</p>
+                            <p><i class="fas fa-car"></i> Parkirišče Center: 300m</p>
+                            <p><i class="fas fa-bicycle"></i> 10 kolesarskih stojal</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="zemljevid">
+                    <!-- Prikaz zemljevida -->
+                    <div class="zemljevid-ogrodje">
+                        <div class="zemljevid-mesto">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <p>Zemljevid lokacije</p>
+                            <p class="mala-napis">Kolesarska ulica 15, 1000 Ljubljana</p>
+                        </div>
+                    </div>
+                    <a href="https://maps.google.com/?q=Kolesarska+ulica+15,+Ljubljana" 
+                       target="_blank" 
+                       class="btn secondary">
+                        <i class="fas fa-external-link-alt"></i> Odpri v Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EKIPKA -->
+    <section class="ekipa">
+        <div class="container">
+            <h2>Naša ekipa</h2>
+            <p class="podnaslov">Strokovnjaki, ki vam bodo z veseljem pomagali</p>
+            
+            <div class="ekipa-grid">
+                <div class="clan-ekipe">
+                    <div class="foto-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Marko Novak</h3>
+                    <p class="pozicija">Vodja trgovine</p>
+                    <p class="opis">20+ let izkušenj s kolesi</p>
+                    <p class="kontakt"><i class="fas fa-envelope"></i> marko@biciklstore.si</p>
+                </div>
+
+                <div class="clan-ekipe">
+                    <div class="foto-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Ana Kovač</h3>
+                    <p class="pozicija">Servisna tehnica</p>
+                    <p class="opis">Specialistka za električna kolesa</p>
+                    <p class="kontakt"><i class="fas fa-envelope"></i> ana@biciklstore.si</p>
+                </div>
+
+                <div class="clan-ekipe">
+                    <div class="foto-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Luka Horvat</h3>
+                    <p class="pozicija">Strokovnjak za opremo</p>
+                    <p class="opis">Bivši tekmovalni kolesar</p>
+                    <p class="kontakt"><i class="fas fa-envelope"></i> luka@biciklstore.si</p>
+                </div>
+
+                <div class="clan-ekipe">
+                    <div class="foto-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Maja Petrovič</h3>
+                    <p class="pozicija">Podpora strankam</p>
+                    <p class="opis">Odzivni čas: do 2 uri</p>
+                    <p class="kontakt"><i class="fas fa-envelope"></i> maja@biciklstore.si</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- POGOSTA VPRAŠANJA -->
+    <section class="faq">
+        <div class="container">
+            <h2>Pogosta vprašanja</h2>
+            
+            <div class="faq-grid">
+                <div class="faq-vprasanje">
+                    <h4>Kako dolgo traja servis kolesa?</h4>
+                    <p>Standardni servis traja 1-2 delovna dneva. Kompleksnejši servisi lahko trajajo do 5 delovnih dni. Za nujne primere imamo tudi hitri servis istega dne.</p>
+                </div>
+
+                <div class="faq-vprasanje">
+                    <h4>Ali imate možnost testne vožnje koles?</h4>
+                    <p>Da, vse naše kolesa lahko preizkusite na našem zaprtem testnem tiru. Za testno vožnjo zunaj trgovine se je potrebno najprej dogovoriti.</p>
+                </div>
+
+                <div class="faq-vprasanje">
+                    <h4>Kakšna je garancija na kolesa?</h4>
+                    <p>Vsa nova kolesa imajo 2-letno garancijo na okvir in 1-letno garancijo na komponente. Servisne storitve so zajamčene 6 mesecev.</p>
+                </div>
+
+                <div class="faq-vprasanje">
+                    <h4>Ali dostavljate po vsej Sloveniji?</h4>
+                    <p>Da, dostavljamo v vsa mesta v Sloveniji. Dostava je brezplačna za naročila nad 50€. Za manjša naročila je strošek dostave 4,90€.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>

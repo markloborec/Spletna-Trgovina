@@ -1,0 +1,491 @@
+/* GLOBALNI STILI */
+.kontakt-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* HERO SEKCIJA */
+.hero {
+    background: linear-gradient(#155724, #154722);
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4rem 1rem;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* GUMBI */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn.primary {
+    background-color:  #28a745;
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color:  #57a86a;
+    transform: translateY(-2px);
+}
+
+.btn.ghost {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn.ghost:hover {
+    background-color: white;
+    color: #1a365d;
+}
+
+.btn.secondary {
+    background-color: #38a169;
+    color: white;
+}
+
+.btn.servis {
+    background-color: #e53e3e;
+    color: white;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+/* KONTAKTNE INFORMACIJE */
+.kontakt-info {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.kontakt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.kontakt-kartica {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.kontakt-kartica:hover {
+    transform: translateY(-5px);
+}
+
+.kontakt-ikona {
+    background-color: #2d6ae3;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.kontakt-kartica h3 {
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.kontakt-podrobnosti p {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.kontakt-podrobnosti a {
+    color: #2d6ae3;
+    text-decoration: none;
+}
+
+.kontakt-podrobnosti a:hover {
+    text-decoration: underline;
+}
+
+.delovni-cas {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.delovni-cas h4 {
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+/* KONTAKTNI OBRAZEC */
+.kontakt-obrazec {
+    padding: 4rem 0;
+    background: white;
+}
+
+.obrazec-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .obrazec-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+
+.obrazec-info h2 {
+    color: #1a365d;
+    margin-bottom: 1rem;
+}
+
+.nasveti {
+    background-color: #f0fff4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border-left: 4px solid #38a169;
+}
+
+.nasveti ul {
+    list-style: none;
+    padding: 0;
+}
+
+.nasveti li {
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nasveti i {
+    color: #38a169;
+}
+
+.pogosta-vprasanja {
+    margin-top: 2rem;
+}
+
+.vprasanje {
+    margin-bottom: 1.5rem;
+}
+
+.vprasanje h5 {
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+/* FORMA */
+.obrazec {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2d3748;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #2d6ae3;
+    box-shadow: 0 0 0 3px rgba(45, 106, 227, 0.1);
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.obvestilo {
+    background-color: #c6f6d5;
+    color: #22543d;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.obvestilo i {
+    color: #38a169;
+}
+
+/* LOKACIJA */
+.lokacija {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.lokacija h2 {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 2rem;
+}
+
+.lokacija-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+@media (max-width: 768px) {
+    .lokacija-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.lokacija-kartica {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.lokacija-kartica h3 {
+    color: #1a365d;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navodila, .parkiranje {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.navodila h4, .parkiranje h4 {
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.zemljevid-ogrodje {
+    background-color: #e2e8f0;
+    height: 300px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.zemljevid-mesto {
+    text-align: center;
+    color: #4a5568;
+}
+
+.zemljevid-mesto i {
+    font-size: 3rem;
+    color: #2d6ae3;
+    margin-bottom: 1rem;
+}
+
+.mala-napis {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+/* EKIPA */
+.ekipa {
+    padding: 4rem 0;
+    background: white;
+}
+
+.ekipa h2 {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.podnaslov {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 3rem;
+}
+
+.ekipa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.clan-ekipe {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.clan-ekipe:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.foto-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: #2d6ae3;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 1rem;
+}
+
+.clan-ekipe h3 {
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.pozicija {
+    color: #2d6ae3;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.opis {
+    color: #718096;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.kontakt {
+    color: #4a5568;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* FAQ */
+.faq {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.faq h2 {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 3rem;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.faq-vprasanje {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.faq-vprasanje h4 {
+    color: #1a365d;
+    margin-bottom: 0.5rem;
+}
+
+.faq-povezava {
+    text-align: center;
+    padding: 2rem;
+    background-color: #2d6ae3;
+    color: white;
+    border-radius: 8px;
+}
+
+.faq-povezava a {
+    color: white;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Responsive dodatki */
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
