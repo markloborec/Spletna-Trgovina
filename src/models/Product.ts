@@ -9,9 +9,10 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     brand: { type: String },
     image_url: { type: String },
-    is_active: { type: Boolean, default: true }
+    inStock: { type: Boolean, default: true }
   },
   { timestamps: true }
 );
 
 export const Product = mongoose.model("Product", productSchema);
+
