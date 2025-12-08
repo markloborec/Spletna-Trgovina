@@ -20,10 +20,11 @@ export const getProducts = async (req: Request, res: Response) => {
         id: p._id.toString(),
         name: p.name,
         price: p.price,
-        categoryId: p.category?.toString(),
         brand: p.brand,
+        image_url: p.image_url,
+        short_description: p.short_description,
+        categoryId: p.category?.toString(),
         inStock: p.inStock,
-        image_url: p.image_url, 
       })),
       total,
       page,
@@ -40,20 +41,20 @@ export const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    // 1) invalid ObjectId (npr. "abc")
+    // invalid ObjectId (npr. "abc")
     if (!isValidObjectId(id)) {
       return res.status(400).json({ errorCode: "PRODUCT_ID_INVALID" });
     }
 
-    // 2) poiščemo produkt v bazi
+    // poiščemo produkt v bazi
     const product = await Product.findById(id).lean();
 
-    // 3) če ga ni
+    // če ga ni
     if (!product) {
       return res.status(404).json({ errorCode: "PRODUCT_NOT_FOUND" });
     }
 
-    // 4) če ga najdemo, vrnemo podatke v lepem formatu
+    // če ga najdemo, vrnemo podatke v lepem formatu
     return res.json({
       id: product._id.toString(),
       name: product.name,
@@ -61,8 +62,9 @@ export const getProductById = async (req: Request, res: Response) => {
       categoryId: product.category?.toString(),
       brand: product.brand,
       inStock: product.inStock,
-      description: product.description,
-      image_url: product.image_url, // ali imageUrl, odvisno od modela
+      short_description: product.short_description,
+      long_description: product.long_description,
+      image_url: product.image_url,
     });
   } catch (err) {
     console.error(err);
