@@ -1,0 +1,115 @@
+<div class="bikes-page">
+    <div class="bikes-header">
+        <h1>Kolesa</h1>
+    </div>
+
+    <!-- 🔍 FILTER & SORT BAR -->
+    <div class="bikes-filters">
+        <div class="filter-group">
+            <label>Velikost obročev</label>
+            <select [(ngModel)]="filter.wheelSize">
+                <option [ngValue]="''">Vse</option>
+                <option [ngValue]="26">26"</option>
+                <option [ngValue]="27.5">27.5"</option>
+                <option [ngValue]="28">28"</option>
+                <option [ngValue]="29">29"</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Okvir</label>
+            <input type="text" [(ngModel)]="filter.frameMaterial" placeholder="Npr. Aluminij" />
+        </div>
+
+        <div class="filter-group">
+            <label>Min. prestav</label>
+            <input type="number" min="1" [(ngModel)]="filter.minGears" placeholder="Npr. 10" />
+        </div>
+
+        <div class="filter-group">
+            <label>Razpoložljivost</label>
+            <select [(ngModel)]="filter.availability">
+                <option value="">Vse</option>
+                <option value="available">Na zalogi</option>
+                <option value="unavailable">Ni na zalogi</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Sortiraj</label>
+            <select [(ngModel)]="sortBy">
+                <option value="name">Ime</option>
+                <option value="price">Cena</option>
+                <option value="wheelSize">Velikost obročev</option>
+                <option value="gearCount">Št. prestav</option>
+            </select>
+        </div>
+
+        <div class="filter-group filter-group-button">
+            <label>&nbsp;</label>
+            <button class="sort-dir" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+                {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
+            </button>
+        </div>
+    </div>
+
+    <div class="bikes-grid">
+        <div class="bike-card" *ngFor="let bike of filteredAndSortedBicycles; trackBy: trackByBikeId">
+            <div class="bike-image-wrapper">
+                <img *ngIf="bike.imageUrl" [src]="bike.imageUrl" [alt]="bike.name" class="bike-image" loading="lazy"
+                    (error)="onImageError(bike)" />
+
+                <div class="bike-image-placeholder" *ngIf="!bike.imageUrl">
+                    <span class="placeholder-icon">🚲</span>
+                    <span class="placeholder-name">{{ bike.name }}</span>
+                </div>
+
+                <span class="badge badge-unavailable" *ngIf="!bike.isAvailable">
+                    Ni na zalogi
+                </span>
+            </div>
+
+            <div class="bike-info">
+                <div class="bike-name">{{ bike.name }}</div>
+
+                <div class="bike-description">
+                    {{ bike.description }}
+                </div>
+
+                <div class="bike-specs">
+                    <div class="spec">
+                        <span class="label">Velikost obročev</span>
+                        <span class="value">{{ bike.wheelSize }}"</span>
+                    </div>
+                    <div class="spec">
+                        <span class="label">Okvir</span>
+                        <span class="value">{{ bike.frameMaterial }}</span>
+                    </div>
+                    <div class="spec">
+                        <span class="label">Prestav</span>
+                        <span class="value">{{ bike.gearCount }}</span>
+                    </div>
+                    <div class="spec">
+                        <span class="label">Garancija</span>
+                        <span class="value">{{ bike.warrantyMonths }} mesecev</span>
+                    </div>
+                </div>
+
+                <div class="bike-bottom">
+                    <div class="bike-price">
+                        {{ bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }} </div>
+                    <div class="actions">
+                        <button class="add-to-cart" [disabled]="!bike.isAvailable">
+                            {{ bike.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
+                        </button>
+
+                        <a *ngIf="bike.officialProductSite" class="official-link" [href]="bike.officialProductSite"
+                            target="_blank" rel="noopener noreferrer">
+                            Uradna stran
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

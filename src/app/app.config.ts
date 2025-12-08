@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     importProvidersFrom(
-      TranslateModule.forRoot()   // brez loaderja, vse naložimo iz kode
+      TranslateModule.forRoot()   // brez loaderja
     ),
   ],
 };

@@ -21,7 +21,7 @@ export class HeaderButtonContainer {
   isUserMenuOpen = false;
   isCartMenuOpen = false;
   isLangMenuOpen = false;
-  isLoggedIn = false;
+  isLoggedIn = true;
 
   constructor(private elementRef: ElementRef,
     private router: Router,) { }

@@ -1,0 +1,66 @@
+.branch-card {
+    background: #ffffff;
+    padding: 1.2rem 1.4rem;
+    border-radius: 0.85rem;
+    border: 1px solid #e2e8f0;
+    transition: 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+        background: #f9fafb;
+    }
+
+    &.active {
+        border-color: #3daa56;
+        background: #eaf6ec;
+        box-shadow: 0 6px 18px rgba(61, 170, 86, 0.26);
+    }
+}
+
+.branch-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #111827;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.branch-details p {
+    margin: 0.15rem 0;
+    font-size: 0.95rem;
+    color: #374151;
+}
+
+.branch-details strong {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+// --- Delovni čas ---
+
+.hours {
+    margin-top: 0.4rem;
+    padding-top: 0.55rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.hours-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.hours ul {
+    padding-left: 18px;
+    margin: 0;
+    line-height: 1.45;
+    font-size: 0.9rem;
+    color: #374151;
+}

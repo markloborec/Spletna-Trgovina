@@ -1,0 +1,132 @@
+<div class="clothes-page">
+    <div class="clothes-header">
+        <h1>Oblačila</h1>
+    </div>
+
+    <!-- 🔍 FILTER & SORT BAR -->
+    <div class="clothes-filters">
+        <div class="filter-group">
+            <label>Velikost</label>
+            <select [(ngModel)]="filter.size">
+                <option value="">Vse</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Spol</label>
+            <select [(ngModel)]="filter.gender">
+                <option value="">Vse</option>
+                <option value="male">Moški</option>
+                <option value="female">Ženske</option>
+                <option value="unisex">Unisex</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Barva</label>
+            <input type="text" [(ngModel)]="filter.color" placeholder="Npr. črna" />
+        </div>
+
+        <div class="filter-group">
+            <label>Material</label>
+            <input type="text" [(ngModel)]="filter.material" placeholder="Npr. poliester" />
+        </div>
+
+        <div class="filter-group">
+            <label>Razpoložljivost</label>
+            <select [(ngModel)]="filter.availability">
+                <option value="">Vse</option>
+                <option value="available">Na zalogi</option>
+                <option value="unavailable">Ni na zalogi</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Sortiraj</label>
+            <select [(ngModel)]="sortBy">
+                <option value="name">Ime</option>
+                <option value="price">Cena</option>
+            </select>
+        </div>
+
+        <div class="filter-group filter-group-button">
+            <label>&nbsp;</label>
+            <button class="sort-dir" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+                {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
+            </button>
+        </div>
+    </div>
+
+    <div class="clothes-grid">
+        <div class="clothes-card" *ngFor="let item of filteredAndSortedClothes; trackBy: trackByClothesId">
+            <div class="clothes-image-wrapper">
+                <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="item.name" class="clothes-image" loading="lazy"
+                    (error)="onImageError(item)" />
+
+                <div class="clothes-image-placeholder" *ngIf="!item.imageUrl">
+                    <span class="placeholder-icon">👕</span>
+                    <span class="placeholder-name">{{ item.name }}</span>
+                </div>
+
+                <span class="badge badge-unavailable" *ngIf="!item.isAvailable">
+                    Ni na zalogi
+                </span>
+            </div>
+
+            <div class="clothes-info">
+                <div class="clothes-name">{{ item.name }}</div>
+
+                <div class="clothes-description">
+                    {{ item.description }}
+                </div>
+
+                <div class="clothes-specs">
+                    <div class="spec">
+                        <span class="label">Velikost</span>
+                        <span class="value">{{ item.size }}</span>
+                    </div>
+                    <div class="spec" *ngIf="item.gender">
+                        <span class="label">Za</span>
+                        <span class="value">
+                            {{ item.gender === 'male' ? 'Moške' : item.gender === 'female' ? 'Ženske' : 'Unisex'}}
+                        </span>
+                    </div>
+                    <div class="spec" *ngIf="item.material">
+                        <span class="label">Material</span>
+                        <span class="value">{{ item.material }}</span>
+                    </div>
+                    <div class="spec" *ngIf="item.color">
+                        <span class="label">Barva</span>
+                        <span class="value">{{ item.color }}</span>
+                    </div>
+                    <div class="spec">
+                        <span class="label">Garancija</span>
+                        <span class="value">{{ item.warrantyMonths }} mesecev</span>
+                    </div>
+                </div>
+
+                <div class="clothes-bottom">
+                    <div class="clothes-price">
+                        {{ item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+                    </div>
+
+                    <div class="actions">
+                        <button class="add-to-cart" [disabled]="!item.isAvailable">
+                            {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
+                        </button>
+
+                        <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite" target="_blank" rel="noopener noreferrer">
+                            Uradna stran
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,11 +5,34 @@
     </button>
 
     <ul class="navbar-list" [class.open]="menuOpen">
-        <li><a href="#" class="navbar-link">Domov</a></li>
-        <li><a href="#" class="navbar-link">Kolesa</a></li>
-        <li><a href="#" class="navbar-link">Oprema</a></li>
-        <li><a href="#" class="navbar-link">Oblačila</a></li>
-        <li><a href="#" class="navbar-link">Servis</a></li>
-        <li><a href="#" class="navbar-link">Kontakt</a></li>
+        <li>
+            <a class="navbar-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">
+                <span>Domov</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="navbar-link" routerLink="/bikes" routerLinkActive="active" (click)="toggleMenu()">
+                <span>Kolesa</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="navbar-link" routerLink="/equipment" routerLinkActive="active" (click)="toggleMenu()">
+                <span>Oprema</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="navbar-link" routerLink="/clothes" routerLinkActive="active" (click)="toggleMenu()">
+                <span>Oblačila</span>
+            </a>
+        </li>
+
+        <li>
+            <a class="navbar-link" routerLink="/contact" routerLinkActive="active" (click)="toggleMenu()">
+                <span>Kontakt</span>
+            </a>
+        </li>
     </ul>
 </nav>
