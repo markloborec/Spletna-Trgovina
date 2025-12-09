@@ -52,8 +52,8 @@ Implementirane funkcionalnosti:
 
 ### Kloniranje repozitorija
 ```bash
-git clone https://github.com/yourusername/sportna-trgovina.git
-cd sportna-trgovina
+git clone https://github.com/markloborec/Spletna-Trgovina.git
+cd Spletna-Trgovina
 ```
 
 ### Backend
@@ -89,7 +89,7 @@ npm install
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4200/api'
+  apiUrl: 'http://localhost:4000/api'
 };
 ```
 
