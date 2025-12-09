@@ -4,43 +4,51 @@
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 
-Spletna aplikacija za trgovino s kolesarsko opremo, ki ponuja celovito izkušnjo spletnega nakupovanja za kolesarske navdušence.
+Spletna trgovina s kolesarsko opremo, razvita po SCRUM metodi in razdeljena v cikle (sprinte). Projekt vključuje razvoj frontenda, backenda in integracije z bazo podatkov.
 
-## 🌟 Funkcionalnosti
+## Trenutne funkcionalnosti (stanje do 3. cikla)
+### Backend (Node.js + Express + MongoDB)
+Implementirane funkcionalnosti:
+- Registracija in prijava uporabnika (JWT avtentikacija)
+- Vračanje uporabniških podatkov (/api/auth/me)
+- Pridobivanje seznama izdelkov
+- Pridobivanje podrobnosti izdelka
+- Pridobivanje kategorij izdelkov
+- Seed podatki za izdelke, kategorije in variante (variant backend še ne vrača)
+- Povezava na MongoDB + osnovna struktura modelov
 
-### 🛒 Osnovne funkcionalnosti
-- **Upravljanje uporabnikov**: Registracija, prijava, upravljanje profila
-- **Nakupovalna košarica**: Dodajanje/odstranjevanje izdelkov, spremljanje stanja
+### Frontend (Angular)
+Implementirane funkcionalnosti:
+#### Uporabniški vmesnik
+- Zaključen osnovni vizualni koncept aplikacije
+- Končan homepage
+- Delitev aplikacije na ključne komponente (komponentna arhitektura)
 
-### 🔍 Napredno iskanje in filtriranje
-- **Inteligentno iskanje**: Hitro iskanje po celotni ponudbi izdelkov
-- **Filtriraj po**:
-  - Kategoriji (kolesa, oblačila, dodatki, orodja)
-  - Znamki
-  - Ceni
-  - Velikosti
-  - Barvi
-  - Oceni uporabnikov
+#### Navigacija in jeziki
+- Globalna izbira jezika + jezikovna menjava v headerju
+- Delujoč routing med stranmi
 
-### 📱 Uporabniški vmesnik
-- Odzivna zasnova za vse naprave
-- Intuitivna navigacija
-- Vizualne galerije izdelkov
-- Podrobni opisi izdelkov s slikami
+#### Prikaz izdelkov
+- Prikaz vseh koles
+- Prikaz vseh oblačil
+- Prikaz celotne opreme
+- 3 različna filtriranja opreme
+- Model + Factory pattern za produkt
+- Osnovna struktura strani za kategorije izdelkov
 
-### 🏢 Informacije o podjetju
-- Kontaktni obrazec
-- Lokacija in urnik
-- Informacije o podjetju
-- FAQ sekcija
+#### Lokacije in kontakt
+- Interaktivni zemljevid poslovalnic
+- Stran "Kontakt" + kontaktni obrazec
+- Vse osnovne kontaktne povezave
 
-## 🚀 Namestitev in zagon
+#### Uporabniki
+- Registracija in prijava uporabnika
+- Frontend pop-upi (modal) za prijavo/registracijo
+- Funkcionalnost “pozabljeno geslo” (frontend obrazec)
+- UserService za upravljanje uporabniških podatkov
+- Prikaz profila uporabnika (UI)
 
-### Predpogoji
-- Node.js (v16 ali novejši)
-- Angular CLI
-- MongoDB (lokalen ali Atlas)
-- npm ali yarn
+## Namestitev in zagon
 
 ### 1. Kloniranje repozitorija
 ```bash
@@ -48,24 +56,15 @@ git clone https://github.com/yourusername/sportna-trgovina.git
 cd sportna-trgovina
 ```
 
-### 2. Namestitev odvisnosti
-
-#### Backend
+### 2. Backend
+   Namestitev odvisnosti: 
 ```bash
 cd backend
 npm install
 ```
 
-#### Frontend
-```bash
-cd frontend
-npm install
-```
-
-### 3. Konfiguracija
-
-#### Backend konfiguracija
-Ustvarite `.env` datoteko v backend mapi:
+    Konfiguracija
+Ustvarimo `.env` datoteko v backend mapi:
 ```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
@@ -73,8 +72,18 @@ PORT=3000
 NODE_ENV=development
 ```
 
-#### Frontend konfiguracija
-Uredite `environment.ts` v `src/environments/`:
+    Zagon strežnika
+```npm run dev```
+
+### 3. Frontend
+    Namestitev odvisnosti
+```bash
+cd frontend
+npm install
+```
+
+    Konfiguracija
+Uredimo `environment.ts` v `src/environments/`:
 ```typescript
 export const environment = {
   production: false,
@@ -82,117 +91,72 @@ export const environment = {
 };
 ```
 
-### 4. Zagon aplikacije
-
-#### Opcija A: Ločen zagon
-```bash
-# Terminal 1: Zagon backend strežnika
-cd backend
-node server.js
-# ali za razvoj: npm run dev
-
-# Terminal 2: Zagon frontend aplikacije
+    Zagon aplikacije
 cd frontend
 ng serve --open
 ```
 
-#### Opcija B: Z uporabo skript (če so definirane)
-```bash
-# Namestitev in zagon celotne aplikacije
-npm run install-all
-npm start
 ```
+Frontend: http://localhost:4200
+Backend API: http://localhost:4000/api
 
-### 5. Dostop do aplikacije
-- Frontend: [http://localhost:4200](http://localhost:4200)
-- Backend API: [http://localhost:3000](http://localhost:3000)
-- MongoDB: Localhost:27017 (ali vaš Atlas cluster)
+## Arhitektura sistema
 
-## 🏗️ Arhitektura
+### Frontend 
+- Angular aplikacija s komponentnim pristopom
+- Podpora za i18n
+- Services za komunikacijo z API-ji
+- Modeli in tovarniški vzorci za podatkovne objekte
 
-### Frontend (Angular)
+### Backend 
+- Express API v Node.js
+- JWT avtentikacija
+- Mongoose modeli:
+1. Users
+2. Products
+3. Categories
+4. ProductVariants
+   
+### Baza podatkov
+- MongoDB (lokalno ali preko Atlas)
 
-### Backend (Node.js + Express)
-
-### Baza podatkov (MongoDB)
-- **Uporabniki**: User collection
-- **Izdelki**: Products collection
-- **Naročila**: Orders collection
-- **Kategorije**: Categories collection
 
 ## 🧪 Testiranje
 
-```bash
-# Frontend testi
-cd frontend
-npm test
+Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno preverjanje delovanja frontenda.
+Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
-# Backend testi
-cd backend
-npm test
-
-# E2E testi
-npm run e2e
-```
-
-## 🐛 Reševanje težav
+## Reševanje težav
 
 ### Pogoste težave
 
-1. **MongoDB povezava**
-   ```bash
-   # Preverite, ali je MongoDB zagnan
-   mongod --version
-   # Preverite povezavo v .env datoteki
-   ```
+1. **Težave z MongoDB**
+- preveri povezavo v .env
+- preveri, ali teče MongoDB strežnik
 
-2. **Porti so zasedeni**
+2. **Porti 4000 ali 4200 je zaseden**
    ```bash
    # Poglejte, kateri procesi uporabljajo porte
    sudo lsof -i :3000
    sudo lsof -i :4200
    ```
 
-3. **Odvisnosti manjkajo**
+3. **Manjkajoče odvisnosti**
    ```bash
    # Ponovno namestite odvisnosti
    rm -rf node_modules package-lock.json
    npm install
    ```
 
-## 📦 Deployment
-
-### Produkcijski build
-```bash
-# Frontend build
-cd frontend
-ng build --prod
-
-# Backend deployment
-cd backend
-npm install --production
-NODE_ENV=production node server.js
-```
-
-## 👥 Credits
-
 ### Razvijalci
-- **Matevž Koren** - Full Stack Developer
-- **Mark Loborec** - Dokumntiranje
-- **Naja Miličič** - Backend development
+- **Matevž Koren** - Full Stack razvoj
+- **Mark Loborec** - Dokumentacija
+- **Naja Miličič** - Backend razvoj
 
 
 ## 📄 Licenca
 
 Ta projekt je licenciran pod MIT licenco - glej [LICENSE](LICENSE) datoteko za podrobnosti.
 
-## 🤝 Podpora
-
-Za vprašanja in podporo obiščite:
-- **Email**: support@sportnatrgovina.si
-- **Website**: [www.sportnatrgovina.si](https://www.sportnatrgovina.si)
-- **Telefon**: +386 1 234 5678
-
----
 
 ⭐ Če vam je ta projekt všeč, prosimo dajte zvezdico na GitHubu!
