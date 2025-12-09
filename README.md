@@ -4,52 +4,42 @@
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Bicikl store homepage](./img/Biciklstorehomepage.GIF)
-Spletna trgovina s kolesarsko opremo, razvita po SCRUM metodi in razdeljena v cikle (sprinte). Projekt vključuje razvoj frontenda, backenda in integracije z bazo podatkov.
+Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
 ## Trenutne funkcionalnosti (stanje do 3. cikla)
-### Backend (Node.js + Express + MongoDB)
-Implementirane funkcionalnosti:
-- Registracija in prijava uporabnika (JWT avtentikacija)
-- Vračanje uporabniških podatkov (/api/auth/me)
-- Pridobivanje seznama izdelkov
-- Pridobivanje podrobnosti izdelka
-- Pridobivanje kategorij izdelkov
-- Seed podatki za izdelke, kategorije in variante (variant backend še ne vrača)
-- Povezava na MongoDB + osnovna struktura modelov
-
-### Frontend (Angular)
-Implementirane funkcionalnosti:
-#### Uporabniški vmesnik
-- Zaključen osnovni vizualni koncept aplikacije
-- Končan homepage
-- Delitev aplikacije na ključne komponente (komponentna arhitektura)
-
-#### Navigacija in jeziki
-- Globalna izbira jezika + jezikovna menjava v headerju
-- Delujoč routing med stranmi
-
-#### Prikaz izdelkov
-- Prikaz vseh koles
-- Prikaz vseh oblačil
-- Prikaz celotne opreme
-- 3 različna filtriranja opreme
-- Model + Factory pattern za produkt
-- Osnovna struktura strani za kategorije izdelkov
-
-#### Lokacije in kontakt
+### Uporabniki
+- Registracija in prijava uporabnika (JWT)
+- Pridobivanje uporabniških podatkov (profil)
+- Modalna okna za prijavo/registracijo
+- Frontend funkcionalnost za pozabljeno geslo
+### Izdelki in kategorije
+- Prikaz vseh izdelkov (kolesa, oblačila, oprema)
+- Prikaz podrobnosti izdelka
+- Prikaz kategorij izdelkov
+- Trije filtri za opremo
+- Model in factory za produkt
+- Seed podatki za izdelke, kategorije in variante
+(variant backend trenutno še ne vrača)
+#### Navigacija in jezik
+- Routing med stranmi
+- Globalna menjava jezika (i18n)
+#### Informacije in poslovalnice
 - Interaktivni zemljevid poslovalnic
-- Stran "Kontakt" + kontaktni obrazec
-- Vse osnovne kontaktne povezave
+- Kontaktna stran in obrazec
 
-#### Uporabniki
-- Registracija in prijava uporabnika
-- Frontend pop-upi (modal) za prijavo/registracijo
-- Funkcionalnost “pozabljeno geslo” (frontend obrazec)
-- UserService za upravljanje uporabniških podatkov
-- Prikaz profila uporabnika (UI)
-
+## Uporabljene tehnoligije 
+### Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT avtentikacija
+- 
+### Frontend
+- Angular
+- Komponentna arhitektura
+- Services za komunikacijo z API-ji
+- i18n podpora
+- 
 ## Namestitev in zagon
-
 ### Kloniranje repozitorija
 ```bash
 git clone https://github.com/markloborec/Spletna-Trgovina.git
