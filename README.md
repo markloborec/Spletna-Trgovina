@@ -120,30 +120,8 @@ ng serve --open
 - MongoDB (lokalno ali preko Atlas)
 
 ## Testiranje
-
 Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno preverjanje delovanja frontenda.
 Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
-
-## Reševanje težav
-### Pogoste težave
-
-1. **Težave z MongoDB**
-- preveri povezavo v .env
-- preveri, ali teče MongoDB strežnik
-
-2. **Porti 4000 ali 4200 je zaseden**
-   ```bash
-   # Poglejte, kateri procesi uporabljajo porte
-   sudo lsof -i :4000
-   sudo lsof -i :4200
-   ```
-
-3. **Manjkajoče odvisnosti**
-   ```bash
-   # Ponovno namestite odvisnosti
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
 
 ### Razvijalci
 - **Matevž Koren** - Full Stack razvoj
