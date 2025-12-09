@@ -12,7 +12,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Pridobivanje uporabniških podatkov (profil)
 - Modalna okna za prijavo/registracijo
 - Frontend funkcionalnost za pozabljeno geslo
-- 
+  
 ![Bicikl store homepage](./img/Biciklstorehomepage.GIF)
 
 ### Izdelki in kategorije
