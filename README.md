@@ -147,11 +147,9 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 ### Razvijalci
 - **Matevž Koren** - Full Stack razvoj
-- **Mark Loborec** - Dokumentacija
+- **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
 
 
-## Licenca
-Ta projekt je licenciran pod MIT licenco - glej [LICENSE](LICENSE) datoteko za podrobnosti.
 
 
