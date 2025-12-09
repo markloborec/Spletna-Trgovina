@@ -32,13 +32,11 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Node.js + Express
 - MongoDB + Mongoose
 - JWT avtentikacija
-- 
 ### Frontend
 - Angular
 - Komponentna arhitektura
 - Services za komunikacijo z API-ji
 - i18n podpora
-- 
 ## Namestitev in zagon
 ### Kloniranje repozitorija
 ```bash
