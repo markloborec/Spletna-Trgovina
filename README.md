@@ -58,16 +58,13 @@ cd sportna-trgovina
 
 ### 2. Backend
 **Namestitev odvisnosti**
-
 ```bash
 cd backend
 npm install
 ```
 
 **Konfiguracija**
-
 Ustvarite datoteko .env v backend mapi z naslednjo vsebino:
-
 ```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
@@ -76,19 +73,18 @@ NODE_ENV=development
 ```
 
 **Zagon strežnika**
-
 ```bash
 npm run dev
 ```
 
 ### 3. Frontend
-    Namestitev odvisnosti
+    **Namestitev odvisnosti**
 ```bash
 cd frontend
 npm install
 ```
 
-    Konfiguracija
+    **Konfiguracija**
 Uredimo `environment.ts` v `src/environments/`:
 ```typescript
 export const environment = {
@@ -97,10 +93,12 @@ export const environment = {
 };
 ```
 
-    Zagon aplikacije
-Zagon aplikacije
+    **Zagon aplikacije**
+
+```bash
 cd frontend
 ng serve --open
+```
 
 Frontend: http://localhost:4200
 Backend API: http://localhost:4000/api
