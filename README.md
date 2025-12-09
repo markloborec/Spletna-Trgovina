@@ -120,15 +120,11 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
 
-###SLIKE:
+### SLIKE:
+
 ![Kolesa(./img/Kolesa.GIF)
-
-
 ![Kontakt](./img/Kontakt.GIF)
-
 ![Oblačila](./img/Oblačila.GIF)
-
-
 ![Oprema](./img/Oprema.GIF)
 
 
