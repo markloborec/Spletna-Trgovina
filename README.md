@@ -57,23 +57,29 @@ cd sportna-trgovina
 ```
 
 ### 2. Backend
-Namestitev odvisnosti
+**Namestitev odvisnosti**
 
+```bash
 cd backend
 npm install
+```
 
-Konfiguracija
+**Konfiguracija**
 
 Ustvarite datoteko .env v backend mapi z naslednjo vsebino:
 
+```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 PORT=4000
 NODE_ENV=development
+```
 
-Zagon strežnika
+**Zagon strežnika**
 
+```bash
 npm run dev
+```
 
 ### 3. Frontend
     Namestitev odvisnosti
