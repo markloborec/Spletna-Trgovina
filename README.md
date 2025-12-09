@@ -68,7 +68,7 @@ Ustvarimo `.env` datoteko v backend mapi:
 ```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
-PORT=3000
+PORT=4000
 NODE_ENV=development
 ```
 
@@ -92,11 +92,10 @@ export const environment = {
 ```
 
     Zagon aplikacije
+Zagon aplikacije
 cd frontend
 ng serve --open
-```
 
-```
 Frontend: http://localhost:4200
 Backend API: http://localhost:4000/api
 
@@ -121,7 +120,7 @@ Backend API: http://localhost:4000/api
 - MongoDB (lokalno ali preko Atlas)
 
 
-## 🧪 Testiranje
+## Testiranje
 
 Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno preverjanje delovanja frontenda.
 Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
@@ -137,7 +136,7 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 2. **Porti 4000 ali 4200 je zaseden**
    ```bash
    # Poglejte, kateri procesi uporabljajo porte
-   sudo lsof -i :3000
+   sudo lsof -i :4000
    sudo lsof -i :4200
    ```
 
@@ -154,9 +153,8 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Naja Miličič** - Backend razvoj
 
 
-## 📄 Licenca
+## Licenca
 
 Ta projekt je licenciran pod MIT licenco - glej [LICENSE](LICENSE) datoteko za podrobnosti.
 
 
-⭐ Če vam je ta projekt všeč, prosimo dajte zvezdico na GitHubu!
