@@ -64,7 +64,7 @@ npm install
 ```
 
 **Konfiguracija**
-Ustvarite datoteko .env v backend mapi z naslednjo vsebino:
+- Ustvarite datoteko .env v backend mapi z naslednjo vsebino:
 ```env
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
@@ -85,7 +85,7 @@ npm install
 ```
 
    **Konfiguracija**
-Uredimo `environment.ts` v `src/environments/`:
+- Uredimo `environment.ts` v `src/environments/`:
 ```typescript
 export const environment = {
   production: false,
