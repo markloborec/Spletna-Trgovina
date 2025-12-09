@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-
+![Bicikl store homepage](./img/Biciklstorehomepage.GIF)
 Spletna trgovina s kolesarsko opremo, razvita po SCRUM metodi in razdeljena v cikle (sprinte). Projekt vključuje razvoj frontenda, backenda in integracije z bazo podatkov.
 
 ## Trenutne funkcionalnosti (stanje do 3. cikla)
