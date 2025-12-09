@@ -3,7 +3,7 @@
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![Bicikl store homepage](./img/Biciklstorehomepage.GIF)
+
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
 ## Trenutne funkcionalnosti (stanje do 3. cikla)
@@ -12,6 +12,9 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Pridobivanje uporabniških podatkov (profil)
 - Modalna okna za prijavo/registracijo
 - Frontend funkcionalnost za pozabljeno geslo
+- 
+![Bicikl store homepage](./img/Biciklstorehomepage.GIF)
+
 ### Izdelki in kategorije
 - Prikaz vseh izdelkov (kolesa, oblačila, oprema)
 - Prikaz podrobnosti izdelka
