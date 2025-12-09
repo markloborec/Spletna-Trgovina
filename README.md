@@ -50,13 +50,13 @@ Implementirane funkcionalnosti:
 
 ## Namestitev in zagon
 
-### 1. Kloniranje repozitorija
+### Kloniranje repozitorija
 ```bash
 git clone https://github.com/yourusername/sportna-trgovina.git
 cd sportna-trgovina
 ```
 
-### 2. Backend
+### Backend
 **Namestitev odvisnosti**
 ```bash
 cd backend
@@ -77,7 +77,7 @@ NODE_ENV=development
 npm run dev
 ```
 
-### 3. Frontend
+### Frontend
    **Namestitev odvisnosti**
 ```bash
 cd frontend
@@ -89,12 +89,11 @@ npm install
 ```typescript
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api'
+  apiUrl: 'http://localhost:4200/api'
 };
 ```
 
    **Zagon aplikacije**
-
 ```bash
 cd frontend
 ng serve --open
