@@ -23,6 +23,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Model in factory za produkt
 - Seed podatki za izdelke, kategorije in variante
 (variant backend trenutno še ne vrača)
+
 ### Navigacija in jezik
 - Routing med stranmi
 - Globalna menjava jezika (i18n)
@@ -118,6 +119,17 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Matevž Koren** - Full Stack razvoj
 - **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
+
+###SLIKE:
+![Kolesa(./img/Kolesa.GIF)
+
+
+![Kontakt](./img/Kontakt.GIF)
+
+![Oblačila](./img/Oblačila.GIF)
+
+
+![Oprema](./img/Oprema.GIF)
 
 
 
