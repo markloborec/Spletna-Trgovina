@@ -20,10 +20,10 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Model in factory za produkt
 - Seed podatki za izdelke, kategorije in variante
 (variant backend trenutno še ne vrača)
-#### Navigacija in jezik
+### Navigacija in jezik
 - Routing med stranmi
 - Globalna menjava jezika (i18n)
-#### Informacije in poslovalnice
+### Informacije in poslovalnice
 - Interaktivni zemljevid poslovalnic
 - Kontaktna stran in obrazec
 
