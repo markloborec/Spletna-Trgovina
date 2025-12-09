@@ -78,13 +78,13 @@ npm run dev
 ```
 
 ### 3. Frontend
-    **Namestitev odvisnosti**
+   **Namestitev odvisnosti**
 ```bash
 cd frontend
 npm install
 ```
 
-    **Konfiguracija**
+   **Konfiguracija**
 Uredimo `environment.ts` v `src/environments/`:
 ```typescript
 export const environment = {
@@ -93,24 +93,22 @@ export const environment = {
 };
 ```
 
-    **Zagon aplikacije**
+   **Zagon aplikacije**
 
 ```bash
 cd frontend
 ng serve --open
 ```
 
-Frontend: http://localhost:4200
-Backend API: http://localhost:4000/api
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:4000/api
 
 ## Arhitektura sistema
-
 ### Frontend 
 - Angular aplikacija s komponentnim pristopom
 - Podpora za i18n
 - Services za komunikacijo z API-ji
 - Modeli in tovarniški vzorci za podatkovne objekte
-
 ### Backend 
 - Express API v Node.js
 - JWT avtentikacija
@@ -119,10 +117,8 @@ Backend API: http://localhost:4000/api
 2. Products
 3. Categories
 4. ProductVariants
-   
 ### Baza podatkov
 - MongoDB (lokalno ali preko Atlas)
-
 
 ## Testiranje
 
@@ -130,7 +126,6 @@ Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno 
 Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 ## Reševanje težav
-
 ### Pogoste težave
 
 1. **Težave z MongoDB**
@@ -158,7 +153,6 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 
 ## Licenca
-
 Ta projekt je licenciran pod MIT licenco - glej [LICENSE](LICENSE) datoteko za podrobnosti.
 
 
