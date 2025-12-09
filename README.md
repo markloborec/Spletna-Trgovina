@@ -122,7 +122,7 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 ### SLIKE:
 
-![Kolesa(./img/Kolesa.GIF)
+![Kolesa](./img/Kolesa.GIF)
 ![Kontakt](./img/Kontakt.GIF)
 ![Oblačila](./img/Oblačila.GIF)
 ![Oprema](./img/Oprema.GIF)
