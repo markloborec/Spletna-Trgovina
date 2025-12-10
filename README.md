@@ -35,7 +35,6 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 ### Backend
 - Node.js + Express
 - MongoDB + Mongoose
-- JWT avtentikacija
 ### Frontend
 - Angular
 - Komponentna arhitektura
