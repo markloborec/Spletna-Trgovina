@@ -1,4 +1,4 @@
-# Športna Trgovina s kolearsko opremo Bicklstore
+# Športna Trgovina s kolesarsko opremo Bicklstore
 
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
