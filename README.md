@@ -26,7 +26,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 
 ### Navigacija in jezik
 - Routing med stranmi
-- Globalna menjava jezika (i18n)
+- Globalna menjava jezika 
 ### Informacije in poslovalnice
 - Interaktivni zemljevid poslovalnic
 - Kontaktna stran in obrazec
