@@ -122,11 +122,14 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 ### SLIKE:
 
+
 ![Kolesa](./img/Kolesa.GIF)
+Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa.
 ![Kontakt](./img/Kontakt.GIF)
+Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore.
 ![Oblačila](./img/Oblačila.GIF)
+Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup.
 ![Oprema](./img/Oprema.GIF)
-
-
+Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca.
 
 
