@@ -72,7 +72,7 @@ npm run dev
 ### Frontend
    **Namestitev odvisnosti**
 ```bash
-cd frontend
+cd sports-store
 npm install
 ```
 
@@ -87,7 +87,7 @@ export const environment = {
 
    **Zagon aplikacije**
 ```bash
-cd frontend
+cd sports-store
 ng serve --open
 ```
 
@@ -97,7 +97,7 @@ ng serve --open
 ## Arhitektura sistema
 ### Frontend 
 - Angular aplikacija s komponentnim pristopom
-- Podpora za i18n
+- Integriran Google Translate Website Widget
 - Services za komunikacijo z API-ji
 - Modeli in tovarniški vzorci za podatkovne objekte
 ### Backend 
