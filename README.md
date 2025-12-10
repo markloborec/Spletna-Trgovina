@@ -40,7 +40,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Angular
 - Komponentna arhitektura
 - Services za komunikacijo z API-ji
-- i18n podpora
+- Integriran Google Translate Website Widget
 ## Namestitev in zagon
 ### Kloniranje repozitorija
 ```bash
