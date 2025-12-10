@@ -31,7 +31,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Interaktivni zemljevid poslovalnic
 - Kontaktna stran in obrazec
 
-## Uporabljene tehnoligije 
+## Uporabljene tehnologije 
 ### Backend
 - Node.js + Express
 - MongoDB + Mongoose
