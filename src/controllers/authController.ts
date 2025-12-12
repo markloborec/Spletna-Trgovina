@@ -8,7 +8,15 @@ const SALT_ROUNDS = 10;
 
 export async function register(req: Request, res: Response) {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      deliveryAddress,
+      phone,
+      password,
+      // confirmPassword ignoriramo (FE-only)
+    } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({ error: "REGISTER_MISSING_FIELDS" });
@@ -22,28 +30,32 @@ export async function register(req: Request, res: Response) {
     const password_hash = await bcrypt.hash(password, SALT_ROUNDS);
 
     const user = await User.create({
-      first_name: firstName,
-      last_name: lastName,
+      firstName: firstName ?? "",
+      lastName: lastName ?? "",
       email: email.toLowerCase(),
+      deliveryAddress: deliveryAddress ?? "",
+      phone: phone ?? "",
       password_hash,
-      is_admin: false
+      is_admin: false,
     });
 
     const token = signToken({
       userId: user._id.toString(),
       email: user.email,
-      is_admin: user.is_admin
+      is_admin: user.is_admin,
     });
 
     return res.status(201).json({
       token,
       user: {
         id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
-        is_admin: user.is_admin
-      }
+        deliveryAddress: user.deliveryAddress,
+        phone: user.phone,
+        is_admin: user.is_admin,
+      },
     });
   } catch (err) {
     console.error("Register error:", err);
@@ -72,18 +84,20 @@ export async function login(req: Request, res: Response) {
     const token = signToken({
       userId: user._id.toString(),
       email: user.email,
-      is_admin: user.is_admin
+      is_admin: user.is_admin,
     });
 
     return res.json({
       token,
       user: {
         id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
-        is_admin: user.is_admin
-      }
+        deliveryAddress: user.deliveryAddress,
+        phone: user.phone,
+        is_admin: user.is_admin,
+      },
     });
   } catch (err) {
     console.error("Login error:", err);
@@ -104,10 +118,12 @@ export async function getMe(req: AuthRequest, res: Response) {
 
     return res.json({
       id: user._id,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
-      is_admin: user.is_admin
+      deliveryAddress: user.deliveryAddress,
+      phone: user.phone,
+      is_admin: user.is_admin,
     });
   } catch (err) {
     console.error("GetMe error:", err);
