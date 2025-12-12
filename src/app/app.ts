@@ -7,11 +7,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { Registration } from "./dialogs/registration/registration";
 import { Login } from "./dialogs/login/login";
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, Header, Homepage, Footer, FontAwesomeModule, Registration, Login,],
+  imports: [RouterOutlet, CommonModule, Header, Footer, FontAwesomeModule, Registration, Login,],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -19,6 +20,11 @@ export class App {
   protected readonly title = 'sports-store';
   showRegistration = false;
   showLogin = false;
+
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+  }
 
   onRegisterClick() {
     this.showRegistration = true;

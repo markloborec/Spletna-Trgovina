@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe, } from '@angular/common';
 import { Equipment } from '../models/product';
 import { FormsModule } from '@angular/forms';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-equipments',
@@ -10,6 +11,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './equipments.scss',
 })
 export class Equipments {
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.productService.getAll().subscribe({
+      next: (items) => console.log('BACKEND PRODUCTS:', items),
+      error: (err) => console.error('PRODUCTS ERROR:', err),
+    });
+  }
+
   equipments: Equipment[] = [
     {
       id: 'helmet-1',

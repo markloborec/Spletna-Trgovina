@@ -27,7 +27,7 @@ export class Registration {
   isSubmitting = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   onSubmit(form?: NgForm) {
     this.errorMessage = '';
@@ -52,20 +52,22 @@ export class Registration {
 
     this.isSubmitting = true;
 
+    // confirmPassword je samo FE validacija
     const payload: RegisterRequest = { ...this.formData };
     delete payload.confirmPassword;
 
     this.authService.register(payload).subscribe({
-      next: () => {
+      next: (user) => {
         this.isSubmitting = false;
-        // uspešna registracija – zapri dialog
+        console.log('REGISTER OK (saved):', user);
         this.close.emit();
       },
       error: (err) => {
         console.error(err);
         this.isSubmitting = false;
-        this.errorMessage =
-          err?.error?.message || 'Pri registraciji je prišlo do napake.';
+
+        const code = err?.error?.error;
+        this.errorMessage = code || 'Pri registraciji je prišlo do napake.';
       },
     });
   }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,10 @@ export class Login {
     password: ''
   };
 
-  isSubmitting = false;
+   isSubmitting = false;
   errorMessage = '';
+
+  constructor(private authService: AuthService) {}
 
   onSubmit() {
     this.errorMessage = '';
@@ -30,20 +33,26 @@ export class Login {
 
     this.isSubmitting = true;
 
-    // tukaj pride klic na API / auth service
-    setTimeout(() => {
-      this.isSubmitting = false;
-      // Za demo
-      this.close.emit();
-    }, 800);
+    this.authService.login(this.formData).subscribe({
+      next: (res) => {
+        this.isSubmitting = false;
+        console.log('LOGIN OK:', res);
+        this.close.emit();
+      },
+      error: (err) => {
+        console.error(err);
+        this.isSubmitting = false;
+        const code = err?.error?.error;
+        this.errorMessage = code || 'Prijava ni uspela.';
+      },
+    });
   }
 
   onCancel() {
     this.close.emit();
   }
+
   onForgotPassword() {
-    // TODO: tukaj kasneje odpreš modal / preusmeriš na "reset password" stran
     console.log('Pozabljeno geslo kliknjeno');
-    // ali: alert('Funkcionalnost za ponastavitev gesla še ni implementirana.');
   }
 }

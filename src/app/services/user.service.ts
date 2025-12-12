@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, map } from 'rxjs';
 import { RegisterRequest, UserProfile } from '../models/user';
+import { API_BASE_URL } from './api.config';
 
 export interface LoginRequest {
   email: string;
@@ -15,83 +16,98 @@ export interface LoginResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  private readonly apiUrl = '/api/users';    // kasneje uporabiš pravi URL
+  private readonly authUrl = `${API_BASE_URL}/auth`;
+  private readonly TOKEN_KEY = 'auth_token';
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Registracija novega uporabnika.
-   */
-  register(data: RegisterRequest): Observable<UserProfile> {
-    // return this.http.post<UserProfile>(`${this.apiUrl}/register`, data);
-    return of({ ...data }); // placeholder
+  private storeToken(token: string) {
+    localStorage.setItem(this.TOKEN_KEY, token);
   }
 
-  /**
-   * Prijava uporabnika.
-   */
-  login(credentials: LoginRequest): Observable<LoginResponse> {
-    // return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials);
-    return of({
-      token: 'fake_token',
-      user: {
-        id: 'TEMP-ID',
-        firstName: 'John',
-        lastName: 'Doe',
-        email: credentials.email,
-        phone: '',
-        deliveryAddress: ''
-      }
-    });
+  getToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  /**
-   * Odjava
-   */
   logout(): void {
-    // npr. this.http.post(`${this.apiUrl}/logout`, {})
-    // ali front-end clear
-    localStorage.removeItem('token');
+    localStorage.removeItem(this.TOKEN_KEY);
   }
 
-  /**
-   * Pridobi podatke trenutnega uporabnika.
-   */
+  private authHeaders(): HttpHeaders {
+    const token = this.getToken();
+    return token
+      ? new HttpHeaders({ Authorization: `Bearer ${token}` })
+      : new HttpHeaders();
+  }
+
+  private mapUser(u: any): UserProfile {
+    return {
+      id: u.id?.toString(),
+      firstName: u.firstName ?? '',
+      lastName: u.lastName ?? '',
+      email: u.email ?? '',
+      deliveryAddress: u.deliveryAddress ?? '',
+      phone: u.phone ?? '',
+    };
+  }
+
+  register(data: RegisterRequest): Observable<UserProfile> {
+    const payload = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      deliveryAddress: data.deliveryAddress,
+      phone: data.phone,
+      password: data.password,
+    };
+
+    return this.http
+      .post<{ token: string; user: any }>(`${this.authUrl}/register`, payload)
+      .pipe(
+        map((res) => {
+          this.storeToken(res.token);
+          return this.mapUser(res.user);
+        })
+      );
+  }
+
+  login(credentials: LoginRequest): Observable<LoginResponse> {
+    return this.http
+      .post<{ token: string; user: any }>(`${this.authUrl}/login`, credentials)
+      .pipe(
+        map((res) => {
+          this.storeToken(res.token);
+          return {
+            token: res.token,
+            user: this.mapUser(res.user),
+          };
+        })
+      );
+  }
+
   getProfile(): Observable<UserProfile> {
-    // return this.http.get<UserProfile>(`${this.apiUrl}/profile`);
-    return of({
-      id: 'TEMP-ID',
-      firstName: 'Demo',
-      lastName: 'User',
-      email: 'demo@example.com',
-      deliveryAddress: '',
-      phone: ''
-    });
+    return this.http
+      .get<any>(`${this.authUrl}/me`, { headers: this.authHeaders() })
+      .pipe(map((u) => this.mapUser(u)));
   }
 
   /**
-   * Posodobi podatke profila.
+   * Update profila
+   * Backend še nima endpointa → placeholder (kasneje zamenjaš s PUT /users/me)
    */
   updateProfile(changes: Partial<UserProfile>): Observable<UserProfile> {
-    // return this.http.put<UserProfile>(`${this.apiUrl}/profile`, changes);
-    return of({
-      id: 'TEMP-ID',
-      firstName: changes.firstName ?? 'Demo',
-      lastName: changes.lastName ?? 'User',
-      email: changes.email ?? 'demo@example.com',
-      deliveryAddress: changes.deliveryAddress ?? '',
-      phone: changes.phone ?? ''
-    });
+    return this.getProfile().pipe(
+      map((current) => ({
+        ...current,
+        ...changes,
+      }))
+    );
   }
 
-  /**
-   * Izbriše uporabnika.
-   */
   deleteAccount(): Observable<void> {
-    // return this.http.delete<void>(`${this.apiUrl}/profile`);
     return of(void 0);
   }
 }

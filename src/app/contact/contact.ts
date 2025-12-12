@@ -10,6 +10,7 @@ import { StoreInfo } from './store-info/store-info';
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
+
 export class Contact implements AfterViewInit {
 
   private map!: L.Map;

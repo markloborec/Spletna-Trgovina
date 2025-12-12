@@ -3,7 +3,6 @@ export interface UserProfile {
 
     firstName: string;
     lastName: string;
-
     email: string;
 
     deliveryAddress: string;
