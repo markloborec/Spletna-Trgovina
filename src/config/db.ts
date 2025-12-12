@@ -11,7 +11,7 @@ if (!mongoUri) {
 
 export async function connectDB() {
   try {
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(mongoUri as string);
     console.log("MongoDB connected");
   } catch (error) {
     console.error("MongoDB connection error:", error);
