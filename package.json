@@ -4,11 +4,12 @@
   "main": "dist/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "seed": "ts-node-dev --transpile-only src/seed.ts"
-  },
+  "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "seed": "ts-node-dev --transpile-only src/seed.ts",
+  "migrate:users": "ts-node-dev --transpile-only src/migrations/migrateUsersSnakeToCamel.ts"
+},
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

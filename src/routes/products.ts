@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { getProductById, getProducts } from "../controllers/productsController";
+import {
+  getProductById,
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "../controllers/productsController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -9,5 +16,13 @@ router.get("/", getProducts);
 // en produkt po ID
 router.get("/:id", getProductById);
 
-export default router;
+// ustvarjanje produkta (admin)
+router.post("/", authMiddleware, createProduct);
 
+// posodobitev produkta (admin)
+router.put("/:id", authMiddleware, updateProduct);
+
+// brisanje produkta (admin)
+router.delete("/:id", authMiddleware, deleteProduct);
+
+export default router;

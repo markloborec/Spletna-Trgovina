@@ -13,6 +13,6 @@ export const getCategories = async (_req: Request, res: Response) => {
     );
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ errorCode: "CATEGORY_LIST_ERROR" });
+    return res.status(500).json({ error: "CATEGORY_LIST_ERROR" });
   }
 };
