@@ -118,7 +118,10 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Matevž Koren** - Full Stack razvoj
 - **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
-
+### Kontakt in informacije:
+- **Discord**
+- **E-mail**: bickilstore@gmail.com
+- **Telefonska številka**: 041 223 531
 ### SLIKE:
 
 
