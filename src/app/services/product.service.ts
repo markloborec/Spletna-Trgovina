@@ -28,7 +28,8 @@ export class ProductService {
       name: p.name,
       price: p.price,
       imageUrl: p.image_url || '',
-      description: p.short_description ?? '',
+      shortDescription: p.short_description ?? '',
+      longDescription: p.long_description ?? '',
       // začasno: backend ne pošilja tipa → damo vse v equipment
       type: 'equipment',
       isAvailable: p.inStock ?? true,

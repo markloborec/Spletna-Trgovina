@@ -21,7 +21,7 @@ export class Equipments {
   }
 
   equipments: Equipment[] = [
-    {
+    /*{
       id: 'helmet-1',
       name: 'MTB Vetra Flow čelada',
       price: 69.99,
@@ -63,7 +63,7 @@ export class Equipments {
       material: 'BPA Free Plastic',
       brand: 'CycleGear',
       officialProductSite: 'https://www.11-11.si',
-    },
+    },*/
   ];
   filter = {
     brand: '',

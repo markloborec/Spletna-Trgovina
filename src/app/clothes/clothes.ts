@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './clothes.scss',
 })
 export class Clothes {
-  clothes: Clothing[] = [
+  clothes: Clothing[] = [/*
     {
       id: 'shirt-1',
       name: 'MTB Trail Air Jersey',
@@ -54,7 +54,7 @@ export class Clothes {
       material: 'Membrana',
       color: 'Modra',
       officialProductSite: 'https://www.11-11.si/',
-    },
+    },*/
   ];
 
   filter = {
