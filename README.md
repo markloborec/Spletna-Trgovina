@@ -122,11 +122,17 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Discord**
 - **E-mail**: bickilstore@gmail.com
 - **Telefonska številka**: 041 223 531
-### SLIKE:
+### UVOD ZA UPORABNIKA S SLIKAMI:
 
 
 ![Kolesa](./img/Kolesa.GIF)
 **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa.
+Filtri:
+- **Velikost obročev**: Omogoča filitrianje po velikosti obroča kolesa. Izbira velikosti obroča je odvisna od velikosti posamenzika in hkrati zaradi udobja v vožnji (Absorbiranje vibracij med vožnjo, oprijem gume...)
+- **Okvir**: Omogoča filitrianje po velikosti okviraj kolesa. To je pomembna zaradi velikosti uporabnika, saj je lahko večji okvir bolj udoben/primeren za kupca večje velikosti.
+- **Min. Prestav**: Omogoča filitirnaje po številu prestav. Uporabnik lahko tako najde primerno kolo glede na želje razmerja prestav.
+- **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva kolesa na lokacijah BicklStore.
+- **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
 
 ![Kontakt](./img/Kontakt.GIF)
 **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore.
