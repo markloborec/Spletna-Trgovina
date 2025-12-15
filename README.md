@@ -159,5 +159,9 @@ Filtri:
 
 ![Registracija](./img/Registracija.GIF)
 
+**REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno.
+
 
 ![Prijava](./img/Prijava.GIF)
+
+**PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo".
