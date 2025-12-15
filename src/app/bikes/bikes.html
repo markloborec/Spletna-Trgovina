@@ -99,9 +99,11 @@
                     <div class="bike-price">
                         {{ bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }} </div>
                     <div class="actions">
-                        <button class="add-to-cart" [disabled]="!bike.isAvailable">
+                        <button class="add-to-cart" type="button" [disabled]="!bike.isAvailable"
+                            (click)="addToCart(bike)">
                             {{ bike.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
+
 
                         <a *ngIf="bike.officialProductSite" class="official-link" [href]="bike.officialProductSite"
                             target="_blank" rel="noopener noreferrer">

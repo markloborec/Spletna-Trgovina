@@ -1,19 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Bicycle } from '../models/product';
+import { Bicycle, Equipment } from '../models/product';
+import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 type BackendProduct = {
   id: string;
-  type: 'cycles' | 'equipment' | 'clothing';
   name: string;
   price: number;
-  brand?: string;
-  image_url?: string;
-  short_description?: string;
-  long_description?: string;
-  inStock?: boolean;
+  imageUrl?: string;
+  shortDescription?: string;
+  longDescription?: string;
+  isAvailable?: boolean;
+  officialProductSite?: string;
 };
 
 @Component({
@@ -23,124 +23,8 @@ type BackendProduct = {
   templateUrl: './bikes.html',
   styleUrls: ['./bikes.scss'],
 })
-
 export class Bikes {
-  /*bicycles: Bicycle[] = [
-    {
-      id: 'bike-1',
-      name: 'Trailblazer 500',
-      price: 1299.99,
-      imageUrl: 'assets/images/bike-mtb-1.svg',
-      description: 'Vzmeteno gorsko kolo za rekreativno in trail vožnjo.',
-      type: 'cycles',
-      isAvailable: true,
-      warrantyMonths: 24,
-      wheelSize: 29,
-      frameMaterial: 'Aluminij',
-      gearCount: 12,
-      officialProductSite: 'https://www.decathlon.si/7447-gorska-kolesa',
-    },
-    {
-      id: 'bike-2',
-      name: 'City Rider Pro',
-      price: 899,
-      imageUrl: 'assets/images/bike-city-1.svg',
-      description:
-        'Udobno mestno kolo za vsakodnevno vožnjo v službo ali po opravkih.',
-      type: 'cycles',
-      isAvailable: true,
-      warrantyMonths: 24,
-      wheelSize: 28,
-      frameMaterial: 'Jeklo',
-      gearCount: 7,
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-    {
-      id: 'bike-3',
-      name: 'Speedster Aero',
-      price: 2199,
-      imageUrl: 'assets/images/bike-road-1.svg',
-      description: 'Lahko cestno kolo za daljše ture in treninge.',
-      type: 'cycles',
-      isAvailable: false,
-      warrantyMonths: 36,
-      wheelSize: 28,
-      frameMaterial: 'Carbon',
-      gearCount: 22,
-      officialProductSite: 'https://www.11-11.si/en/categories/cycling/bikes',
-    },
-  ];*/
-
-  private readonly http = inject(HttpClient);
+  constructor(private productService: ProductService, private cart: CartService) { }
 
   bicycles: Bicycle[] = [];
 
@@ -151,29 +35,21 @@ export class Bikes {
     minGears: '' as '' | number,
   };
 
-  // SORT
   sortBy: 'name' | 'price' | 'wheelSize' | 'gearCount' = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   ngOnInit() {
-    this.http
-      .get<{ items: BackendProduct[] }>('/api/products?type=cycles&pageSize=100')
-      .subscribe({
-        next: (res) => {
-          this.bicycles = (res.items ?? []).map((p) => this.mapBackendToBicycle(p));
-        },
-        error: (err) => {
-          console.error('Failed loading bicycles', err);
-          this.bicycles = [];
-        },
-      });
+    this.productService.getBicycles(100).subscribe({
+      next: (items) => {
+        this.bicycles = (items ?? []).map((p: any) => this.mapBackendToBicycle(p as BackendProduct));
+      },
+      error: (err) => {
+        console.error('Failed loading bicycles', err);
+        this.bicycles = [];
+      },
+    });
   }
 
-  /**
-   * Backend ti trenutno NE daje wheelSize/frameMaterial/gearCount,
-   * zato naredimo "placeholder" vrednosti, da UI dela.
-   * Kasneje, ko boš imel te atribute v bazi, to mapiranje odstraniš.
-   */
   private mapBackendToBicycle(p: BackendProduct): Bicycle {
     const derived = this.deriveBikeSpecs(p);
 
@@ -181,15 +57,13 @@ export class Bikes {
       id: p.id,
       name: p.name,
       price: p.price,
-      imageUrl: p.image_url || '',
-      shortDescription: p.short_description || '',
-      longDescription: p.long_description || '',
+      imageUrl: p.imageUrl ?? '',
+      shortDescription: p.shortDescription ?? '',
+      longDescription: p.longDescription ?? '',
       type: 'cycles',
-      isAvailable: p.inStock ?? true,
+      isAvailable: p.isAvailable ?? true,
       warrantyMonths: 24,
-      officialProductSite: p.brand
-        ? `https://www.google.com/search?q=${encodeURIComponent(`${p.brand} ${p.name}`)}`
-        : undefined,
+      officialProductSite: p.officialProductSite,
 
       wheelSize: derived.wheelSize,
       frameMaterial: derived.frameMaterial,
@@ -197,15 +71,14 @@ export class Bikes {
     };
   }
 
-  /**
-   * Prosto pravilo, da dobiš realistične številke v UI, brez sprememb backenda.
-   * (če nočeš tega, lahko nastaviš npr. 28 / "Aluminij" / 11 za vse)
-   */
-  private deriveBikeSpecs(p: BackendProduct): { wheelSize: 26 | 27.5 | 28 | 29; frameMaterial: string; gearCount: number } {
+  private deriveBikeSpecs(p: BackendProduct): {
+    wheelSize: 26 | 27.5 | 28 | 29;
+    frameMaterial: string;
+    gearCount: number;
+  } {
     const name = (p.name || '').toLowerCase();
     const price = Number(p.price || 0);
 
-    // road bike
     if (name.includes('tarmac') || name.includes('roubaix') || name.includes('cest')) {
       return {
         wheelSize: 28,
@@ -214,7 +87,6 @@ export class Bikes {
       };
     }
 
-    // mtb
     if (name.includes('marlin') || name.includes('mtb') || name.includes('gors')) {
       return {
         wheelSize: 29,
@@ -223,7 +95,6 @@ export class Bikes {
       };
     }
 
-    // fallback
     return {
       wheelSize: 28,
       frameMaterial: 'Aluminij',
@@ -261,15 +132,12 @@ export class Bikes {
       const valB = b[this.sortBy];
 
       if (typeof valA === 'string' && typeof valB === 'string') {
-        return this.sortDirection === 'asc'
-          ? valA.localeCompare(valB)
-          : valB.localeCompare(valA);
+        return this.sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
       }
 
-      const numA = valA as number;
-      const numB = valB as number;
-
-      return this.sortDirection === 'asc' ? numA - numB : numB - numA;
+      return this.sortDirection === 'asc'
+        ? (valA as number) - (valB as number)
+        : (valB as number) - (valA as number);
     });
 
     return result;
@@ -279,5 +147,10 @@ export class Bikes {
 
   onImageError(bike: Bicycle) {
     bike.imageUrl = '';
+  }
+
+  addToCart(bike: Bicycle) {
+    if (!bike.isAvailable) return;
+    this.cart.add(bike, 1);
   }
 }

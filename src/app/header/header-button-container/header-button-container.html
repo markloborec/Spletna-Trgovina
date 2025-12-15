@@ -1,38 +1,59 @@
 <div class="header-button-container">
+	<!-- ACCOUNT ICON -->
 	<span (click)="OpenUser()" class="icon account" tabindex="0" aria-label="Account">
 		<fa-icon [icon]="faUser"></fa-icon>
 	</span>
 
+	<!-- CART ICON (single) -->
 	<span (click)="OpenCard()" class="icon cart" tabindex="0" aria-label="Shopping Cart">
 		<fa-icon [icon]="faShoppingCart"></fa-icon>
+		<span class="cart-badge" *ngIf="cart.totalItems > 0">{{ cart.totalItems }}</span>
 	</span>
 
 	<!-- USER DROPDOWN -->
 	<div class="dropdown user-dropdown" *ngIf="isUserMenuOpen">
 		<ng-container *ngIf="!isLoggedIn; else loggedInMenu">
-			<button (click)="openRegistration()">Ustvari račun</button>
-			<button (click)="openLogin()">Vpiši se</button>
+			<button type="button" (click)="openRegistration()">Ustvari račun</button>
+			<button type="button" (click)="openLogin()">Vpiši se</button>
 		</ng-container>
 
 		<ng-template #loggedInMenu>
-			<button (click)="routeToUserProfile()">Moj profil</button>
-			<button>Pretekla naročila</button>
+			<button type="button" (click)="routeToUserProfile()">Moj profil</button>
+			<button type="button">Pretekla naročila</button>
 		</ng-template>
 	</div>
 
 	<!-- CART DROPDOWN -->
 	<div class="dropdown cart-dropdown" *ngIf="isCartMenuOpen">
 		<p class="cart-title">Košarica</p>
-		<div class="cart-empty">Košarica je prazna</div>
+
+		<div class="cart-empty" *ngIf="cart.items.length === 0">
+			Košarica je prazna
+		</div>
+
+		<div class="cart-items" *ngIf="cart.items.length > 0">
+			<div class="cart-row" *ngFor="let it of cart.items; let i = index">
+				<div class="cart-name">{{ i + 1 }}. {{ it.product.name }}</div>
+				<div class="cart-qty">x{{ it.qty }}</div>
+			</div>
+
+			<div class="cart-total">
+				Skupaj: {{ cart.totalPrice | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
+			</div>
+
+			<button class="cart-open" type="button" (click)="goToCart()">
+				Odpri košarico
+			</button>
+		</div>
 	</div>
 
-	<button class="lang-switch notranslate" (click)="toggleLanguage()">
+	<!-- LANGUAGE SWITCH -->
+	<button class="lang-switch notranslate" type="button" (click)="toggleLanguage()">
 		<img class="flag-img" [src]="currentLang === 'sl'
-      ? '/flag-for-flag-slovenia.svg'
-      : '/flag-for-flag-united-kingdom.svg'" [alt]="currentLang === 'sl' ? 'SLO' : 'ENG'" />
+        ? '/flag-for-flag-slovenia.svg'
+        : '/flag-for-flag-united-kingdom.svg'" [alt]="currentLang === 'sl' ? 'SLO' : 'ENG'" />
 		<span class="lang-code notranslate">
 			{{ currentLang.toUpperCase() }}
 		</span>
 	</button>
-
 </div>

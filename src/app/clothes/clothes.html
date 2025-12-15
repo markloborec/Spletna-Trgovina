@@ -117,11 +117,13 @@
                     </div>
 
                     <div class="actions">
-                        <button class="add-to-cart" [disabled]="!item.isAvailable">
+                        <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
+                            (click)="addToCart(item)">
                             {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
 
-                        <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite" target="_blank" rel="noopener noreferrer">
+                        <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
+                            target="_blank" rel="noopener noreferrer">
                             Uradna stran
                         </a>
                     </div>

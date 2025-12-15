@@ -1,0 +1,27 @@
+<div class="cart-page">
+    <h1>Košarica</h1>
+
+    <div class="empty" *ngIf="cart.items.length === 0">
+        Košarica je prazna.
+    </div>
+
+    <div class="cart-list" *ngIf="cart.items.length > 0">
+        <div class="row" *ngFor="let it of cart.items">
+            <div class="name">{{ it.product.name }}</div>
+
+            <input class="qty" type="number" min="1" [value]="it.qty"
+                (change)="setQty(it.product.id, $any($event.target).value)" />
+
+            <div class="price">{{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+            <div class="subtotal">{{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+
+            <button class="remove" type="button" (click)="remove(it.product.id)">✕</button>
+        </div>
+
+        <div class="summary">
+            <div><strong>Izdelki:</strong> {{ cart.totalItems }}</div>
+            <div><strong>Skupaj:</strong> {{ cart.totalPrice | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+            <button class="clear" type="button" (click)="clear()">Izprazni košarico</button>
+        </div>
+    </div>
+</div>

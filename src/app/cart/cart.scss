@@ -1,0 +1,167 @@
+.cart-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 28px 16px;
+
+    h1 {
+        margin: 0 0 16px;
+        font-size: 28px;
+        letter-spacing: -0.02em;
+    }
+}
+
+.empty {
+    padding: 18px 16px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.cart-list {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 90px 120px 140px 44px;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.02);
+    }
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+}
+
+.name {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.price,
+.subtotal {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.subtotal {
+    font-weight: 700;
+}
+
+.qty {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+    outline: none;
+    font-variant-numeric: tabular-nums;
+
+    &:focus {
+        border-color: rgba(0, 0, 0, 0.35);
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
+    }
+}
+
+.remove {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+.summary {
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.015);
+
+    strong {
+        font-weight: 800;
+    }
+}
+
+.clear {
+    border: none;
+    padding: 10px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+
+    &:active {
+        transform: translateY(1px);
+    }
+}
+
+/* Responsive: na ozkih ekranih preuredimo vrstico */
+@media (max-width: 720px) {
+    .row {
+        grid-template-columns: 1fr 90px 44px;
+        grid-template-areas:
+            "name name remove"
+            "qty  price remove"
+            "qty  subtotal remove";
+        gap: 10px;
+    }
+
+    .name {
+        grid-area: name;
+    }
+
+    .qty {
+        grid-area: qty;
+    }
+
+    .price {
+        grid-area: price;
+        text-align: right;
+    }
+
+    .subtotal {
+        grid-area: subtotal;
+        text-align: right;
+    }
+
+    .remove {
+        grid-area: remove;
+        justify-self: end;
+    }
+
+    .summary {
+        flex-direction: column;
+        align-items: stretch;
+
+        .clear {
+            width: 100%;
+        }
+    }
+}

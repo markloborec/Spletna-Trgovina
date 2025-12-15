@@ -2,6 +2,7 @@
     <div class="equipment-header">
         <h1>Oprema</h1>
     </div>
+
     <div class="equipment-filters">
         <div class="filter-group">
             <label>Brand</label>
@@ -44,14 +45,15 @@
 
         <div class="filter-group filter-group-button">
             <label>&nbsp;</label>
-            <button class="sort-dir" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+            <button class="sort-dir" type="button" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
                 {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
             </button>
         </div>
     </div>
 
     <div class="equipment-grid">
-        <div class="equipment-card" *ngFor="let item of filteredAndSortedEquipments">
+        <div class="equipment-card" *ngFor="let item of filteredAndSortedEquipments; trackBy: trackByEquipmentId">
+
             <div class="equipment-image-wrapper">
                 <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="equipment-image" [alt]="item.name"
                     loading="lazy" (error)="onImageError(item)" />
@@ -65,18 +67,14 @@
             </div>
 
             <div class="equipment-info">
-
                 <div class="equipment-name">{{ item.name }}</div>
 
-                <div class="equipment-description">{{ item.shortDescription }}</div>
+                <div class="equipment-description">
+                    {{ item.shortDescription || item.longDescription || '—' }}
+                </div>
 
                 <div class="equipment-specs">
-                    <div class="spec">
-                        <span class="label">Združljivost</span>
-                        <span class="value">{{ item.compatibility.join(', ') }}</span>
-                    </div>
-
-                    <div class="spec" *ngIf="item.weight">
+                    <div class="spec" *ngIf="item.weight !== undefined && item.weight !== null">
                         <span class="label">Teža</span>
                         <span class="value">{{ item.weight }} g</span>
                     </div>
@@ -103,7 +101,8 @@
                     </div>
 
                     <div class="actions">
-                        <button class="add-to-cart" [disabled]="!item.isAvailable">
+                        <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
+                            (click)="addToCart(item)">
                             {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
 
@@ -113,8 +112,8 @@
                         </a>
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </div>

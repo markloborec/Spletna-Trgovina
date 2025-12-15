@@ -5,6 +5,7 @@ import { Bikes } from './bikes/bikes';
 import { Clothes } from './clothes/clothes';
 import { Equipments } from './equipments/equipments';
 import { Contact } from './contact/contact';
+import { Cart } from './cart/cart';
 
 export const routes: Routes = [
     { path: '', component: Homepage },
@@ -12,5 +13,6 @@ export const routes: Routes = [
     { path: 'bikes', component: Bikes },
     { path: 'equipment', component: Equipments },
     { path: 'clothes', component: Clothes},
-    { path: 'contact', component: Contact}
+    { path: 'contact', component: Contact},
+    { path: 'cart', component: Cart },
 ];

@@ -1,7 +1,26 @@
 import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
-import { Clothing } from '../models/product';
 import { FormsModule } from '@angular/forms';
+import { Clothing } from '../models/product';
+import { ProductService } from '../services/product.service';
+import { CartService } from '../services/cart.service';
+
+type BackendProduct = {
+  id: string;
+  name: string;
+  price: number;
+
+  imageUrl?: string;
+  shortDescription?: string;
+  longDescription?: string;
+  isAvailable?: boolean;
+  officialProductSite?: string;
+
+  size?: Clothing['size'];
+  gender?: 'male' | 'female' | 'unisex';
+  color?: string;
+  material?: string;
+};
 
 @Component({
   selector: 'app-clothes',
@@ -10,52 +29,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './clothes.scss',
 })
 export class Clothes {
-  clothes: Clothing[] = [/*
-    {
-      id: 'shirt-1',
-      name: 'MTB Trail Air Jersey',
-      price: 39.99,
-      imageUrl: 'assets/images/clothing-shirt-1.svg',
-      description: 'Lahka in zračna MTB majica, hitro sušeč material.',
-      type: 'clothing',
-      isAvailable: true,
-      warrantyMonths: 24,
-      size: 'M',
-      gender: 'unisex',
-      material: 'Poliester',
-      color: 'Črna/Zelena',
-      officialProductSite: 'https://www.decathlon.si/',
-    },
-    {
-      id: 'shirt-2',
-      name: 'Road Aero Jersey',
-      price: 69.9,
-      imageUrl: 'assets/images/clothing-shirt-2.svg',
-      description: 'Oprijeta cestna majica, idealna za dolge ture v vročini.',
-      type: 'clothing',
-      isAvailable: true,
-      warrantyMonths: 24,
-      size: 'L',
-      gender: 'male',
-      material: 'Elastan + Poliester',
-      color: 'Rdeča',
-    },
-    {
-      id: 'jacket-1',
-      name: 'All Weather Wind Jacket',
-      price: 119.0,
-      imageUrl: 'assets/images/clothing-jacket.svg',
-      description: 'Vodoodporna jakna za celotno kolesarsko sezono.',
-      type: 'clothing',
-      isAvailable: false,
-      warrantyMonths: 36,
-      size: 'XL',
-      gender: 'unisex',
-      material: 'Membrana',
-      color: 'Modra',
-      officialProductSite: 'https://www.11-11.si/',
-    },*/
-  ];
+  constructor(private productService: ProductService, private cart: CartService) { }
+
+  clothes: Clothing[] = [];
 
   filter = {
     size: '' as '' | Clothing['size'],
@@ -65,36 +41,94 @@ export class Clothes {
     availability: '' as '' | 'available' | 'unavailable',
   };
 
-  // SORT
   sortBy: 'name' | 'price' = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
+
+  ngOnInit(): void {
+    this.productService.getClothing(100).subscribe({
+      next: (items) => {
+        this.clothes = (items ?? []).map((p: any) => this.mapBackendToClothing(p as BackendProduct));
+      },
+      error: (err) => {
+        console.error('CLOTHING ERROR:', err);
+        this.clothes = [];
+      },
+    });
+  }
+
+  private mapBackendToClothing(p: BackendProduct): Clothing {
+    const derived = this.deriveClothingSpecs(p);
+
+    return {
+      id: p.id,
+      name: p.name,
+      price: p.price,
+      imageUrl: p.imageUrl ?? '',
+      shortDescription: p.shortDescription ?? '',
+      longDescription: p.longDescription ?? '',
+      type: 'clothing',
+      isAvailable: p.isAvailable ?? true,
+      warrantyMonths: 24,
+      officialProductSite: p.officialProductSite,
+
+      // če backend pošlje, uporabimo; sicer fallback
+      size: p.size ?? derived.size,
+      gender: p.gender ?? derived.gender,
+      color: p.color ?? derived.color,
+      material: p.material ?? derived.material,
+    };
+  }
+
+  private deriveClothingSpecs(p: BackendProduct): {
+    size: Clothing['size'];
+    gender: 'male' | 'female' | 'unisex';
+    color: string;
+    material: string;
+  } {
+    const name = (p.name || '').toLowerCase();
+
+    // gender (heuristika iz imena)
+    const gender: 'male' | 'female' | 'unisex' =
+      name.includes('women') || name.includes('žensk') ? 'female'
+        : name.includes('men') || name.includes('mošk') ? 'male'
+          : 'unisex';
+
+    // size (default)
+    const size: Clothing['size'] = 'M';
+
+    // material (default)
+    const material =
+      name.includes('merino') ? 'Merino volna'
+        : name.includes('gore-tex') || name.includes('goretex') ? 'Gore-Tex'
+          : 'Poliester';
+
+    // color (default)
+    const color =
+      name.includes('black') || name.includes('črn') ? 'Črna'
+        : name.includes('blue') || name.includes('moder') ? 'Modra'
+          : '';
+
+    return { size, gender, color, material };
+  }
 
   get filteredAndSortedClothes(): Clothing[] {
     let result = [...this.clothes];
 
-    if (this.filter.size) {
-      result = result.filter(c => c.size === this.filter.size);
-    }
-
-    if (this.filter.gender) {
-      result = result.filter(c => c.gender === this.filter.gender);
-    }
+    if (this.filter.size) result = result.filter(c => c.size === this.filter.size);
+    if (this.filter.gender) result = result.filter(c => c.gender === this.filter.gender);
 
     if (this.filter.color) {
       const q = this.filter.color.toLowerCase();
-      result = result.filter(c => c.color?.toLowerCase().includes(q));
+      result = result.filter(c => (c.color ?? '').toLowerCase().includes(q));
     }
 
     if (this.filter.material) {
       const q = this.filter.material.toLowerCase();
-      result = result.filter(c => c.material?.toLowerCase().includes(q));
+      result = result.filter(c => (c.material ?? '').toLowerCase().includes(q));
     }
 
-    if (this.filter.availability === 'available') {
-      result = result.filter(c => c.isAvailable);
-    } else if (this.filter.availability === 'unavailable') {
-      result = result.filter(c => !c.isAvailable);
-    }
+    if (this.filter.availability === 'available') result = result.filter(c => c.isAvailable);
+    else if (this.filter.availability === 'unavailable') result = result.filter(c => !c.isAvailable);
 
     result.sort((a, b) => {
       const valA = a[this.sortBy];
@@ -106,9 +140,9 @@ export class Clothes {
           : valB.localeCompare(valA);
       }
 
-      const numA = valA as number;
-      const numB = valB as number;
-      return this.sortDirection === 'asc' ? numA - numB : numB - numA;
+      return this.sortDirection === 'asc'
+        ? (valA as number) - (valB as number)
+        : (valB as number) - (valA as number);
     });
 
     return result;
@@ -118,5 +152,10 @@ export class Clothes {
 
   onImageError(item: Clothing) {
     item.imageUrl = '';
+  }
+
+  addToCart(bike: Clothing) {
+    if (!bike.isAvailable) return;
+    this.cart.add(bike, 1);
   }
 }

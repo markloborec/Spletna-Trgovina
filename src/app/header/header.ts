@@ -20,5 +20,4 @@ export class Header {
   onLoginClick() {
     this.loginClick.emit();
   }
-
 }

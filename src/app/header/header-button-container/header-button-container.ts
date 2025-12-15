@@ -1,13 +1,14 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output, } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header-button-container',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, RouterModule],
   templateUrl: './header-button-container.html',
   styleUrls: ['./header-button-container.scss'],
 })
@@ -23,8 +24,11 @@ export class HeaderButtonContainer {
   isLangMenuOpen = false;
   isLoggedIn = false;
 
-  constructor(private elementRef: ElementRef,
-    private router: Router,) { }
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    public cart: CartService,
+  ) { }
 
   OpenUser() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -38,10 +42,9 @@ export class HeaderButtonContainer {
     this.isLangMenuOpen = false;
   }
 
-  toggleLanguageMenu() {
-    this.isLangMenuOpen = !this.isLangMenuOpen;
-    this.isUserMenuOpen = false;
-    this.isCartMenuOpen = false;
+  goToCart() {
+    this.router.navigate(['/cart']);
+    this.closeAllMenus();
   }
 
   closeAllMenus() {
@@ -63,9 +66,7 @@ export class HeaderButtonContainer {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
-    if (!clickedInside) {
-      this.closeAllMenus();
-    }
+    if (!clickedInside) this.closeAllMenus();
   }
 
   routeToUserProfile() {
@@ -77,14 +78,10 @@ export class HeaderButtonContainer {
 
   toggleLanguage() {
     const googleCombo = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
-    if (!googleCombo) {
-      console.warn('Google translate not initialized yet');
-      return;
-    }
+    if (!googleCombo) return;
 
     this.currentLang = this.currentLang === 'sl' ? 'en' : 'sl';
     googleCombo.value = this.currentLang;
     googleCombo.dispatchEvent(new Event('change'));
   }
-
 }
