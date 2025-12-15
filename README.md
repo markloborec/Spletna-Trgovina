@@ -6,7 +6,7 @@
 
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
-## Trenutne funkcionalnosti (stanje do 3. cikla)
+## Trenutne funkcionalnosti (stanje do 4. cikla)
 ### Uporabniki
 - Registracija in prijava uporabnika (JWT)
 - Pridobivanje uporabniških podatkov (profil)
@@ -156,3 +156,8 @@ Filtri:
 - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljivo opremo na lokacijah BicklStore. Če oprema ni razpoložljiva lahko uporabnik klikne na gumb obvesti me.
 - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
 - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
+
+![Registracija](./img/Registracija.GIF)
+
+
+![Prijava](./img/Prijava.GIF)
