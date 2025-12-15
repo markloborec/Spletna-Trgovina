@@ -148,7 +148,7 @@ Filtri:
 - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
 - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
   
-![Oprema](./img/Oprema.GIF)
+      ![Oprema](./img/Oprema.GIF)
 **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca.
 - **Brand**: Omogoča filtriranje po zaželeni znamki.
 - **Material**: Omogoča filtriranje po materialu izdelka (plastika, aluminij, karbon,...) Vpliva na težo, trpežnost in zmogljivost opreme.
@@ -157,7 +157,7 @@ Filtri:
 - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
 - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
 
-![Registracija](./img/Registracija.GIF)
+      ![Registracija](./img/Registracija.GIF)
 
 **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno.
 
