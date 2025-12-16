@@ -158,7 +158,9 @@ Filtri:
 - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
 
   <div align="center">
-  ![Registracija](./img/Registracija.GIF)
+  
+![Registracija](./img/Registracija.GIF)
+  
   </div>
 
 **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno.
@@ -167,6 +169,7 @@ Filtri:
   <div align="center">
     
   ![Prijava](./img/Prijava.GIF)
+  
   </div>
   
 
