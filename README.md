@@ -159,7 +159,7 @@ Filtri:
 
   <div align="center">
   
-![Registracija](./img/Registracija.GIF)
+  ![Registracija](./img/Registracija.GIF)
   
   </div>
 
