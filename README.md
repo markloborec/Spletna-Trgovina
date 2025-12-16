@@ -157,12 +157,12 @@ Filtri:
 - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
 - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
 
-  ![Registracija](./img/Registracija.GIF)
+  <div align="center">![Registracija](./img/Registracija.GIF)</div>
 
 **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno.
 
 
-  ![Prijava](./img/Prijava.GIF)
+  <div align="center">![Prijava](./img/Prijava.GIF)</div>
 
 **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo".
 
@@ -172,9 +172,8 @@ Filtri:
 ![Kosarica1](./img/kosarica1.png)
 
 </div>
-
 **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se pravk tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa.
 
-![Kosarica2](./img/kosarica2.png)
-
+<div align="center">![Kosarica2](./img/kosarica2.png)
+</div>
 **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spleta stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico".
