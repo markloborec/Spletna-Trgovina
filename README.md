@@ -122,6 +122,8 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 - **Discord**
 - **E-mail**: bickilstore@gmail.com
 - **Telefonska številka**: +386 041 223 531
+## Licenca:
+Ta projekt je licenciran pod MIT licenco.
 ### UVOD ZA UPORABNIKA S SLIKAMI:
 
 ![Kolesa](./img/Kolesa.GIF)
