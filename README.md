@@ -165,3 +165,7 @@ Filtri:
   ![Prijava](./img/Prijava.GIF)
 
 **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo".
+
+![Kosarica1](./img/kosarica1.png)
+
+![Kosarica2](./img/kosarica2.png)
