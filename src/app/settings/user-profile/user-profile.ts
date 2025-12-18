@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { UserProfile } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,21 +14,31 @@ import { UserProfile } from '../../models/user';
 export class UserProfileComponent implements OnInit {
   profile: UserProfile | null = null;
   loading = false;
+
   isEditing = false;
   isSaving = false;
+
   errorMessage = '';
   successMessage = '';
+
   private originalProfile?: UserProfile;
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.loadProfile();
   }
 
-  loadProfile() {
+  private resetMessages() {
+    this.errorMessage = '';
+    this.successMessage = '';
+  }
+
+  loadProfile(): void {
+    this.resetMessages();
     this.loading = true;
-    this.authService.getProfile().subscribe({
+
+    this.userService.getProfile().subscribe({
       next: (profile) => {
         this.profile = { ...profile };
         this.originalProfile = { ...profile };
@@ -42,36 +52,35 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  onEdit() {
-    this.errorMessage = '';
-    this.successMessage = '';
+  onEdit(): void {
+    this.resetMessages();
     this.isEditing = true;
   }
 
-  onCancelEdit() {
+  onCancelEdit(): void {
+    this.resetMessages();
+
     if (this.originalProfile) {
       this.profile = { ...this.originalProfile };
     }
+
     this.isEditing = false;
-    this.errorMessage = '';
-    this.successMessage = '';
   }
 
-  onSave() {
-    if (!this.profile) {
-      return;
-    }
+  onSave(): void {
+    if (!this.profile) return;
 
-    this.errorMessage = '';
-    this.successMessage = '';
+    this.resetMessages();
     this.isSaving = true;
 
-    this.authService.updateProfile(this.profile).subscribe({
+    this.userService.updateProfile(this.profile).subscribe({
       next: (updated) => {
         this.isSaving = false;
         this.isEditing = false;
+
         this.profile = { ...updated };
         this.originalProfile = { ...updated };
+
         this.successMessage = 'Profil uspešno posodobljen.';
       },
       error: (err) => {

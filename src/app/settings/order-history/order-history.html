@@ -1,0 +1,35 @@
+<div class="orders-page">
+    <h2>Pretekla naročila</h2>
+
+    <div *ngIf="!isLoggedIn" class="info">
+        Ta stran je na voljo samo registriranim/prijavljenim uporabnikom.
+    </div>
+
+    <div *ngIf="isLoggedIn">
+        <div *ngIf="loading" class="info">Nalagam naročila...</div>
+        <div *ngIf="error" class="error">{{ error }}</div>
+
+        <div *ngIf="!loading && !error && orders.length === 0" class="info">
+            Trenutno še nimaš nobenega naročila.
+        </div>
+
+        <div *ngFor="let o of orders" class="order-card">
+            <div class="order-top">
+                <div><strong>Št. naročila:</strong> {{ o.orderId }}</div>
+                <div><strong>Status:</strong> {{ o.status }}</div>
+                <div><strong>Datum:</strong> {{ o.date | date:'dd.MM.yyyy HH:mm' }}</div>
+                <div><strong>Skupaj:</strong> {{ o.total | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+            </div>
+
+            <div class="order-items">
+                <div class="items-title"><strong>Izdelki</strong></div>
+                <ul>
+                    <li *ngFor="let it of o.items" class="order-item">
+                        <span class="item-name">{{ it.name }}</span>
+                        <span class="item-qty">× {{ it.qty }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

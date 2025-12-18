@@ -6,6 +6,7 @@ import { Clothes } from './clothes/clothes';
 import { Equipments } from './equipments/equipments';
 import { Contact } from './contact/contact';
 import { Cart } from './cart/cart';
+import { OrderHistory } from './settings/order-history/order-history';
 
 export const routes: Routes = [
     { path: '', component: Homepage },
@@ -15,4 +16,5 @@ export const routes: Routes = [
     { path: 'clothes', component: Clothes},
     { path: 'contact', component: Contact},
     { path: 'cart', component: Cart },
+    { path: 'orderHistory', component: OrderHistory}
 ];

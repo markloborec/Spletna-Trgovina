@@ -1,27 +1,140 @@
 <div class="cart-page">
     <h1>Košarica</h1>
 
-    <div class="empty" *ngIf="cart.items.length === 0">
-        Košarica je prazna.
-    </div>
+    <div class="empty" *ngIf="cart.items.length === 0">Košarica je prazna.</div>
 
-    <div class="cart-list" *ngIf="cart.items.length > 0">
-        <div class="row" *ngFor="let it of cart.items">
-            <div class="name">{{ it.product.name }}</div>
+    <div class="cart-layout" *ngIf="cart.items.length > 0">
+        <div class="cart-list">
+            <div class="row head">
+                <div class="name">Izdelek</div>
+                <div class="qty-wrap">Količina</div>
+                <div class="price">Cena</div>
+                <div class="subtotal">Skupaj</div>
+                <div></div>
+            </div>
 
-            <input class="qty" type="number" min="1" [value]="it.qty"
-                (change)="setQty(it.product.id, $any($event.target).value)" />
+            <div class="row" *ngFor="let it of cart.items">
+                <div class="name">{{ it.product.name }}</div>
 
-            <div class="price">{{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
-            <div class="subtotal">{{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+                <input class="qty" type="number" min="1" [value]="it.qty"
+                    (change)="setQty(it.product.id, $any($event.target).value)" />
 
-            <button class="remove" type="button" (click)="remove(it.product.id)">✕</button>
+                <div class="price">{{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+                <div class="subtotal">{{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+
+                <button class="remove" type="button" (click)="remove(it.product.id)">✕</button>
+            </div>
+
+            <div class="list-actions">
+                <button class="clear" type="button" (click)="clear()">Izprazni košarico</button>
+            </div>
         </div>
 
-        <div class="summary">
-            <div><strong>Izdelki:</strong> {{ cart.totalItems }}</div>
-            <div><strong>Skupaj:</strong> {{ cart.totalPrice | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
-            <button class="clear" type="button" (click)="clear()">Izprazni košarico</button>
+        <!-- RIGHT: checkout povzetek + izbire -->
+        <div class="checkout">
+            <div class="card">
+                <h3>Povzetek</h3>
+
+                <div class="line">
+                    <span>Vmesni seštevek</span>
+                    <span>{{ itemsTotal | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
+                </div>
+
+                <div class="line">
+                    <span>Davek (DDV)</span>
+                    <span>{{ taxAmount | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
+                </div>
+
+                <div class="line" *ngIf="shippingCost!=0">
+                    <span class="delivery">Stroški dostave</span>
+                    <span class="delivery">{{ shippingCost | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="line total">
+                    <span>Skupaj za plačilo</span>
+                    <span>{{ grandTotal | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Dostava</h3>
+
+                <div class="options">
+                    <label class="opt">
+                        <input type="radio" name="delivery" [(ngModel)]="delivery" value="courier" />
+                        <span>Dostava na naslov</span>
+                    </label>
+
+                    <label class="opt">
+                        <input type="radio" name="delivery" [(ngModel)]="delivery" value="pickup" />
+                        <span>Osebni prevzem</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Plačilo</h3>
+
+                <div class="options">
+                    <label class="opt">
+                        <input type="radio" name="payment" [(ngModel)]="payment" value="card" />
+                        <span>Kartica</span>
+                    </label>
+
+                    <label class="opt">
+                        <input type="radio" name="payment" [(ngModel)]="payment" value="cod" />
+                        <span>Po povzetju</span>
+                    </label>
+
+                    <label class="opt">
+                        <input type="radio" name="payment" [(ngModel)]="payment" value="bank" />
+                        <span>Nakazilo</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Guest naslov -->
+            <div class="card" *ngIf="!isLoggedIn && delivery === 'courier'">
+                <h3>Naslov za dostavo</h3>
+
+                <div class="form">
+                    <div class="field">
+                        <label>Ime in priimek *</label>
+                        <input type="text" [(ngModel)]="guestAddress.fullName" name="fullName" />
+                    </div>
+
+                    <div class="field">
+                        <label>Ulica in hišna št. *</label>
+                        <input type="text" [(ngModel)]="guestAddress.street" name="street" />
+                    </div>
+
+                    <div class="grid2">
+                        <div class="field">
+                            <label>Mesto *</label>
+                            <input type="text" [(ngModel)]="guestAddress.city" name="city" />
+                        </div>
+
+                        <div class="field">
+                            <label>Poštna št. *</label>
+                            <input type="text" [(ngModel)]="guestAddress.postalCode" name="postalCode" />
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Telefon *</label>
+                        <input type="tel" [(ngModel)]="guestAddress.phone" name="phone" />
+                    </div>
+                </div>
+            </div>
+
+            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+            <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+
+            <button class="place" type="button" (click)="placeOrder()" [disabled]="isPlacingOrder">
+                {{ isPlacingOrder ? 'Oddajanje...' : 'Oddaj naročilo' }}
+            </button>
         </div>
     </div>
 </div>

@@ -19,7 +19,8 @@
 
 		<ng-template #loggedInMenu>
 			<button type="button" (click)="routeToUserProfile()">Moj profil</button>
-			<button type="button">Pretekla naročila</button>
+			<button type="button" (click)="routeToOrderHistory()">Pretekla naročila</button>
+			<button type="button" class="logout" (click)="logout()">Odjava</button>
 		</ng-template>
 	</div>
 

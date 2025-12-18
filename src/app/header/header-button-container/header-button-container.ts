@@ -4,6 +4,7 @@ import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header-button-container',
@@ -22,13 +23,9 @@ export class HeaderButtonContainer {
   isUserMenuOpen = false;
   isCartMenuOpen = false;
   isLangMenuOpen = false;
-  isLoggedIn = false;
+  isLoggedIn = localStorage.getItem('auth_token') ? true : false;
 
-  constructor(
-    private elementRef: ElementRef,
-    private router: Router,
-    public cart: CartService,
-  ) { }
+  constructor(private elementRef: ElementRef, private router: Router, public cart: CartService, private authService: AuthService) { }
 
   OpenUser() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
@@ -63,6 +60,16 @@ export class HeaderButtonContainer {
     this.loginClick.emit();
   }
 
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe(v => this.isLoggedIn = v);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.closeAllMenus();
+    this.router.navigate(['/']);
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const clickedInside = this.elementRef.nativeElement.contains(event.target);
@@ -71,6 +78,11 @@ export class HeaderButtonContainer {
 
   routeToUserProfile() {
     this.router.navigate(['/settings/user-profile']);
+    this.closeAllMenus();
+  }
+
+  routeToOrderHistory() {
+    this.router.navigate(['/orderHistory']);
     this.closeAllMenus();
   }
 

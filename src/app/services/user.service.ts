@@ -88,11 +88,18 @@ export class UserService {
       );
   }
 
-  getProfile(): Observable<UserProfile> {
-    return this.http
-      .get<any>(`${this.authUrl}/me`, { headers: this.authHeaders() })
-      .pipe(map((u) => this.mapUser(u)));
-  }
+getProfile(): Observable<UserProfile> {
+  return this.http
+    .get<any>(`${this.authUrl}/me`, { headers: this.authHeaders() })
+    .pipe(
+      map((u) => {
+        console.log('ME RAW:', u);
+        const mapped = this.mapUser(u);
+        console.log('ME MAPPED:', mapped);
+        return mapped;
+      })
+    );
+}
 
   /**
    * Update profila
