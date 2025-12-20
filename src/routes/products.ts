@@ -5,24 +5,21 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductVariants,
 } from "../controllers/productsController";
 import { authMiddleware } from "../middleware/authMiddleware";
+import { adminMiddleware } from "../middleware/adminMiddleware";
 
 const router = Router();
 
-// seznam produktov
+// public
 router.get("/", getProducts);
-
-// en produkt po ID
+router.get("/:id/variants", getProductVariants); // <-- DODANO, MORA BITI TU
 router.get("/:id", getProductById);
 
-// ustvarjanje produkta (admin)
-router.post("/", authMiddleware, createProduct);
-
-// posodobitev produkta (admin)
-router.put("/:id", authMiddleware, updateProduct);
-
-// brisanje produkta (admin)
-router.delete("/:id", authMiddleware, deleteProduct);
+// admin-only
+router.post("/", authMiddleware, adminMiddleware, createProduct);
+router.put("/:id", authMiddleware, adminMiddleware, updateProduct);
+router.delete("/:id", authMiddleware, adminMiddleware, deleteProduct);
 
 export default router;

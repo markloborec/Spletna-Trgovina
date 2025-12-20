@@ -6,7 +6,7 @@ import { connectDB } from "./config/db";
 import productsRouter from "./routes/products";
 import categoriesRouter from "./routes/categories";
 import usersRouter from "./routes/users";
-
+import cartRoutes from "./routes/cart";
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ app.use("/api", router);
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/users", usersRouter);
-
+app.use("/api/cart", cartRoutes);
 
 
 connectDB().catch((err) => {

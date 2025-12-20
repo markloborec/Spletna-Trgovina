@@ -6,6 +6,11 @@ import { ProductVariant } from "./models/ProductVariant";
 
 dotenv.config();
 
+if (process.env.NODE_ENV !== "development") {
+  console.error("❌ Seeding is disabled outside development environment");
+  process.exit(1);
+}
+
 async function seed() {
   try {
     await connectDB();
@@ -340,22 +345,48 @@ async function seed() {
     ]);
 
     console.log("Inserting product variants...");
-    await ProductVariant.insertMany([
-      {
-        product: products[0]._id,
-        variant_name: "Velikost 54",
-        sku: "ALLEZ-54",
-        stock_quantity: 5,
-        extra_price: 0,
-      },
-      {
-        product: products[0]._id,
-        variant_name: "Velikost 56",
-        sku: "ALLEZ-56",
-        stock_quantity: 3,
-        extra_price: 0,
-      },
-    ]);
+await ProductVariant.insertMany([
+  // products[0] Specialized Allez
+  {
+    product: products[0]._id,
+    variant_name: "Velikost 54",
+    sku: "ALLEZ-54",
+    stock_quantity: 5,
+    extra_price: 0,
+  },
+  {
+    product: products[0]._id,
+    variant_name: "Velikost 56",
+    sku: "ALLEZ-56",
+    stock_quantity: 3,
+    extra_price: 0,
+  },
+
+  // products[1] Specialized Tarmac SL7
+  {
+    product: products[1]._id,
+    variant_name: "Velikost 54",
+    sku: "TARMAC-54",
+    stock_quantity: 2,
+    extra_price: 0,
+  },
+  {
+    product: products[1]._id,
+    variant_name: "Velikost 56",
+    sku: "TARMAC-56",
+    stock_quantity: 1,
+    extra_price: 0,
+  },
+
+  // products[4] Trek Marlin 7 
+  {
+    product: products[4]._id,
+    variant_name: "Velikost M",
+    sku: "MARLIN-M",
+    stock_quantity: 4,
+    extra_price: 0,
+  },
+]);
 
     console.log("Seeding finished.");
     process.exit(0);
