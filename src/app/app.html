@@ -1,7 +1,11 @@
+<a href="#main-content" class="skip-link">Preskoči na vsebino</a>
+
 <app-header (registerClick)="onRegisterClick()" (loginClick)="onLoginClick()" />
-<main class="main-content">
+
+<main id="main-content" tabindex="-1">
     <router-outlet />
 </main>
+
 <app-footer />
 
 <app-registration *ngIf="showRegistration" (close)="onRegistrationClose()" />
