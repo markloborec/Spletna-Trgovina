@@ -1,29 +1,53 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProductById = exports.getProducts = void 0;
+exports.getProductVariants = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProductById = exports.getProducts = void 0;
 const Product_1 = require("../models/Product");
 const mongoose_1 = require("mongoose");
+const ProductVariant_1 = require("../models/ProductVariant");
 const ALLOWED_TYPES = new Set(["cycles", "equipment", "clothing"]);
-const toApiProduct = (p) => ({
-    id: p._id.toString(),
-    name: p.name,
-    price: p.price,
-    // backend snake_case -> frontend camelCase
-    imageUrl: p.image_url ?? "",
-    shortDescription: p.short_description ?? "",
-    longDescription: p.long_description ?? "",
-    type: p.type,
-    // backend inStock -> frontend isAvailable
-    isAvailable: Boolean(p.inStock),
-    // new fields (stored or default)
-    warrantyMonths: typeof p.warrantyMonths === "number" ? p.warrantyMonths : 24,
-    officialProductSite: p.officialProductSite ?? undefined,
-});
-// GET /api/products?type=cycles|equipment|clothing&page=1&pageSize=12
+function normalizeCompatibility(value) {
+    if (Array.isArray(value)) {
+        return value.map((x) => String(x).trim()).filter(Boolean);
+    }
+    if (typeof value === "string") {
+        // podpira "MTB, Road" ali "MTB"
+        return value
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+    }
+    return [];
+}
+function toApiProduct(p) {
+    return {
+        id: p._id.toString(),
+        name: p.name,
+        price: p.price,
+        // backend snake_case -> frontend camelCase
+        imageUrl: p.image_url ?? "",
+        shortDescription: p.short_description ?? "",
+        longDescription: p.long_description ?? "",
+        type: p.type,
+        // backend inStock -> frontend isAvailable
+        isAvailable: Boolean(p.inStock),
+        warrantyMonths: typeof p.warrantyMonths === "number" ? p.warrantyMonths : 24,
+        officialProductSite: p.officialProductSite || undefined,
+        // ✅ dodatna polja (oprema)
+        brand: p.brand ?? undefined,
+        material: p.material ?? undefined,
+        weight: typeof p.weight === "number" ? p.weight : undefined,
+        compatibility: Array.isArray(p.compatibility) ? p.compatibility : [],
+    };
+}
+// GET /api/products?type=cycles|equipment|clothing&page=1&pageSize=12&categoryId=...&priceMin=...&priceMax=...
 const getProducts = async (req, res) => {
     try {
-        const page = Number(req.query.page) || 1;
-        const pageSize = Number(req.query.pageSize) || 12;
+        const pageRaw = parseInt(req.query.page, 10);
+        const page = Number.isFinite(pageRaw) && pageRaw > 0 ? pageRaw : 1;
+        const pageSizeRaw = parseInt(req.query.pageSize, 10);
+        const pageSizeCandidate = Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? pageSizeRaw : 12;
+        const pageSize = Math.min(pageSizeCandidate, 50);
+        const skip = (page - 1) * pageSize;
         const type = req.query.type?.toLowerCase();
         if (type && !ALLOWED_TYPES.has(type)) {
             return res.status(400).json({
@@ -31,15 +55,55 @@ const getProducts = async (req, res) => {
                 allowed: Array.from(ALLOWED_TYPES),
             });
         }
-        const skip = (page - 1) * pageSize;
+        const categoryId = req.query.categoryId;
+        const priceMinRaw = req.query.priceMin;
+        const priceMaxRaw = req.query.priceMax;
+        const priceMin = priceMinRaw !== undefined ? Number(priceMinRaw) : undefined;
+        const priceMax = priceMaxRaw !== undefined ? Number(priceMaxRaw) : undefined;
         const filter = {};
         if (type)
             filter.type = type;
+        if (categoryId) {
+            if (!(0, mongoose_1.isValidObjectId)(categoryId)) {
+                return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
+            }
+            filter.category = categoryId;
+        }
+        if (priceMin !== undefined || priceMax !== undefined) {
+            if (priceMin !== undefined && (Number.isNaN(priceMin) || priceMin < 0)) {
+                return res.status(400).json({ error: "PRODUCT_PRICE_MIN_INVALID" });
+            }
+            if (priceMax !== undefined && (Number.isNaN(priceMax) || priceMax < 0)) {
+                return res.status(400).json({ error: "PRODUCT_PRICE_MAX_INVALID" });
+            }
+            if (priceMin !== undefined && priceMax !== undefined && priceMin > priceMax) {
+                return res.status(400).json({ error: "PRODUCT_PRICE_RANGE_INVALID" });
+            }
+            filter.price = {};
+            if (priceMin !== undefined)
+                filter.price.$gte = priceMin;
+            if (priceMax !== undefined)
+                filter.price.$lte = priceMax;
+        }
+        const sortParam = req.query.sort?.toLowerCase();
+        const sortOptions = {
+            price_asc: { price: 1 },
+            price_desc: { price: -1 },
+            name_asc: { name: 1 },
+            name_desc: { name: -1 },
+        };
+        if (sortParam && !sortOptions[sortParam]) {
+            return res.status(400).json({
+                error: "PRODUCT_SORT_INVALID",
+                allowed: Object.keys(sortOptions),
+            });
+        }
+        const sort = sortParam ? sortOptions[sortParam] : { name: 1 };
         const [items, total] = await Promise.all([
-            Product_1.Product.find(filter).skip(skip).limit(pageSize).lean(),
+            Product_1.Product.find(filter).sort(sort).skip(skip).limit(pageSize).lean(),
             Product_1.Product.countDocuments(filter),
         ]);
-        return res.json({
+        return res.status(200).json({
             items: items.map(toApiProduct),
             total,
             page,
@@ -47,7 +111,7 @@ const getProducts = async (req, res) => {
         });
     }
     catch (err) {
-        console.error(err);
+        console.error("PRODUCT_LIST_ERROR:", err);
         return res.status(500).json({ error: "PRODUCT_LIST_ERROR" });
     }
 };
@@ -63,77 +127,103 @@ const getProductById = async (req, res) => {
         if (!product) {
             return res.status(404).json({ error: "PRODUCT_NOT_FOUND" });
         }
-        return res.json(toApiProduct(product));
+        return res.status(200).json(toApiProduct(product));
     }
     catch (err) {
-        console.error(err);
+        console.error("PRODUCT_DETAIL_ERROR:", err);
         return res.status(500).json({ error: "PRODUCT_DETAIL_ERROR" });
     }
 };
 exports.getProductById = getProductById;
-// POST /api/products  (admin only)
+// POST /api/products (admin only)
 const createProduct = async (req, res) => {
     try {
-        // 1) admin check
-        if (!req.user || !req.user.is_admin) {
-            return res.status(403).json({ error: "PRODUCT_ADMIN_ONLY" });
+        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, 
+        // ✅ new
+        material, weight, compatibility, } = req.body;
+        if (typeof name !== "string" || name.trim() === "") {
+            return res.status(400).json({ error: "PRODUCT_NAME_REQUIRED" });
         }
-        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, } = req.body;
-        // 2) obvezna polja
-        if (!name || !price || !type || !category) {
-            return res.status(400).json({ error: "PRODUCT_MISSING_FIELDS" });
+        if (price === undefined || typeof price !== "number" || price < 0) {
+            return res.status(400).json({ error: "PRODUCT_PRICE_INVALID" });
         }
-        // 3) validacija type
-        const normalizedType = String(type).toLowerCase();
+        if (typeof type !== "string") {
+            return res.status(400).json({ error: "PRODUCT_TYPE_REQUIRED" });
+        }
+        const normalizedType = type.toLowerCase();
         if (!ALLOWED_TYPES.has(normalizedType)) {
             return res.status(400).json({
                 error: "PRODUCT_TYPE_INVALID",
                 allowed: Array.from(ALLOWED_TYPES),
             });
         }
-        // 4) validacija category ID
-        if (!(0, mongoose_1.isValidObjectId)(category)) {
-            return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
+        if (category !== undefined && category !== null && category !== "") {
+            if (typeof category !== "string" || !(0, mongoose_1.isValidObjectId)(category)) {
+                return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
+            }
         }
-        // 5) priprava podatkov za Mongo (match na schema field names)
-        const product = await Product_1.Product.create({
-            name,
+        // ✅ validate new fields
+        if (material !== undefined && material !== null && typeof material !== "string") {
+            return res.status(400).json({ error: "PRODUCT_MATERIAL_INVALID" });
+        }
+        if (weight !== undefined && weight !== null) {
+            if (typeof weight !== "number" || Number.isNaN(weight) || weight < 0) {
+                return res.status(400).json({ error: "PRODUCT_WEIGHT_INVALID" });
+            }
+        }
+        const compatArr = normalizeCompatibility(compatibility);
+        const created = await Product_1.Product.create({
+            name: name.trim(),
             price,
             type: normalizedType,
-            category,
-            short_description: shortDescription ?? "",
-            long_description: longDescription ?? "",
-            brand: brand ?? "",
-            image_url: imageUrl ?? "",
+            category: category ? category : undefined,
+            short_description: typeof shortDescription === "string" ? shortDescription : "",
+            long_description: typeof longDescription === "string" ? longDescription : "",
+            brand: typeof brand === "string" ? brand : "",
+            image_url: typeof imageUrl === "string" ? imageUrl : "",
             inStock: typeof inStock === "boolean" ? inStock : true,
             warrantyMonths: typeof warrantyMonths === "number" ? warrantyMonths : 24,
-            officialProductSite: officialProductSite ?? "",
+            officialProductSite: typeof officialProductSite === "string" ? officialProductSite : undefined,
+            // ✅ new
+            material: typeof material === "string" ? material : "",
+            weight: typeof weight === "number" ? weight : undefined,
+            compatibility: compatArr,
         });
-        return res.status(201).json(toApiProduct(product));
+        return res.status(201).json(toApiProduct(created));
     }
     catch (err) {
-        console.error(err);
+        console.error("PRODUCT_CREATE_ERROR:", err);
         return res.status(500).json({ error: "PRODUCT_CREATE_ERROR" });
     }
 };
 exports.createProduct = createProduct;
-// PUT /api/products/:id  (admin only)
+// PUT /api/products/:id (admin only)
 const updateProduct = async (req, res) => {
     try {
-        if (!req.user || !req.user.is_admin) {
-            return res.status(403).json({ error: "PRODUCT_ADMIN_ONLY" });
-        }
         const { id } = req.params;
         if (!(0, mongoose_1.isValidObjectId)(id)) {
             return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
         }
-        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, } = req.body;
+        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, 
+        // ✅ new
+        material, weight, compatibility, } = req.body;
         const updateData = {};
-        if (typeof name === "string")
-            updateData.name = name;
-        if (typeof price === "number")
+        if (name !== undefined) {
+            if (typeof name !== "string" || name.trim() === "") {
+                return res.status(400).json({ error: "PRODUCT_NAME_INVALID" });
+            }
+            updateData.name = name.trim();
+        }
+        if (price !== undefined) {
+            if (typeof price !== "number" || price < 0) {
+                return res.status(400).json({ error: "PRODUCT_PRICE_INVALID" });
+            }
             updateData.price = price;
-        if (typeof type === "string") {
+        }
+        if (type !== undefined) {
+            if (typeof type !== "string") {
+                return res.status(400).json({ error: "PRODUCT_TYPE_INVALID" });
+            }
             const normalizedType = type.toLowerCase();
             if (!ALLOWED_TYPES.has(normalizedType)) {
                 return res.status(400).json({
@@ -143,67 +233,148 @@ const updateProduct = async (req, res) => {
             }
             updateData.type = normalizedType;
         }
-        if (typeof category === "string") {
-            if (!(0, mongoose_1.isValidObjectId)(category)) {
-                return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
+        if (category !== undefined) {
+            if (category === null || category === "") {
+                updateData.category = undefined;
             }
-            updateData.category = category;
+            else {
+                if (typeof category !== "string" || !(0, mongoose_1.isValidObjectId)(category)) {
+                    return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
+                }
+                updateData.category = category;
+            }
         }
-        if (typeof shortDescription === "string") {
+        if (shortDescription !== undefined) {
+            if (typeof shortDescription !== "string") {
+                return res.status(400).json({ error: "PRODUCT_SHORT_DESCRIPTION_INVALID" });
+            }
             updateData.short_description = shortDescription;
         }
-        if (typeof longDescription === "string") {
+        if (longDescription !== undefined) {
+            if (typeof longDescription !== "string") {
+                return res.status(400).json({ error: "PRODUCT_LONG_DESCRIPTION_INVALID" });
+            }
             updateData.long_description = longDescription;
         }
-        if (typeof brand === "string")
+        if (brand !== undefined) {
+            if (typeof brand !== "string") {
+                return res.status(400).json({ error: "PRODUCT_BRAND_INVALID" });
+            }
             updateData.brand = brand;
-        if (typeof imageUrl === "string")
+        }
+        if (imageUrl !== undefined) {
+            if (typeof imageUrl !== "string") {
+                return res.status(400).json({ error: "PRODUCT_IMAGE_URL_INVALID" });
+            }
             updateData.image_url = imageUrl;
-        if (typeof inStock === "boolean")
+        }
+        if (inStock !== undefined) {
+            if (typeof inStock !== "boolean") {
+                return res.status(400).json({ error: "PRODUCT_INSTOCK_INVALID" });
+            }
             updateData.inStock = inStock;
-        if (typeof warrantyMonths === "number") {
+        }
+        if (warrantyMonths !== undefined) {
+            if (typeof warrantyMonths !== "number" || warrantyMonths < 0) {
+                return res.status(400).json({ error: "PRODUCT_WARRANTY_INVALID" });
+            }
             updateData.warrantyMonths = warrantyMonths;
         }
-        if (typeof officialProductSite === "string") {
-            updateData.officialProductSite = officialProductSite;
+        if (officialProductSite !== undefined) {
+            if (officialProductSite === null || officialProductSite === "") {
+                updateData.officialProductSite = undefined;
+            }
+            else {
+                if (typeof officialProductSite !== "string") {
+                    return res.status(400).json({ error: "PRODUCT_SITE_INVALID" });
+                }
+                updateData.officialProductSite = officialProductSite;
+            }
         }
-        // če ni niti enega polja, ki bi ga posodobili
+        // ✅ update new fields
+        if (material !== undefined) {
+            if (material === null || material === "")
+                updateData.material = undefined;
+            else {
+                if (typeof material !== "string")
+                    return res.status(400).json({ error: "PRODUCT_MATERIAL_INVALID" });
+                updateData.material = material;
+            }
+        }
+        if (weight !== undefined) {
+            if (weight === null || weight === "")
+                updateData.weight = undefined;
+            else {
+                if (typeof weight !== "number" || Number.isNaN(weight) || weight < 0) {
+                    return res.status(400).json({ error: "PRODUCT_WEIGHT_INVALID" });
+                }
+                updateData.weight = weight;
+            }
+        }
+        if (compatibility !== undefined) {
+            updateData.compatibility = normalizeCompatibility(compatibility);
+        }
         if (Object.keys(updateData).length === 0) {
             return res.status(400).json({ error: "PRODUCT_UPDATE_NO_FIELDS" });
         }
         const updated = await Product_1.Product.findByIdAndUpdate(id, updateData, {
             new: true,
-        });
+            runValidators: true,
+        }).lean();
         if (!updated) {
             return res.status(404).json({ error: "PRODUCT_NOT_FOUND" });
         }
-        return res.json(toApiProduct(updated));
+        return res.status(200).json(toApiProduct(updated));
     }
     catch (err) {
-        console.error(err);
+        console.error("PRODUCT_UPDATE_ERROR:", err);
         return res.status(500).json({ error: "PRODUCT_UPDATE_ERROR" });
     }
 };
 exports.updateProduct = updateProduct;
-// DELETE /api/products/:id  (admin only)
+// DELETE /api/products/:id (admin only)
 const deleteProduct = async (req, res) => {
     try {
-        if (!req.user || !req.user.is_admin) {
-            return res.status(403).json({ error: "PRODUCT_ADMIN_ONLY" });
-        }
         const { id } = req.params;
         if (!(0, mongoose_1.isValidObjectId)(id)) {
             return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
         }
-        const deleted = await Product_1.Product.findByIdAndDelete(id);
+        const deleted = await Product_1.Product.findByIdAndDelete(id).lean();
         if (!deleted) {
             return res.status(404).json({ error: "PRODUCT_NOT_FOUND" });
         }
-        return res.json({ success: true });
+        return res.status(200).json({ success: true });
     }
     catch (err) {
-        console.error(err);
+        console.error("PRODUCT_DELETE_ERROR:", err);
         return res.status(500).json({ error: "PRODUCT_DELETE_ERROR" });
     }
 };
 exports.deleteProduct = deleteProduct;
+// GET /api/products/:id/variants
+const getProductVariants = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!(0, mongoose_1.isValidObjectId)(id)) {
+            return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
+        }
+        const variants = await ProductVariant_1.ProductVariant.find({ product: id })
+            .select("_id variant_name sku stock_quantity extra_price product")
+            .lean();
+        return res.status(200).json({
+            items: variants.map((v) => ({
+                id: v._id.toString(),
+                productId: v.product.toString(),
+                variantName: v.variant_name,
+                sku: v.sku ?? "",
+                stockQuantity: typeof v.stock_quantity === "number" ? v.stock_quantity : 0,
+                extraPrice: typeof v.extra_price === "number" ? v.extra_price : 0,
+            })),
+        });
+    }
+    catch (err) {
+        console.error("PRODUCT_VARIANTS_ERROR:", err);
+        return res.status(500).json({ error: "PRODUCT_VARIANTS_ERROR" });
+    }
+};
+exports.getProductVariants = getProductVariants;

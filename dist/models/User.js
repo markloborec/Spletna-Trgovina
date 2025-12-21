@@ -13,5 +13,7 @@ const userSchema = new mongoose_1.default.Schema({
     phone: { type: String, trim: true, default: "" },
     password_hash: { type: String, required: true },
     is_admin: { type: Boolean, default: false },
+    resetPasswordTokenHash: { type: String, default: undefined },
+    resetPasswordExpires: { type: Date, default: undefined },
 }, { timestamps: true });
 exports.User = mongoose_1.default.model("User", userSchema);

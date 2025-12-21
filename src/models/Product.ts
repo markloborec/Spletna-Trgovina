@@ -28,6 +28,11 @@ const productSchema = new mongoose.Schema(
     warrantyMonths: { type: Number, default: 24 },
 
     officialProductSite: { type: String },
+
+    // ✅ equipment-specific (manjkalo)
+    material: { type: String },
+    weight: { type: Number }, // grams
+    compatibility: { type: [String], default: [] }, // e.g. ["MTB","Road"]
   },
   { timestamps: true }
 );

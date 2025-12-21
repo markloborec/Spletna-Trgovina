@@ -7,4 +7,6 @@ const authMiddleware_1 = require("../middleware/authMiddleware");
 exports.authRouter = (0, express_1.Router)();
 exports.authRouter.post("/register", authController_1.register);
 exports.authRouter.post("/login", authController_1.login);
+exports.authRouter.post("/forgot-password", authController_1.forgotPassword);
+exports.authRouter.post("/reset-password", authController_1.resetPassword);
 exports.authRouter.get("/me", authMiddleware_1.authMiddleware, authController_1.getMe);

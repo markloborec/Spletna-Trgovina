@@ -261,10 +261,12 @@ async function seed() {
         category: helmetCat._id,
         name: "Giro Syntax MIPS",
         short_description: "Udobna cestna čelada z MIPS in dobro ventilacijo.",
-        long_description:
-          "Giro Syntax MIPS združuje varnost, udobje in zračnost za cestne ter gravel vožnje.",
+        long_description: "Giro Syntax MIPS združuje varnost, udobje in zračnost za cestne ter gravel vožnje.",
         price: 129,
         brand: "Giro",
+        material: "Polikarbonat",
+        weight: 280,
+        compatibility: ["Road", "Gravel"],
         image_url: "",
         inStock: true,
         warrantyMonths: 24,
@@ -275,14 +277,32 @@ async function seed() {
         category: helmetCat._id,
         name: "POC Ventral Air MIPS",
         short_description: "Zelo zračna čelada za vroče dni in intenzivno vožnjo.",
-        long_description:
-          "POC Ventral Air MIPS je optimiziran za pretok zraka in udobje pri visokih temperaturah.",
+        long_description: "POC Ventral Air MIPS je optimiziran za pretok zraka in udobje pri visokih temperaturah.",
         price: 249,
         brand: "POC",
+        material: "Polikarbonat",
+        weight: 250,
+        compatibility: ["Road", "Gravel"],
         image_url: "",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://poc.com",
+      },
+      {
+        type: "equipment",
+        category: helmetCat._id,
+        name: "Bell Z20 MIPS",
+        short_description: "Lahka in varna cestna čelada z MIPS.",
+        long_description: "Bell Z20 MIPS je znan po udobju, zračnosti in dobri zaščiti pri padcih.",
+        price: 189,
+        brand: "Bell",
+        material: "Polikarbonat",
+        weight: 265,
+        compatibility: ["Road"],
+        image_url: "",
+        inStock: true,
+        warrantyMonths: 24,
+        officialProductSite: "https://www.bellhelmets.com",
       },
 
       // --- clothing ---
@@ -345,48 +365,48 @@ async function seed() {
     ]);
 
     console.log("Inserting product variants...");
-await ProductVariant.insertMany([
-  // products[0] Specialized Allez
-  {
-    product: products[0]._id,
-    variant_name: "Velikost 54",
-    sku: "ALLEZ-54",
-    stock_quantity: 5,
-    extra_price: 0,
-  },
-  {
-    product: products[0]._id,
-    variant_name: "Velikost 56",
-    sku: "ALLEZ-56",
-    stock_quantity: 3,
-    extra_price: 0,
-  },
+    await ProductVariant.insertMany([
+      // products[0] Specialized Allez
+      {
+        product: products[0]._id,
+        variant_name: "Velikost 54",
+        sku: "ALLEZ-54",
+        stock_quantity: 5,
+        extra_price: 0,
+      },
+      {
+        product: products[0]._id,
+        variant_name: "Velikost 56",
+        sku: "ALLEZ-56",
+        stock_quantity: 3,
+        extra_price: 0,
+      },
 
-  // products[1] Specialized Tarmac SL7
-  {
-    product: products[1]._id,
-    variant_name: "Velikost 54",
-    sku: "TARMAC-54",
-    stock_quantity: 2,
-    extra_price: 0,
-  },
-  {
-    product: products[1]._id,
-    variant_name: "Velikost 56",
-    sku: "TARMAC-56",
-    stock_quantity: 1,
-    extra_price: 0,
-  },
+      // products[1] Specialized Tarmac SL7
+      {
+        product: products[1]._id,
+        variant_name: "Velikost 54",
+        sku: "TARMAC-54",
+        stock_quantity: 2,
+        extra_price: 0,
+      },
+      {
+        product: products[1]._id,
+        variant_name: "Velikost 56",
+        sku: "TARMAC-56",
+        stock_quantity: 1,
+        extra_price: 0,
+      },
 
-  // products[4] Trek Marlin 7 
-  {
-    product: products[4]._id,
-    variant_name: "Velikost M",
-    sku: "MARLIN-M",
-    stock_quantity: 4,
-    extra_price: 0,
-  },
-]);
+      // products[4] Trek Marlin 7 
+      {
+        product: products[4]._id,
+        variant_name: "Velikost M",
+        sku: "MARLIN-M",
+        stock_quantity: 4,
+        extra_price: 0,
+      },
+    ]);
 
     console.log("Seeding finished.");
     process.exit(0);

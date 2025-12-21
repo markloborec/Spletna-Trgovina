@@ -1,10 +1,16 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 import { User } from "../models/User";
 import { signToken } from "../utils/jwt";
 import { AuthRequest } from "../middleware/authMiddleware";
 
 const SALT_ROUNDS = 10;
+const RESET_TOKEN_TTL_MS = 60 * 60 * 1000; // 1 hour
+
+function sha256Hex(input: string): string {
+  return crypto.createHash("sha256").update(input).digest("hex");
+}
 
 export async function register(req: Request, res: Response) {
   try {
@@ -15,7 +21,6 @@ export async function register(req: Request, res: Response) {
       deliveryAddress,
       phone,
       password,
-      // confirmPassword ignoriramo (FE-only)
     } = req.body;
 
     if (!email || !password) {
@@ -128,5 +133,76 @@ export async function getMe(req: AuthRequest, res: Response) {
   } catch (err) {
     console.error("GetMe error:", err);
     return res.status(500).json({ error: "ME_FAILED" });
+  }
+}
+
+/**
+ * Pozabljeno geslo (request reset)
+ * POST /api/auth/forgot-password
+ * Body: { email }
+ */
+export async function forgotPassword(req: Request, res: Response) {
+  try {
+    const { email } = req.body || {};
+    if (!email) {
+      return res.status(400).json({ error: "FORGOT_PASSWORD_MISSING_EMAIL" });
+    }
+
+    const user = await User.findOne({ email: String(email).toLowerCase() });
+
+    // Vedno vrni 200 (da ne razkrivaš, ali email obstaja)
+    if (!user) {
+      return res.json({ message: "RESET_REQUESTED" });
+    }
+
+    const rawToken = crypto.randomBytes(24).toString("hex");
+    const tokenHash = sha256Hex(rawToken);
+
+    user.resetPasswordTokenHash = tokenHash;
+    user.resetPasswordExpires = new Date(Date.now() + RESET_TOKEN_TTL_MS);
+    await user.save();
+
+    // POZOR: v pravi aplikaciji token pošlješ po emailu.
+    // Za šolski projekt ga vračamo, da lahko FE prikaže korak "ponastavi".
+    return res.json({ message: "RESET_REQUESTED", resetToken: rawToken });
+  } catch (err) {
+    console.error("ForgotPassword error:", err);
+    return res.status(500).json({ error: "FORGOT_PASSWORD_FAILED" });
+  }
+}
+
+/**
+ * Ponastavi geslo (apply reset)
+ * POST /api/auth/reset-password
+ * Body: { token, newPassword }
+ */
+export async function resetPassword(req: Request, res: Response) {
+  try {
+    const { token, newPassword } = req.body || {};
+    if (!token || !newPassword) {
+      return res.status(400).json({ error: "RESET_PASSWORD_MISSING_FIELDS" });
+    }
+
+    const tokenHash = sha256Hex(String(token));
+    const now = new Date();
+
+    const user = await User.findOne({
+      resetPasswordTokenHash: tokenHash,
+      resetPasswordExpires: { $gt: now },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: "RESET_PASSWORD_INVALID_OR_EXPIRED" });
+    }
+
+    user.password_hash = await bcrypt.hash(String(newPassword), SALT_ROUNDS);
+    user.resetPasswordTokenHash = null;
+    user.resetPasswordExpires = null;
+    await user.save();
+
+    return res.json({ message: "PASSWORD_RESET_OK" });
+  } catch (err) {
+    console.error("ResetPassword error:", err);
+    return res.status(500).json({ error: "RESET_PASSWORD_FAILED" });
   }
 }

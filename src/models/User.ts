@@ -12,6 +12,9 @@ const userSchema = new mongoose.Schema(
 
     password_hash: { type: String, required: true },
     is_admin: { type: Boolean, default: false },
+
+    resetPasswordTokenHash: { type: String, default: undefined  },
+    resetPasswordExpires: { type: Date, default: undefined  },
   },
   { timestamps: true }
 );

@@ -1,8 +1,23 @@
 import { Request, Response } from "express";
 import { Product } from "../models/Product";
 import { isValidObjectId } from "mongoose";
+import { ProductVariant } from "../models/ProductVariant";
 
 const ALLOWED_TYPES = new Set(["cycles", "equipment", "clothing"]);
+
+function normalizeCompatibility(value: any): string[] {
+  if (Array.isArray(value)) {
+    return value.map((x) => String(x).trim()).filter(Boolean);
+  }
+  if (typeof value === "string") {
+    // podpira "MTB, Road" ali "MTB"
+    return value
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
 
 function toApiProduct(p: any) {
   return {
@@ -22,28 +37,27 @@ function toApiProduct(p: any) {
 
     warrantyMonths: typeof p.warrantyMonths === "number" ? p.warrantyMonths : 24,
     officialProductSite: p.officialProductSite || undefined,
+
+    // ✅ dodatna polja (oprema)
+    brand: p.brand ?? undefined,
+    material: p.material ?? undefined,
+    weight: typeof p.weight === "number" ? p.weight : undefined,
+    compatibility: Array.isArray(p.compatibility) ? p.compatibility : [],
   };
 }
 
 // GET /api/products?type=cycles|equipment|clothing&page=1&pageSize=12&categoryId=...&priceMin=...&priceMax=...
 export const getProducts = async (req: Request, res: Response) => {
   try {
-    // -----------------------
-    // PAGINACIJA
-    // -----------------------
     const pageRaw = parseInt(req.query.page as string, 10);
     const page = Number.isFinite(pageRaw) && pageRaw > 0 ? pageRaw : 1;
 
     const pageSizeRaw = parseInt(req.query.pageSize as string, 10);
-    const pageSizeCandidate =
-      Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? pageSizeRaw : 12;
+    const pageSizeCandidate = Number.isFinite(pageSizeRaw) && pageSizeRaw > 0 ? pageSizeRaw : 12;
     const pageSize = Math.min(pageSizeCandidate, 50);
 
     const skip = (page - 1) * pageSize;
 
-    // -----------------------
-    // FILTRI
-    // -----------------------
     const type = (req.query.type as string | undefined)?.toLowerCase();
     if (type && !ALLOWED_TYPES.has(type)) {
       return res.status(400).json({
@@ -78,11 +92,7 @@ export const getProducts = async (req: Request, res: Response) => {
       if (priceMax !== undefined && (Number.isNaN(priceMax) || priceMax < 0)) {
         return res.status(400).json({ error: "PRODUCT_PRICE_MAX_INVALID" });
       }
-      if (
-        priceMin !== undefined &&
-        priceMax !== undefined &&
-        priceMin > priceMax
-      ) {
+      if (priceMin !== undefined && priceMax !== undefined && priceMin > priceMax) {
         return res.status(400).json({ error: "PRODUCT_PRICE_RANGE_INVALID" });
       }
 
@@ -91,11 +101,7 @@ export const getProducts = async (req: Request, res: Response) => {
       if (priceMax !== undefined) filter.price.$lte = priceMax;
     }
 
-    // -----------------------
-    // SORT
-    // -----------------------
     const sortParam = (req.query.sort as string | undefined)?.toLowerCase();
-
     const sortOptions: Record<string, any> = {
       price_asc: { price: 1 },
       price_desc: { price: -1 },
@@ -110,20 +116,13 @@ export const getProducts = async (req: Request, res: Response) => {
       });
     }
 
-    const sort = sortParam ? sortOptions[sortParam] : { name: 1 }; // default
+    const sort = sortParam ? sortOptions[sortParam] : { name: 1 };
 
-
-    // -----------------------
-    // QUERY
-    // -----------------------
     const [items, total] = await Promise.all([
       Product.find(filter).sort(sort).skip(skip).limit(pageSize).lean(),
       Product.countDocuments(filter),
     ]);
 
-    // -----------------------
-    // RESPONSE
-    // -----------------------
     return res.status(200).json({
       items: items.map(toApiProduct),
       total,
@@ -135,7 +134,6 @@ export const getProducts = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "PRODUCT_LIST_ERROR" });
   }
 };
-
 
 // GET /api/products/:id
 export const getProductById = async (req: Request, res: Response) => {
@@ -158,7 +156,7 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-// POST /api/products (admin only) — admin check je v adminMiddleware
+// POST /api/products (admin only)
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const {
@@ -173,14 +171,17 @@ export const createProduct = async (req: Request, res: Response) => {
       inStock,
       warrantyMonths,
       officialProductSite,
+
+      // ✅ new
+      material,
+      weight,
+      compatibility,
     } = req.body;
 
-    // obvezna polja
     if (typeof name !== "string" || name.trim() === "") {
       return res.status(400).json({ error: "PRODUCT_NAME_REQUIRED" });
     }
 
-    // price mora biti number (ne string) in >= 0
     if (price === undefined || typeof price !== "number" || price < 0) {
       return res.status(400).json({ error: "PRODUCT_PRICE_INVALID" });
     }
@@ -197,12 +198,24 @@ export const createProduct = async (req: Request, res: Response) => {
       });
     }
 
-    // category je optional, ampak če je podan mora biti valid
     if (category !== undefined && category !== null && category !== "") {
       if (typeof category !== "string" || !isValidObjectId(category)) {
         return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
       }
     }
+
+    // ✅ validate new fields
+    if (material !== undefined && material !== null && typeof material !== "string") {
+      return res.status(400).json({ error: "PRODUCT_MATERIAL_INVALID" });
+    }
+
+    if (weight !== undefined && weight !== null) {
+      if (typeof weight !== "number" || Number.isNaN(weight) || weight < 0) {
+        return res.status(400).json({ error: "PRODUCT_WEIGHT_INVALID" });
+      }
+    }
+
+    const compatArr = normalizeCompatibility(compatibility);
 
     const created = await Product.create({
       name: name.trim(),
@@ -219,6 +232,11 @@ export const createProduct = async (req: Request, res: Response) => {
       inStock: typeof inStock === "boolean" ? inStock : true,
       warrantyMonths: typeof warrantyMonths === "number" ? warrantyMonths : 24,
       officialProductSite: typeof officialProductSite === "string" ? officialProductSite : undefined,
+
+      // ✅ new
+      material: typeof material === "string" ? material : "",
+      weight: typeof weight === "number" ? weight : undefined,
+      compatibility: compatArr,
     });
 
     return res.status(201).json(toApiProduct(created));
@@ -228,7 +246,7 @@ export const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /api/products/:id (admin only) — admin check je v adminMiddleware
+// PUT /api/products/:id (admin only)
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -249,6 +267,11 @@ export const updateProduct = async (req: Request, res: Response) => {
       inStock,
       warrantyMonths,
       officialProductSite,
+
+      // ✅ new
+      material,
+      weight,
+      compatibility,
     } = req.body;
 
     const updateData: any = {};
@@ -282,7 +305,6 @@ export const updateProduct = async (req: Request, res: Response) => {
     }
 
     if (category !== undefined) {
-      // omogočimo tudi “brisanje” kategorije (null/"")
       if (category === null || category === "") {
         updateData.category = undefined;
       } else {
@@ -346,6 +368,29 @@ export const updateProduct = async (req: Request, res: Response) => {
       }
     }
 
+    // ✅ update new fields
+    if (material !== undefined) {
+      if (material === null || material === "") updateData.material = undefined;
+      else {
+        if (typeof material !== "string") return res.status(400).json({ error: "PRODUCT_MATERIAL_INVALID" });
+        updateData.material = material;
+      }
+    }
+
+    if (weight !== undefined) {
+      if (weight === null || weight === "") updateData.weight = undefined;
+      else {
+        if (typeof weight !== "number" || Number.isNaN(weight) || weight < 0) {
+          return res.status(400).json({ error: "PRODUCT_WEIGHT_INVALID" });
+        }
+        updateData.weight = weight;
+      }
+    }
+
+    if (compatibility !== undefined) {
+      updateData.compatibility = normalizeCompatibility(compatibility);
+    }
+
     if (Object.keys(updateData).length === 0) {
       return res.status(400).json({ error: "PRODUCT_UPDATE_NO_FIELDS" });
     }
@@ -366,7 +411,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE /api/products/:id (admin only) — admin check je v adminMiddleware
+// DELETE /api/products/:id (admin only)
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -387,7 +432,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "PRODUCT_DELETE_ERROR" });
   }
 };
-import { ProductVariant } from "../models/ProductVariant"; // dodaj na vrh, če ga še nimaš
 
 // GET /api/products/:id/variants
 export const getProductVariants = async (req: Request, res: Response) => {
@@ -417,4 +461,3 @@ export const getProductVariants = async (req: Request, res: Response) => {
     return res.status(500).json({ error: "PRODUCT_VARIANTS_ERROR" });
   }
 };
-
