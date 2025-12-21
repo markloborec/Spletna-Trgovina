@@ -70,6 +70,23 @@
         color: #c0392b;
     }
 
+    .success {
+        margin-top: 0.2rem;
+        font-size: 0.85rem;
+        color: #166534;
+        background: #dcfce7;
+        border: 1px solid #86efac;
+        padding: 0.65rem 0.75rem;
+        border-radius: 12px;
+    }
+
+    .help {
+        margin: 0.25rem 0 0;
+        font-size: 0.82rem;
+        color: #6b7280;
+        line-height: 1.35;
+    }
+
     .actions {
         display: flex;
         justify-content: flex-end;
@@ -116,11 +133,12 @@
             }
         }
     }
-        .forgot-password {
+
+    .forgot-password {
         margin-top: 0.6rem;
         font-size: 0.9rem;
-        font-weight: 700;      // krepko
-        color: #218838;        // zelena kot primary
+        font-weight: 700;
+        color: #218838;
         text-align: right;
         cursor: pointer;
         user-select: none;

@@ -52,8 +52,8 @@
     </div>
 
     <div class="equipment-grid">
-        <div class="equipment-card" *ngFor="let item of filteredAndSortedEquipments; trackBy: trackByEquipmentId">
-
+        <div class="equipment-card" *ngFor="let item of filteredAndSortedEquipments; trackBy: trackByEquipmentId"
+            (dblclick)="openDetails(item)">
             <div class="equipment-image-wrapper">
                 <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="equipment-image" [alt]="item.name"
                     loading="lazy" (error)="onImageError(item)" />
@@ -102,18 +102,19 @@
 
                     <div class="actions">
                         <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
-                            (click)="addToCart(item)">
+                            (click)="addToCart(item)" (dblclick)="$event.stopPropagation()">
                             {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
 
                         <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
-                            target="_blank" rel="noopener noreferrer">
+                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
                             Uradna stran
                         </a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
+
+<app-product-info *ngIf="selectedEquipment" [product]="selectedEquipment" (close)="closeDetails()" />

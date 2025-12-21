@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-info',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-info.html',
-  styleUrl: './product-info.scss',
+  styleUrls: ['./product-info.scss']
 })
 export class ProductInfo {
+  @Input() product: any;
+  @Output() close = new EventEmitter<void>();
 
+  closeModal() {
+    this.close.emit();
+  }
 }

@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Equipment } from '../models/product';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { ProductInfo } from '../dialogs/product-info/product-info';
 
 @Component({
   selector: 'app-equipments',
-  imports: [NgFor, NgIf, CurrencyPipe, FormsModule],
+  imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './equipments.html',
   styleUrl: './equipments.scss',
 })
@@ -27,11 +28,25 @@ export class Equipments {
   sortBy: 'name' | 'price' | 'weight' = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
 
+  // MODAL STATE
+  selectedEquipment: Equipment | null = null;
+
   ngOnInit(): void {
     this.productService.getEquipment(100).subscribe({
-      next: (items) => (this.equipments = items),
-      error: (err) => console.error('PRODUCTS ERROR:', err),
+      next: (items) => (this.equipments = items ?? []),
+      error: (err) => {
+        console.error('PRODUCTS ERROR:', err);
+        this.equipments = [];
+      },
     });
+  }
+
+  openDetails(item: Equipment) {
+    this.selectedEquipment = item;
+  }
+
+  closeDetails() {
+    this.selectedEquipment = null;
   }
 
   get filteredAndSortedEquipments(): Equipment[] {
@@ -74,18 +89,9 @@ export class Equipments {
   onImageError(eq: Equipment) {
     eq.imageUrl = '';
   }
-  selectedEquipment: Equipment | null = null;
 
-  openDetails(item: Equipment) {
-    this.selectedEquipment = item;
-  }
-
-  closeDetails() {
-    this.selectedEquipment = null;
-  }
-
-  addToCart(bike: Equipment) {
-    if (!bike.isAvailable) return;
-    this.cart.add(bike, 1);
+  addToCart(item: Equipment) {
+    if (!item.isAvailable) return;
+    this.cart.add(item, 1);
   }
 }

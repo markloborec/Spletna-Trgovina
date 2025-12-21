@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Bicycle, Equipment } from '../models/product';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { ProductInfo } from '../dialogs/product-info/product-info';
 
 type BackendProduct = {
   id: string;
@@ -19,7 +20,7 @@ type BackendProduct = {
 @Component({
   selector: 'app-bikes',
   standalone: true,
-  imports: [NgFor, NgIf, CurrencyPipe, FormsModule],
+  imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './bikes.html',
   styleUrls: ['./bikes.scss'],
 })
@@ -27,6 +28,7 @@ export class Bikes {
   constructor(private productService: ProductService, private cart: CartService) { }
 
   bicycles: Bicycle[] = [];
+  selectedBike: any = null;
 
   filter = {
     wheelSize: '' as '' | 26 | 27.5 | 28 | 29,
@@ -152,5 +154,13 @@ export class Bikes {
   addToCart(bike: Bicycle) {
     if (!bike.isAvailable) return;
     this.cart.add(bike, 1);
+  }
+
+  openDetails(bike: any) {
+    this.selectedBike = bike;
+  }
+
+  closeDetails() {
+    this.selectedBike = null;
   }
 }

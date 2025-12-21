@@ -54,7 +54,8 @@
     </div>
 
     <div class="bikes-grid">
-        <div class="bike-card" *ngFor="let bike of filteredAndSortedBicycles; trackBy: trackByBikeId">
+        <div class="bike-card" *ngFor="let bike of filteredAndSortedBicycles; trackBy: trackByBikeId"
+            (dblclick)="openDetails(bike)">
             <div class="bike-image-wrapper">
                 <img *ngIf="bike.imageUrl" [src]="bike.imageUrl" [alt]="bike.name" class="bike-image" loading="lazy"
                     (error)="onImageError(bike)" />
@@ -64,9 +65,7 @@
                     <span class="placeholder-name">{{ bike.name }}</span>
                 </div>
 
-                <span class="badge badge-unavailable" *ngIf="!bike.isAvailable">
-                    Ni na zalogi
-                </span>
+                <span class="badge badge-unavailable" *ngIf="!bike.isAvailable">Ni na zalogi</span>
             </div>
 
             <div class="bike-info">
@@ -99,14 +98,14 @@
                     <div class="bike-price">
                         {{ bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }} </div>
                     <div class="actions">
+
                         <button class="add-to-cart" type="button" [disabled]="!bike.isAvailable"
-                            (click)="addToCart(bike)">
+                            (click)="addToCart(bike)" (dblclick)="$event.stopPropagation()">
                             {{ bike.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
 
-
                         <a *ngIf="bike.officialProductSite" class="official-link" [href]="bike.officialProductSite"
-                            target="_blank" rel="noopener noreferrer">
+                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
                             Uradna stran
                         </a>
                     </div>
@@ -115,3 +114,4 @@
         </div>
     </div>
 </div>
+<app-product-info *ngIf="selectedBike" [product]="selectedBike" (close)="closeDetails()" />

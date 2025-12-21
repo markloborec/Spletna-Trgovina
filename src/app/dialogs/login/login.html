@@ -1,11 +1,21 @@
 <div class="login-backdrop">
     <div class="login-dialog">
-        <h2>Prijava</h2>
-        <p class="subtitle">
+        <h2 *ngIf="view === 'login'">Prijava</h2>
+        <h2 *ngIf="view === 'forgot'">Pozabljeno geslo</h2>
+        <h2 *ngIf="view === 'reset'">Ponastavitev gesla</h2>
+
+        <p class="subtitle" *ngIf="view === 'login'">
             Prijavi se v svoj BiciklStore račun.
         </p>
+        <p class="subtitle" *ngIf="view === 'forgot'">
+            Vpiši e-pošto in poslali ti bomo navodila za ponastavitev.
+        </p>
+        <p class="subtitle" *ngIf="view === 'reset'">
+            Vpiši novo geslo.
+        </p>
 
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+        <!-- LOGIN VIEW -->
+        <form *ngIf="view === 'login'" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
             <div class="field">
                 <label for="email">E-pošta *</label>
                 <input id="email" name="email" type="email" required [(ngModel)]="formData.email"
@@ -17,18 +27,66 @@
                 <input id="password" name="password" type="password" required [(ngModel)]="formData.password"
                     autocomplete="current-password" />
             </div>
-            <p class="forgot-password" (click)="onForgotPassword()">
+
+            <p class="forgot-password" role="button" tabindex="0" (click)="onForgotPassword()">
                 Pozabljeno geslo?
             </p>
+
             <div class="actions">
-                <button type="button" class="btn ghost" (click)="onCancel()">
-                    Prekliči
-                </button>
+                <button type="button" class="btn ghost" (click)="onCancel()">Prekliči</button>
                 <button type="submit" class="btn primary" [disabled]="isSubmitting">
                     {{ isSubmitting ? 'Prijava...' : 'Vpiši se' }}
                 </button>
             </div>
-            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
         </form>
+
+        <!-- FORGOT PASSWORD VIEW -->
+        <form *ngIf="view === 'forgot'" (ngSubmit)="submitForgotPassword()" #forgotForm="ngForm" novalidate>
+            <div class="field">
+                <label for="forgotEmail">E-pošta *</label>
+                <input id="forgotEmail" name="forgotEmail" type="email" required [(ngModel)]="forgotData.email"
+                    autocomplete="email" />
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn ghost" (click)="onCancel()">Nazaj</button>
+                <button type="submit" class="btn primary" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Pošiljanje...' : 'Pošlji navodila' }}
+                </button>
+            </div>
+        </form>
+
+        <!-- RESET PASSWORD VIEW -->
+        <form *ngIf="view === 'reset'" (ngSubmit)="submitResetPassword()" #resetForm="ngForm" novalidate>
+            <div class="field">
+                <label for="token">Token *</label>
+                <input id="token" name="token" type="text" required [(ngModel)]="resetData.token" autocomplete="off" />
+                <p class="help">
+                    Če bi bila to produkcijska aplikacija, bi token dobil po e-pošti. Tukaj je zaradi šolskega projekta.
+                </p>
+            </div>
+
+            <div class="field">
+                <label for="newPassword">Novo geslo *</label>
+                <input id="newPassword" name="newPassword" type="password" required [(ngModel)]="resetData.newPassword"
+                    autocomplete="new-password" />
+            </div>
+
+            <div class="field">
+                <label for="confirmPassword">Ponovi geslo *</label>
+                <input id="confirmPassword" name="confirmPassword" type="password" required
+                    [(ngModel)]="resetData.confirmPassword" autocomplete="new-password" />
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn ghost" (click)="onCancel()">Nazaj</button>
+                <button type="submit" class="btn primary" [disabled]="isSubmitting">
+                    {{ isSubmitting ? 'Shranjujem...' : 'Shrani novo geslo' }}
+                </button>
+            </div>
+        </form>
+
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
     </div>
 </div>

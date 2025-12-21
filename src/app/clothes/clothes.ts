@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Clothing } from '../models/product';
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { ProductInfo } from '../dialogs/product-info/product-info';
 
 type BackendProduct = {
   id: string;
@@ -24,7 +25,7 @@ type BackendProduct = {
 
 @Component({
   selector: 'app-clothes',
-  imports: [NgFor, NgIf, CurrencyPipe, FormsModule],
+  imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './clothes.html',
   styleUrl: './clothes.scss',
 })
@@ -32,6 +33,7 @@ export class Clothes {
   constructor(private productService: ProductService, private cart: CartService) { }
 
   clothes: Clothing[] = [];
+  selectedCloth: Clothing | null = null;
 
   filter = {
     size: '' as '' | Clothing['size'],
@@ -157,5 +159,13 @@ export class Clothes {
   addToCart(bike: Clothing) {
     if (!bike.isAvailable) return;
     this.cart.add(bike, 1);
+  }
+
+  openDetails(item: Clothing) {
+    this.selectedCloth = item;
+  }
+
+  closeDetails() {
+    this.selectedCloth = null;
   }
 }

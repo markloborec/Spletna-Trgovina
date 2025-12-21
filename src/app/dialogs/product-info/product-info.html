@@ -1,1 +1,197 @@
-<p>product-info works!</p>
+<div class="backdrop" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+        <button class="close-btn" type="button" (click)="closeModal()">✕</button>
+
+        <!-- HEADER -->
+        <div class="header">
+            <h2 class="title">{{ product?.name }}</h2>
+
+            <div class="meta">
+                <span class="chip" *ngIf="product?.type as t">
+                    Tip:
+                    <ng-container [ngSwitch]="t">
+                        <span *ngSwitchCase="'cycles'">Kolo</span>
+                        <span *ngSwitchCase="'equipment'">Oprema</span>
+                        <span *ngSwitchCase="'clothing'">Oblačila</span>
+                        <span *ngSwitchDefault>{{ t }}</span>
+                    </ng-container>
+                </span>
+
+                <span class="chip" *ngIf="product?.id">ID: {{ product.id }}</span>
+
+                <span class="chip" [class.ok]="product?.isAvailable" [class.bad]="product && !product.isAvailable">
+                    {{ product?.isAvailable ? 'Na zalogi' : 'Ni na zalogi' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="image-wrap">
+            <img *ngIf="product?.imageUrl; else noImage" [src]="product.imageUrl" [alt]="product?.name || 'Produkt'"
+                class="product-image" loading="lazy" />
+            <ng-template #noImage>
+                <div class="no-image">
+                    <span class="emoji">
+                        {{
+                        product?.type === 'cycles'
+                        ? '🚲'
+                        : product?.type === 'clothing'
+                        ? '👕'
+                        : '🧰'
+                        }}
+                    </span>
+                    <div class="no-image-text">Ni slike</div>
+                </div>
+            </ng-template>
+        </div>
+
+        <!-- PRICE -->
+        <p class="price">
+            {{ product?.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+        </p>
+
+        <!-- COMMON FIELDS -->
+        <div class="section">
+            <h3>Osnovne informacije</h3>
+
+            <div class="row">
+                <span class="label">Kratki opis</span>
+                <span class="value">
+                    {{ product?.shortDescription || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Dolgi opis</span>
+                <span class="value">
+                    {{ product?.longDescription || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Garancija</span>
+                <span class="value">
+                    {{ product?.warrantyMonths ?? '—' }} <ng-container
+                        *ngIf="product?.warrantyMonths != null">mesecev</ng-container>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Uradna stran</span>
+                <span class="value">
+                    <a *ngIf="product?.officialProductSite; else noSite" [href]="product.officialProductSite"
+                        target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
+                        Odpri uradno stran
+                    </a>
+                    <ng-template #noSite>—</ng-template>
+                </span>
+            </div>
+        </div>
+
+        <!-- BICYCLE FIELDS -->
+        <div class="section" *ngIf="product?.type === 'cycles'">
+            <h3>Specifikacije kolesa</h3>
+
+            <div class="row">
+                <span class="label">Velikost obročev</span>
+                <span class="value">
+                    {{ product?.wheelSize ?? '—' }}<ng-container *ngIf="product?.wheelSize != null">"</ng-container>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Material okvirja</span>
+                <span class="value">
+                    {{ product?.frameMaterial || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Število prestav</span>
+                <span class="value">
+                    {{ product?.gearCount ?? '—' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- CLOTHING FIELDS -->
+        <div class="section" *ngIf="product?.type === 'clothing'">
+            <h3>Specifikacije oblačila</h3>
+
+            <div class="row">
+                <span class="label">Velikost</span>
+                <span class="value">
+                    {{ product?.size || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Spol</span>
+                <span class="value">
+                    <ng-container *ngIf="product?.gender as g; else genderDash">
+                        <ng-container [ngSwitch]="g">
+                            <span *ngSwitchCase="'male'">moški</span>
+                            <span *ngSwitchCase="'female'">ženski</span>
+                            <span *ngSwitchCase="'unisex'">unisex</span>
+                            <span *ngSwitchDefault>{{ g }}</span>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #genderDash>—</ng-template>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Material</span>
+                <span class="value">
+                    {{ product?.material || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Barva</span>
+                <span class="value">
+                    {{ product?.color || '—' }}
+                </span>
+            </div>
+        </div>
+
+        <!-- EQUIPMENT FIELDS -->
+        <div class="section" *ngIf="product?.type === 'equipment'">
+            <h3>Specifikacije opreme</h3>
+
+            <div class="row">
+                <span class="label">Znamka</span>
+                <span class="value">
+                    {{ product?.brand || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Material</span>
+                <span class="value">
+                    {{ product?.material || '—' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Teža</span>
+                <span class="value">
+                    {{ product?.weight ?? '—' }}
+                    <ng-container *ngIf="product?.weight != null"> g</ng-container>
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Kompatibilnost</span>
+                <span class="value">
+                    <ng-container *ngIf="product?.compatibility?.length; else compDash">
+                        <ul class="list">
+                            <li *ngFor="let c of product.compatibility">{{ c }}</li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #compDash>—</ng-template>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

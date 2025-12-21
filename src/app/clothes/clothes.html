@@ -3,7 +3,6 @@
         <h1>Oblačila</h1>
     </div>
 
-    <!-- 🔍 FILTER & SORT BAR -->
     <div class="clothes-filters">
         <div class="filter-group">
             <label>Velikost</label>
@@ -64,7 +63,8 @@
     </div>
 
     <div class="clothes-grid">
-        <div class="clothes-card" *ngFor="let item of filteredAndSortedClothes; trackBy: trackByClothesId">
+        <div class="clothes-card" *ngFor="let item of filteredAndSortedClothes; trackBy: trackByClothesId"
+            (dblclick)="openDetails(item)">
             <div class="clothes-image-wrapper">
                 <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="item.name" class="clothes-image" loading="lazy"
                     (error)="onImageError(item)" />
@@ -118,12 +118,12 @@
 
                     <div class="actions">
                         <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
-                            (click)="addToCart(item)">
+                            (click)="addToCart(item)" (dblclick)="$event.stopPropagation()">
                             {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
                         </button>
 
                         <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
-                            target="_blank" rel="noopener noreferrer">
+                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
                             Uradna stran
                         </a>
                     </div>
@@ -132,3 +132,4 @@
         </div>
     </div>
 </div>
+<app-product-info *ngIf="selectedCloth" [product]="selectedCloth" (close)="closeDetails()" />

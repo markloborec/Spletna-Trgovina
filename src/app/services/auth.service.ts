@@ -21,8 +21,7 @@ export class AuthService {
   private hasToken(): boolean {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
-
-  // ---------- token helpers ----------
+  
   private storeToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
     this._isLoggedIn$.next(true);
@@ -44,7 +43,6 @@ export class AuthService {
       : new HttpHeaders();
   }
 
-  // podpira camelCase in snake_case (za vsak slučaj)
   private mapUser(u: any, fallback?: Partial<UserProfile>): UserProfile {
     return {
       id: (u.id ?? u._id)?.toString(),
@@ -54,20 +52,11 @@ export class AuthService {
       deliveryAddress:
         u.deliveryAddress ?? u.delivery_address ?? fallback?.deliveryAddress ?? '',
       phone: u.phone ?? u.phone_number ?? fallback?.phone ?? '',
-      // is_admin: u.is_admin ?? (fallback as any)?.is_admin ?? false,
     };
   }
 
-  /**
-   * Registracija
-   * POST /api/auth/register
-   * Backend pričakuje: firstName, lastName, email, deliveryAddress, phone, password
-   */
   register(data: RegisterRequest): Observable<UserProfile> {
-    if (
-      data.confirmPassword !== undefined &&
-      data.password !== data.confirmPassword
-    ) {
+    if (data.confirmPassword !== undefined && data.password !== data.confirmPassword) {
       return of({
         id: undefined,
         firstName: '',
@@ -95,10 +84,6 @@ export class AuthService {
       );
   }
 
-  /**
-   * Login
-   * POST /api/auth/login
-   */
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http
       .post<{ token: string; user: any }>(`${this.authUrl}/login`, credentials)
@@ -111,20 +96,26 @@ export class AuthService {
       );
   }
 
-  /**
-   * Trenutni uporabnik (me)
-   * GET /api/auth/me
-   */
+  forgotPassword(email: string): Observable<{ message: string; resetToken?: string }> {
+    return this.http.post<{ message: string; resetToken?: string }>(
+      `${this.authUrl}/forgot-password`,
+      { email }
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.authUrl}/reset-password`,
+      { token, newPassword }
+    );
+  }
+
   getProfile(): Observable<UserProfile> {
     return this.http
       .get<any>(`${this.authUrl}/me`, { headers: this.authHeaders() })
       .pipe(map((u) => this.mapUser(u)));
   }
 
-  /**
-   * Update profila
-   * Backend tega še nima → placeholder
-   */
   updateProfile(profile: UserProfile): Observable<UserProfile> {
     return of(profile);
   }
