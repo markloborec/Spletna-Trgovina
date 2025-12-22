@@ -12,15 +12,19 @@ const products_1 = __importDefault(require("./routes/products"));
 const categories_1 = __importDefault(require("./routes/categories"));
 const users_1 = __importDefault(require("./routes/users"));
 const cart_1 = __importDefault(require("./routes/cart"));
+const orders_1 = __importDefault(require("./routes/orders")); // ✅ DODANO
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+// osnovni router (health, auth, debug...)
 app.use("/api", index_1.router);
+// REST routes
 app.use("/api/products", products_1.default);
 app.use("/api/categories", categories_1.default);
 app.use("/api/users", users_1.default);
 app.use("/api/cart", cart_1.default);
+app.use("/api/orders", orders_1.default);
 (0, db_1.connectDB)().catch((err) => {
     console.error("Fatal: cannot connect to MongoDB", err);
     process.exit(1);

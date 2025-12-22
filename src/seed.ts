@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
+import crypto from "crypto";
+import mongoose from "mongoose";
 import { connectDB } from "./config/db";
 import { Category } from "./models/Category";
 import { Product } from "./models/Product";
@@ -11,34 +13,60 @@ if (process.env.NODE_ENV !== "development") {
   process.exit(1);
 }
 
+/**
+ * Uporaba:
+ *   npm run seed              -> upsert (NE briše, ID-ji ostanejo stabilni)
+ *   npm run seed -- --reset   -> pobriše in na novo vstavi (ID-ji se spremenijo)
+ */
+const SHOULD_RESET = process.argv.includes("--reset");
+
+// Helper: stabilen ObjectId iz string ključa (da imaš stabilne _id-je med seeding-i)
+function stableObjectId(key: string) {
+  const hex = crypto.createHash("md5").update(key).digest("hex").slice(0, 24);
+  return new mongoose.Types.ObjectId(hex);
+}
+
 async function seed() {
   try {
     await connectDB();
 
-    console.log("Clearing existing data...");
-    await ProductVariant.deleteMany({});
-    await Product.deleteMany({});
-    await Category.deleteMany({});
+    if (SHOULD_RESET) {
+      console.log("⚠️ RESET mode: clearing existing data...");
+      await ProductVariant.deleteMany({});
+      await Product.deleteMany({});
+      await Category.deleteMany({});
+    } else {
+      console.log("✅ UPSERT mode: keeping existing data (stable IDs).");
+    }
 
-    console.log("Inserting categories...");
-    const categories = await Category.insertMany([
-      { name: "Cestna kolesa" },
-      { name: "Gorska kolesa" },
-      { name: "Čelade" },
-      { name: "Kolesarska oblačila" },
-    ]);
+    // -------------------------
+    // Categories (stable IDs)
+    // -------------------------
+    console.log("Upserting categories...");
+    const categoryDocs = [
+      { _id: stableObjectId("cat:cestna"), name: "Cestna kolesa" },
+      { _id: stableObjectId("cat:gorska"), name: "Gorska kolesa" },
+      { _id: stableObjectId("cat:celade"), name: "Čelade" },
+      { _id: stableObjectId("cat:oblacila"), name: "Kolesarska oblačila" },
+    ];
 
-    const roadCat = categories.find((c) => c.name === "Cestna kolesa")!;
-    const mtbCat = categories.find((c) => c.name === "Gorska kolesa")!;
-    const helmetCat = categories.find((c) => c.name === "Čelade")!;
-    const clothingCat = categories.find((c) => c.name === "Kolesarska oblačila")!;
+    for (const c of categoryDocs) {
+      await Category.updateOne({ _id: c._id }, { $set: c }, { upsert: true });
+    }
 
-    console.log("Inserting products...");
-    const products = await Product.insertMany([
-      // ---------------------------
+    const roadCat = categoryDocs[0];
+    const mtbCat = categoryDocs[1];
+    const helmetCat = categoryDocs[2];
+    const clothingCat = categoryDocs[3];
+
+    // -------------------------
+    // Products (stable IDs)
+    // -------------------------
+    console.log("Upserting products...");
+    const productDocs: any[] = [
       // SPECIALIZED – CESTNA KOLESA
-      // ---------------------------
       {
+        _id: stableObjectId("prod:specialized-allez"),
         type: "cycles",
         category: roadCat._id,
         name: "Specialized Allez",
@@ -53,6 +81,7 @@ async function seed() {
         officialProductSite: "https://www.specialized.com",
       },
       {
+        _id: stableObjectId("prod:specialized-tarmac-sl7"),
         type: "cycles",
         category: roadCat._id,
         name: "Specialized Tarmac SL7",
@@ -67,6 +96,7 @@ async function seed() {
         officialProductSite: "https://www.specialized.com",
       },
       {
+        _id: stableObjectId("prod:sworks-tarmac-sl8"),
         type: "cycles",
         category: roadCat._id,
         name: "Specialized S-Works Tarmac SL8",
@@ -81,6 +111,7 @@ async function seed() {
         officialProductSite: "https://www.specialized.com",
       },
       {
+        _id: stableObjectId("prod:sworks-roubaix"),
         type: "cycles",
         category: roadCat._id,
         name: "Specialized S-Works Roubaix",
@@ -95,16 +126,14 @@ async function seed() {
         officialProductSite: "https://www.specialized.com",
       },
 
-      // ---------------------------
-      // MTB KOLO
-      // ---------------------------
+      // MTB
       {
+        _id: stableObjectId("prod:trek-marlin-7"),
         type: "cycles",
         category: mtbCat._id,
         name: "Trek Marlin 7",
         short_description: "Gorsko kolo za trail ture.",
-        long_description:
-          "Trek Marlin 7 je odlično izhodišče za XC in trail vožnjo.",
+        long_description: "Trek Marlin 7 je odlično izhodišče za XC in trail vožnjo.",
         price: 899.95,
         brand: "Trek",
         image_url: "",
@@ -113,10 +142,9 @@ async function seed() {
         officialProductSite: "https://www.trekbikes.com",
       },
 
-      // ---------------------------
-      // MET ČELADE
-      // ---------------------------
+      // ČELADE
       {
+        _id: stableObjectId("prod:met-trenta-3k"),
         type: "equipment",
         category: helmetCat._id,
         name: "MET Trenta 3K Carbon MIPS",
@@ -131,6 +159,7 @@ async function seed() {
         officialProductSite: "https://met-helmets.com",
       },
       {
+        _id: stableObjectId("prod:met-rivale"),
         type: "equipment",
         category: helmetCat._id,
         name: "MET Rivale MIPS",
@@ -145,10 +174,9 @@ async function seed() {
         officialProductSite: "https://met-helmets.com",
       },
 
-      // ---------------------------
       // OBLAČILA
-      // ---------------------------
       {
+        _id: stableObjectId("prod:castelli-aero-race-jersey"),
         type: "clothing",
         category: clothingCat._id,
         name: "Castelli Aero Race Jersey",
@@ -163,6 +191,7 @@ async function seed() {
         officialProductSite: "https://www.castelli-cycling.com",
       },
       {
+        _id: stableObjectId("prod:castelli-free-aero-rc"),
         type: "clothing",
         category: clothingCat._id,
         name: "Castelli Free Aero RC Bibshort",
@@ -177,6 +206,7 @@ async function seed() {
         officialProductSite: "https://www.castelli-cycling.com",
       },
       {
+        _id: stableObjectId("prod:castelli-perfetto-ros"),
         type: "clothing",
         category: clothingCat._id,
         name: "Castelli Perfetto RoS Jacket",
@@ -191,12 +221,9 @@ async function seed() {
         officialProductSite: "https://www.castelli-cycling.com",
       },
 
-      // =========================================================
-      // DODANIH 10 PRODUKTOV (da imaš več data za testiranje)
-      // =========================================================
-
-      // --- cycles (road) ---
+      // DODATNI PRODUKTI
       {
+        _id: stableObjectId("prod:giant-contend-ar-1"),
         type: "cycles",
         category: roadCat._id,
         name: "Giant Contend AR 1",
@@ -211,6 +238,7 @@ async function seed() {
         officialProductSite: "https://www.giant-bicycles.com",
       },
       {
+        _id: stableObjectId("prod:canyon-endurace-cf7"),
         type: "cycles",
         category: roadCat._id,
         name: "Canyon Endurace CF 7",
@@ -224,9 +252,8 @@ async function seed() {
         warrantyMonths: 24,
         officialProductSite: "https://www.canyon.com",
       },
-
-      // --- cycles (mtb) ---
       {
+        _id: stableObjectId("prod:scott-scale-970"),
         type: "cycles",
         category: mtbCat._id,
         name: "Scott Scale 970",
@@ -241,6 +268,7 @@ async function seed() {
         officialProductSite: "https://www.scott-sports.com",
       },
       {
+        _id: stableObjectId("prod:cube-reaction-tm"),
         type: "cycles",
         category: mtbCat._id,
         name: "Cube Reaction TM",
@@ -254,14 +282,14 @@ async function seed() {
         warrantyMonths: 24,
         officialProductSite: "https://www.cube.eu",
       },
-
-      // --- equipment (helmets) ---
       {
+        _id: stableObjectId("prod:giro-syntax-mips"),
         type: "equipment",
         category: helmetCat._id,
         name: "Giro Syntax MIPS",
         short_description: "Udobna cestna čelada z MIPS in dobro ventilacijo.",
-        long_description: "Giro Syntax MIPS združuje varnost, udobje in zračnost za cestne ter gravel vožnje.",
+        long_description:
+          "Giro Syntax MIPS združuje varnost, udobje in zračnost za cestne ter gravel vožnje.",
         price: 129,
         brand: "Giro",
         material: "Polikarbonat",
@@ -273,11 +301,13 @@ async function seed() {
         officialProductSite: "https://www.giro.com",
       },
       {
+        _id: stableObjectId("prod:poc-ventral-air-mips"),
         type: "equipment",
         category: helmetCat._id,
         name: "POC Ventral Air MIPS",
         short_description: "Zelo zračna čelada za vroče dni in intenzivno vožnjo.",
-        long_description: "POC Ventral Air MIPS je optimiziran za pretok zraka in udobje pri visokih temperaturah.",
+        long_description:
+          "POC Ventral Air MIPS je optimiziran za pretok zraka in udobje pri visokih temperaturah.",
         price: 249,
         brand: "POC",
         material: "Polikarbonat",
@@ -289,11 +319,13 @@ async function seed() {
         officialProductSite: "https://poc.com",
       },
       {
+        _id: stableObjectId("prod:bell-z20-mips"),
         type: "equipment",
         category: helmetCat._id,
         name: "Bell Z20 MIPS",
         short_description: "Lahka in varna cestna čelada z MIPS.",
-        long_description: "Bell Z20 MIPS je znan po udobju, zračnosti in dobri zaščiti pri padcih.",
+        long_description:
+          "Bell Z20 MIPS je znan po udobju, zračnosti in dobri zaščiti pri padcih.",
         price: 189,
         brand: "Bell",
         material: "Polikarbonat",
@@ -304,9 +336,8 @@ async function seed() {
         warrantyMonths: 24,
         officialProductSite: "https://www.bellhelmets.com",
       },
-
-      // --- clothing ---
       {
+        _id: stableObjectId("prod:rapha-core-jersey"),
         type: "clothing",
         category: clothingCat._id,
         name: "Rapha Core Jersey",
@@ -321,6 +352,7 @@ async function seed() {
         officialProductSite: "https://www.rapha.cc",
       },
       {
+        _id: stableObjectId("prod:assos-mille-gt-bibshorts"),
         type: "clothing",
         category: clothingCat._id,
         name: "Assos Mille GT Bib Shorts",
@@ -335,6 +367,7 @@ async function seed() {
         officialProductSite: "https://www.assos.com",
       },
       {
+        _id: stableObjectId("prod:sportful-fiandre-light-jacket"),
         type: "clothing",
         category: clothingCat._id,
         name: "Sportful Fiandre Light Jacket",
@@ -348,70 +381,67 @@ async function seed() {
         warrantyMonths: 24,
         officialProductSite: "https://www.sportful.com",
       },
-      {
-        type: "equipment",
-        category: helmetCat._id,
-        name: "Bell Z20 MIPS",
-        short_description: "Lahka in varna cestna čelada z MIPS.",
-        long_description:
-          "Bell Z20 MIPS je znan po udobju, zračnosti in dobri zaščiti pri padcih.",
-        price: 189,
-        brand: "Bell",
-        image_url: "",
-        inStock: true,
-        warrantyMonths: 24,
-        officialProductSite: "https://www.bellhelmets.com",
-      },
-    ]);
+    ];
 
-    console.log("Inserting product variants...");
-    await ProductVariant.insertMany([
-      // products[0] Specialized Allez
+    for (const p of productDocs) {
+      await Product.updateOne({ _id: p._id }, { $set: p }, { upsert: true });
+    }
+
+    // -------------------------
+    // Variants (stable IDs)
+    // -------------------------
+    console.log("Upserting product variants...");
+    const variantDocs: any[] = [
       {
-        product: products[0]._id,
+        _id: stableObjectId("var:allez-54"),
+        product: stableObjectId("prod:specialized-allez"),
         variant_name: "Velikost 54",
         sku: "ALLEZ-54",
         stock_quantity: 5,
         extra_price: 0,
       },
       {
-        product: products[0]._id,
+        _id: stableObjectId("var:allez-56"),
+        product: stableObjectId("prod:specialized-allez"),
         variant_name: "Velikost 56",
         sku: "ALLEZ-56",
         stock_quantity: 3,
         extra_price: 0,
       },
-
-      // products[1] Specialized Tarmac SL7
       {
-        product: products[1]._id,
+        _id: stableObjectId("var:tarmac-54"),
+        product: stableObjectId("prod:specialized-tarmac-sl7"),
         variant_name: "Velikost 54",
         sku: "TARMAC-54",
         stock_quantity: 2,
         extra_price: 0,
       },
       {
-        product: products[1]._id,
+        _id: stableObjectId("var:tarmac-56"),
+        product: stableObjectId("prod:specialized-tarmac-sl7"),
         variant_name: "Velikost 56",
         sku: "TARMAC-56",
         stock_quantity: 1,
         extra_price: 0,
       },
-
-      // products[4] Trek Marlin 7 
       {
-        product: products[4]._id,
+        _id: stableObjectId("var:marlin-m"),
+        product: stableObjectId("prod:trek-marlin-7"),
         variant_name: "Velikost M",
         sku: "MARLIN-M",
         stock_quantity: 4,
         extra_price: 0,
       },
-    ]);
+    ];
 
-    console.log("Seeding finished.");
+    for (const v of variantDocs) {
+      await ProductVariant.updateOne({ _id: v._id }, { $set: v }, { upsert: true });
+    }
+
+    console.log("✅ Seeding finished.");
     process.exit(0);
   } catch (error) {
-    console.error("Seeding error:", error);
+    console.error("❌ Seeding error:", error);
     process.exit(1);
   }
 }

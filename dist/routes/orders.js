@@ -4,7 +4,7 @@ const express_1 = require("express");
 const authMiddleware_1 = require("../middleware/authMiddleware");
 const ordersController_1 = require("../controllers/ordersController");
 const router = (0, express_1.Router)();
-router.post("/", authMiddleware_1.authMiddleware, ordersController_1.createOrder);
+router.post("/", authMiddleware_1.optionalAuthMiddleware, ordersController_1.createOrder);
 router.get("/my", authMiddleware_1.authMiddleware, ordersController_1.getMyOrders);
 router.get("/:id", authMiddleware_1.authMiddleware, ordersController_1.getOrderById);
 exports.default = router;

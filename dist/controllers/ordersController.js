@@ -9,44 +9,68 @@ exports.getOrderById = getOrderById;
 const mongoose_1 = __importDefault(require("mongoose"));
 const Product_1 = require("../models/Product");
 const Order_1 = require("../models/Order");
+const User_1 = require("../models/User"); // <-- mora obstajati
 async function createOrder(req, res) {
     try {
         const { items, shippingAddress, payment, delivery } = req.body;
-        // 1. Basic validation
+        // 1) Basic validation
         if (!Array.isArray(items) || items.length === 0) {
             return res.status(400).json({ error: "ITEMS_REQUIRED" });
-        }
-        if (!shippingAddress || !shippingAddress.street) {
-            return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
         }
         if (!payment || !delivery) {
             return res.status(400).json({ error: "PAYMENT_AND_DELIVERY_REQUIRED" });
         }
-        // 2. Validate product IDs
+        // 2) Resolve shippingAddress:
+        // - pickup: no address needed
+        // - courier + guest: must send shippingAddress
+        // - courier + logged-in: if not sent, take from profile
+        let finalShippingAddress = null;
+        if (delivery === "courier") {
+            if (req.user?.id) {
+                // logged-in
+                if (shippingAddress && shippingAddress.street) {
+                    finalShippingAddress = shippingAddress; // (če bi kdaj poslal)
+                }
+                else {
+                    const user = await User_1.User.findById(req.user.id).lean();
+                    // ⚠️ Če imaš drugačno strukturo profila, popravi tukaj:
+                    // npr. user.address, user.profile.address, user.shipping, itd.
+                    const profileAddr = user?.shippingAddress;
+                    if (!profileAddr || !profileAddr.street) {
+                        return res.status(400).json({ error: "PROFILE_ADDRESS_MISSING" });
+                    }
+                    finalShippingAddress = profileAddr;
+                }
+            }
+            else {
+                // guest
+                if (!shippingAddress || !shippingAddress.street) {
+                    return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
+                }
+                finalShippingAddress = shippingAddress;
+            }
+        }
+        // 3) Validate product IDs
         const productIds = items.map((i) => i.productId);
         for (const id of productIds) {
             if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
                 return res.status(400).json({ error: "INVALID_PRODUCT_ID" });
             }
         }
-        // 3. Load products from DB
-        const products = await Product_1.Product.find({
-            _id: { $in: productIds },
-        });
+        // 4) Load products
+        const products = await Product_1.Product.find({ _id: { $in: productIds } });
         if (products.length !== productIds.length) {
             return res.status(400).json({ error: "PRODUCT_NOT_FOUND" });
         }
-        // 4. Build order items snapshot
+        // 5) Build order snapshot
         let itemsTotal = 0;
         const orderItems = items.map((item) => {
             const product = products.find((p) => p._id.toString() === item.productId);
-            if (!product) {
-                throw new Error("PRODUCT_MISMATCH");
-            }
+            if (!product)
+                return null;
             const qty = Number(item.qty);
-            if (!qty || qty < 1) {
-                throw new Error("INVALID_QTY");
-            }
+            if (!qty || qty < 1)
+                return null;
             const unitPrice = product.price;
             const lineTotal = unitPrice * qty;
             itemsTotal += lineTotal;
@@ -58,18 +82,21 @@ async function createOrder(req, res) {
                 lineTotal,
             };
         });
-        // 5. Totals calculation
-        const tax = 0; // placeholder
-        const shipping = delivery === "courier" ? 5 : 0;
+        if (orderItems.some((x) => x === null)) {
+            return res.status(400).json({ error: "INVALID_QTY" });
+        }
+        // 6) Totals (usklajeno s frontend: 2.99 courier)
+        const tax = 0;
+        const shipping = delivery === "courier" ? 2.99 : 0;
         const grandTotal = itemsTotal + tax + shipping;
-        // 6. Create order
+        // 7) Create order
         const order = await Order_1.Order.create({
             user_id: req.user?.id || null,
             user_email: req.user?.email || "",
             items: orderItems,
             payment,
             delivery,
-            shippingAddress,
+            shippingAddress: finalShippingAddress,
             totals: {
                 itemsTotal,
                 tax,
@@ -87,7 +114,6 @@ async function createOrder(req, res) {
 }
 /**
  * GET /api/orders/my
- * Vrne vsa naročila prijavljenega uporabnika
  */
 async function getMyOrders(req, res) {
     try {
@@ -106,7 +132,6 @@ async function getMyOrders(req, res) {
 }
 /**
  * GET /api/orders/:id
- * Vrne eno naročilo, če je user owner ali admin
  */
 async function getOrderById(req, res) {
     try {

@@ -33,7 +33,7 @@ const orderSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
         trim: true,
-        enum: ["cod", "card"],
+        enum: ["cod", "card", "bank"],
     },
     delivery: {
         type: String,
@@ -42,7 +42,13 @@ const orderSchema = new mongoose_1.default.Schema({
         enum: ["courier", "pickup"],
     },
     totals: { type: totalsSchema, required: true },
-    shippingAddress: { type: addressSchema, required: true },
+    shippingAddress: {
+        fullName: { type: String, required: true },
+        street: { type: String, required: true },
+        city: { type: String, required: false, default: "" },
+        postalCode: { type: String, required: false, default: "" },
+        phone: { type: String, required: false, default: "" },
+    },
     status: {
         type: String,
         trim: true,

@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyToken, JwtPayload } from "../utils/jwt";
-import { User } from "../models/User";
+import { verifyToken } from "../utils/jwt";
 
 export interface AuthRequest extends Request {
   user?: {
@@ -10,7 +9,8 @@ export interface AuthRequest extends Request {
   };
 }
 
-export async function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+// ✅ Obvezen auth (npr. /orders/my, /orders/:id)
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
   try {
     const authHeader = req.headers.authorization;
 
@@ -19,24 +19,40 @@ export async function authMiddleware(req: AuthRequest, res: Response, next: Next
     }
 
     const token = authHeader.split(" ")[1];
-
-    const payload = verifyToken(token);
-
-    //preveriš, ali user še obstaja v bazi
-    const user = await User.findById(payload.userId).lean();
-    if (!user) {
-      return res.status(401).json({ error: "AUTH_USER_NOT_FOUND" });
-    }
+    const payload: any = verifyToken(token);
 
     req.user = {
       id: payload.userId,
       email: payload.email,
-      is_admin: payload.is_admin
+      is_admin: payload.is_admin === true,
     };
 
     next();
   } catch (err) {
-    console.error("Auth error:", err);
+    console.error("AUTH_ERROR:", err);
     return res.status(401).json({ error: "AUTH_INVALID_TOKEN" });
+  }
+}
+
+
+export function optionalAuthMiddleware(req: AuthRequest, _res: Response, next: NextFunction) {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      const token = authHeader.split(" ")[1];
+      const payload: any = verifyToken(token);
+
+      req.user = {
+        id: payload.userId,
+        email: payload.email,
+        is_admin: payload.is_admin === true,
+      };
+    }
+
+    next();
+  } catch (err) {
+    // če je token slab, nadaljuj kot guest
+    next();
   }
 }

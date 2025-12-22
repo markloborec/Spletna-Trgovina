@@ -1,9 +1,5 @@
-import app from "./app";
 import dotenv from "dotenv";
-import productsRouter from "./routes/products";
-
-app.use("/api/products", productsRouter);
-
+import app from "./app";
 
 dotenv.config();
 
