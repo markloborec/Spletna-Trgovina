@@ -230,10 +230,12 @@ Filtri:
 
 **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila.
 
+
 <div align="center">
   
 ![Pretekla naročila](./img/Pretekla naročila.png)
 
 </div>
+
 
 **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicilstore.
