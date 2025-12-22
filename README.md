@@ -233,7 +233,7 @@ Filtri:
 
 <div align="center">
   
-![Pretekla naročila](./img/Pretekla naročila.png)
+![Preteklanaročila](./img/Pretekla naročila.png)
 
 </div>
 
