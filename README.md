@@ -6,7 +6,7 @@
 
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
-## Trenutne funkcionalnosti (stanje do 4. cikla)
+## Trenutne funkcionalnosti (stanje do 5. cikla)
 ### Uporabniki
 - Registracija in prijava uporabnika (JWT)
 - Pridobivanje uporabniških podatkov (profil)
@@ -22,7 +22,12 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Trije filtri za opremo
 - Model in factory za produkt
 - Seed podatki za izdelke, kategorije in variante
-(variant backend trenutno še ne vrača)
+- Backend podpira delo z variantami (zaloga, cena, izračun košarice)
+
+### Urejanje seznama izdelkov
+- Paginacija (page, pageSize)
+- Filtriranje po tipu, kategoriji in cenovnem razponu
+- Sortiranje po ceni in imenu (naraščajoče/padajoče)
 
 ### Navigacija in jezik
 - Routing med stranmi
@@ -30,6 +35,14 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 ### Informacije in poslovalnice
 - Interaktivni zemljevid poslovalnic
 - Kontaktna stran in obrazec
+
+### Košarica 
+- Definirana struktura košarice (productId, variantId, quantity)
+- Izračun vmesne vsote (subtotal)
+- Dodan izračun davka (DDV) in dostave
+- Preverjanje zaloge na ravni variant
+- Podpora za variante izdelkov
+- Centralizirana logika izračuna cene (pripravljeno za orders)
 
 ## Uporabljene tehnologije 
 ### Backend
