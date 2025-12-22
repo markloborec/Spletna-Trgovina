@@ -204,3 +204,29 @@ Filtri:
 </div>
 
 **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spleta stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico".
+
+
+<div align="center">
+  
+![profil](./img/profil.png)
+
+</div>
+
+
+<div align="center">
+  
+![informacijeizdelka](./img/informacijeizdelka.png)
+
+</div>
+
+<div align="center">
+  
+![Kosaricazakljucek](./img/Kosaricazakljucek.png)
+
+</div>
+
+<div align="center">
+  
+![Pretekla naročila](./img/Pretekla naročila.png)
+
+</div>
