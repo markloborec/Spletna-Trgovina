@@ -19,8 +19,13 @@
                 <input class="qty" type="number" min="1" [value]="it.qty"
                     (change)="setQty(it.product.id, $any($event.target).value)" />
 
-                <div class="price">{{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
-                <div class="subtotal">{{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</div>
+                <div class="price">
+                    {{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
+                </div>
+
+                <div class="subtotal">
+                    {{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
+                </div>
 
                 <button class="remove" type="button" (click)="remove(it.product.id)">✕</button>
             </div>
@@ -45,7 +50,7 @@
                     <span>{{ taxAmount | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
                 </div>
 
-                <div class="line" *ngIf="shippingCost!=0">
+                <div class="line" *ngIf="shippingCost != 0">
                     <span class="delivery">Stroški dostave</span>
                     <span class="delivery">{{ shippingCost | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
                 </div>
@@ -95,36 +100,35 @@
                 </div>
             </div>
 
-            <!-- Guest naslov -->
             <div class="card" *ngIf="!isLoggedIn && delivery === 'courier'">
                 <h3>Naslov za dostavo</h3>
 
                 <div class="form">
                     <div class="field">
                         <label>Ime in priimek *</label>
-                        <input type="text" [(ngModel)]="guestAddress.fullName" name="fullName" />
+                        <input type="text" [(ngModel)]="address.fullName" name="fullName" />
                     </div>
 
                     <div class="field">
                         <label>Ulica in hišna št. *</label>
-                        <input type="text" [(ngModel)]="guestAddress.street" name="street" />
+                        <input type="text" [(ngModel)]="address.street" name="street" />
                     </div>
 
                     <div class="grid2">
                         <div class="field">
                             <label>Mesto *</label>
-                            <input type="text" [(ngModel)]="guestAddress.city" name="city" />
+                            <input type="text" [(ngModel)]="address.city" name="city" />
                         </div>
 
                         <div class="field">
                             <label>Poštna št. *</label>
-                            <input type="text" [(ngModel)]="guestAddress.postalCode" name="postalCode" />
+                            <input type="text" [(ngModel)]="address.postalCode" name="postalCode" />
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Telefon *</label>
-                        <input type="tel" [(ngModel)]="guestAddress.phone" name="phone" />
+                        <input type="tel" [(ngModel)]="address.phone" name="phone" />
                     </div>
                 </div>
             </div>

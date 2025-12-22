@@ -1,26 +1,19 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  flex: 1; 
-  min-height: 0;     // prepreči flex overflow bug
+  display: block;
+  height: 100%;
 }
 
+/* Glavni layout aplikacije */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; // ključno: zapolni cel viewport
+}
+
+/* Glavna vsebina */
 .main-content {
-  flex: 1;
+  flex: 1; // potisne footer na dno
   display: flex;
   flex-direction: column;
-}
-
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: #000;
-  color: #fff;
-  padding: 8px 12px;
-  z-index: 10000;
-}
-
-.skip-link:focus {
-  top: 0;
+  min-height: 0; // prepreči overflow bug pri flex + router-outlet
 }
