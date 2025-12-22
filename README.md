@@ -23,11 +23,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Model in factory za produkt
 - Seed podatki za izdelke, kategorije in variante
 - Backend podpira delo z variantami (zaloga, cena, izračun košarice)
-
-### Urejanje seznama izdelkov
-- Paginacija (page, pageSize)
-- Filtriranje po tipu, kategoriji in cenovnem razponu
-- Sortiranje po ceni in imenu (naraščajoče/padajoče)
+- urejanje seznama izdelkov (paginacija, filtriranje, sortiranje)
 
 ### Navigacija in jezik
 - Routing med stranmi
