@@ -212,6 +212,7 @@ Filtri:
 
 </div>
 
+**PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)...
 
 <div align="center">
   
@@ -219,14 +220,20 @@ Filtri:
 
 </div>
 
+**INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka.
+
 <div align="center">
   
 ![Kosaricazakljucek](./img/Kosaricazakljucek.png)
 
 </div>
 
+**PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila.
+
 <div align="center">
   
 ![Pretekla naročila](./img/Pretekla naročila.png)
 
 </div>
+
+**PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicilstore.
