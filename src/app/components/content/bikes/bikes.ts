@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Bicycle, Equipment } from '../models/product';
-import { ProductService } from '../services/product.service';
-import { CartService } from '../services/cart.service';
-import { ProductInfo } from '../dialogs/product-info/product-info';
+import { Bicycle, Equipment } from '../../../models/product';
+import { ProductService } from '../../../services/product.service';
+import { CartService } from '../../../services/cart.service';
+import { ProductInfo } from '../../dialogs/product-info/product-info';
 
 type BackendProduct = {
   id: string;

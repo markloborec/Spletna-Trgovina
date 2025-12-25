@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Equipment } from '../models/product';
-import { ProductService } from '../services/product.service';
-import { CartService } from '../services/cart.service';
-import { ProductInfo } from '../dialogs/product-info/product-info';
+import { Equipment } from '../../../models/product';
+import { ProductService } from '../../../services/product.service';
+import { CartService } from '../../../services/cart.service';
+import { ProductInfo } from '../../dialogs/product-info/product-info';
 
 @Component({
   selector: 'app-equipments',

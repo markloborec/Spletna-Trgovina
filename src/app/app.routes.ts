@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { Homepage } from './homepage/homepage';
-import { UserProfileComponent } from './settings/user-profile/user-profile';
-import { Bikes } from './bikes/bikes';
-import { Clothes } from './clothes/clothes';
-import { Equipments } from './equipments/equipments';
-import { Contact } from './contact/contact';
-import { Cart } from './cart/cart';
-import { OrderHistory } from './settings/order-history/order-history';
+import { Homepage } from './components/content/homepage/homepage';
+import { UserProfileComponent } from './components/content/user/user-profile/user-profile';
+import { Bikes } from './components/content/bikes/bikes';
+import { Clothes } from './components/content//clothes/clothes';
+import { Equipments } from './components/content/equipments/equipments';
+import { Contact } from './components/content/contact/contact';
+import { Cart } from './components/content/cart/cart';
+import { OrderHistory } from './components/content/user/order-history/order-history';
 
 export const routes: Routes = [
     { path: '', component: Homepage },

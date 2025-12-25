@@ -3,10 +3,9 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription, finalize } from 'rxjs';
-
-import { CartService } from '../services/cart.service';
-import { AuthService } from '../services/auth.service';
-import { API_BASE_URL } from '../services/api.config';
+import { CartService } from '../../../services/cart.service';
+import { AuthService } from '../../../services/auth.service';
+import { API_BASE_URL } from '../../../services/api.config';
 
 type PaymentMethod = 'card' | 'cod' | 'bank';
 type DeliveryMethod = 'courier' | 'pickup';

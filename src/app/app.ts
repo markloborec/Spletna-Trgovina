@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from "./header/header";
-import { Footer } from "./footer/footer";
+import { Header } from "./components/header/header";
+import { Footer } from "./components/footer/footer";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-import { Registration } from "./dialogs/registration/registration";
-import { Login } from "./dialogs/login/login";
+import { Registration } from "./components/dialogs/registration/registration";
+import { Login } from "./components/dialogs/login/login";
 
 @Component({
   selector: 'app-root',

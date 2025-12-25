@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Store } from '../../models/store';
+import { Store } from '../../../../models/store';
 
 @Component({
   selector: 'app-store-info',

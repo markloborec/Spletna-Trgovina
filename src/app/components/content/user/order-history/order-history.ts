@@ -3,8 +3,8 @@ import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
-import { API_BASE_URL } from '../../services/api.config';
-import { AuthService } from '../../services/auth.service';
+import { API_BASE_URL } from '../../../../services/api.config';
+import { AuthService } from '../../../../services/auth.service';
 
 type OrderListItem = {
   orderId: string;

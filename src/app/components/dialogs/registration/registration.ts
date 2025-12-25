@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../models/user';
+import { AuthService } from '../../../services/auth.service';
+import { RegisterRequest } from '../../../models/user';
 
 @Component({
   selector: 'app-registration',

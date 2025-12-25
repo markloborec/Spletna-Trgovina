@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
-import { Store } from '../models/store';
+import { Store } from '../../../models/store';
 import { CommonModule, NgFor } from '@angular/common';
 import { StoreInfo } from './store-info/store-info';
 
