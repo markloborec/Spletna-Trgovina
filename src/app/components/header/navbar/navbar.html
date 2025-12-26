@@ -1,37 +1,35 @@
-<nav class="navbar">
-    <button class="navbar-toggle" (click)="toggleMenu()" [class.open]="menuOpen" aria-label="Meni"
+<nav class="navbar" role="navigation" aria-label="Glavna navigacija">
+    <button class="navbar-toggle" type="button" (click)="toggleMenu()" (keydown)="onToggleKeydown($event)"
+        [class.open]="menuOpen" aria-label="Odpri ali zapri meni" aria-controls="main-navigation"
         [attr.aria-expanded]="menuOpen">
-        <span class="navbar-toggle-icon"></span>
+        <span class="navbar-toggle-icon" aria-hidden="true"></span>
     </button>
 
-    <ul class="navbar-list" [class.open]="menuOpen">
+    <ul id="main-navigation" class="navbar-list" [class.open]="menuOpen" (keydown.escape)="closeMenu()">
         <li>
-            <a class="navbar-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleMenu()">
-                <span>Domov</span>
+            <a class="navbar-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                aria-current="page" (click)="closeMenu()">
+                Domov
             </a>
         </li>
-
         <li>
-            <a class="navbar-link" routerLink="/bikes" routerLinkActive="active" (click)="toggleMenu()">
-                <span>Kolesa</span>
+            <a class="navbar-link" routerLink="/bikes" routerLinkActive="active" (click)="closeMenu()">
+                Kolesa
             </a>
         </li>
-
         <li>
-            <a class="navbar-link" routerLink="/equipment" routerLinkActive="active" (click)="toggleMenu()">
-                <span>Oprema</span>
+            <a class="navbar-link" routerLink="/equipment" routerLinkActive="active" (click)="closeMenu()">
+                Oprema
             </a>
         </li>
-
         <li>
-            <a class="navbar-link" routerLink="/clothes" routerLinkActive="active" (click)="toggleMenu()">
-                <span>Oblačila</span>
+            <a class="navbar-link" routerLink="/clothes" routerLinkActive="active" (click)="closeMenu()">
+                Oblačila
             </a>
         </li>
-
         <li>
-            <a class="navbar-link" routerLink="/contact" routerLinkActive="active" (click)="toggleMenu()">
-                <span>Kontakt</span>
+            <a class="navbar-link" routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">
+                Kontakt
             </a>
         </li>
     </ul>

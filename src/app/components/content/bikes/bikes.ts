@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Bicycle, Equipment } from '../../../models/product';
+import { Bicycle } from '../../../models/product';
 import { ProductService } from '../../../services/product.service';
 import { CartService } from '../../../services/cart.service';
 import { ProductInfo } from '../../dialogs/product-info/product-info';
 
 type BackendProduct = {
-  id: string;
+  id?: string;
+  _id?: string;
   name: string;
   price: number;
   imageUrl?: string;
@@ -52,13 +53,35 @@ export class Bikes {
     });
   }
 
+  toggleSortDirection() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  }
+
+  /** Tipkovnična podpora za kartico: Enter / Space odpre podrobnosti */
+  onCardKeydown(event: KeyboardEvent, bike: any) {
+    const key = event.key;
+    if (key === 'Enter' || key === ' ') {
+      event.preventDefault();
+      this.openDetails(bike);
+    }
+  }
+
+  /** Bolj opisni ALT (WAVE opozori, če je alt generičen ali manjka) */
+  getBikeImageAlt(bike: Bicycle): string {
+    const name = (bike?.name || '').trim();
+    if (!name) return 'Fotografija kolesa';
+    const availability = bike.isAvailable ? 'na zalogi' : 'ni na zalogi';
+    return `Fotografija kolesa: ${name} (${availability})`;
+  }
+
   private mapBackendToBicycle(p: BackendProduct): Bicycle {
     const derived = this.deriveBikeSpecs(p);
+    const id = String(p.id ?? (p as any)._id ?? '');
 
     return {
-      id: p.id,
+      id,
       name: p.name,
-      price: p.price,
+      price: Number(p.price ?? 0),
       imageUrl: p.imageUrl ?? '',
       shortDescription: p.shortDescription ?? '',
       longDescription: p.longDescription ?? '',
@@ -90,26 +113,16 @@ export class Bikes {
     }
 
     if (name.includes('marlin') || name.includes('mtb') || name.includes('gors')) {
-      return {
-        wheelSize: 29,
-        frameMaterial: 'Aluminij',
-        gearCount: 12,
-      };
+      return { wheelSize: 29, frameMaterial: 'Aluminij', gearCount: 12 };
     }
 
-    return {
-      wheelSize: 28,
-      frameMaterial: 'Aluminij',
-      gearCount: 11,
-    };
+    return { wheelSize: 28, frameMaterial: 'Aluminij', gearCount: 11 };
   }
 
   get filteredAndSortedBicycles(): Bicycle[] {
     let result = [...this.bicycles];
 
-    if (this.filter.wheelSize) {
-      result = result.filter((b) => b.wheelSize === this.filter.wheelSize);
-    }
+    if (this.filter.wheelSize) result = result.filter((b) => b.wheelSize === this.filter.wheelSize);
 
     if (this.filter.frameMaterial) {
       const q = this.filter.frameMaterial.toLowerCase();
@@ -118,16 +131,11 @@ export class Bikes {
 
     if (this.filter.minGears !== '') {
       const min = Number(this.filter.minGears);
-      if (!Number.isNaN(min)) {
-        result = result.filter((b) => b.gearCount >= min);
-      }
+      if (!Number.isNaN(min)) result = result.filter((b) => b.gearCount >= min);
     }
 
-    if (this.filter.availability === 'available') {
-      result = result.filter((b) => b.isAvailable);
-    } else if (this.filter.availability === 'unavailable') {
-      result = result.filter((b) => !b.isAvailable);
-    }
+    if (this.filter.availability === 'available') result = result.filter((b) => b.isAvailable);
+    else if (this.filter.availability === 'unavailable') result = result.filter((b) => !b.isAvailable);
 
     result.sort((a, b) => {
       const valA = a[this.sortBy];
@@ -158,6 +166,14 @@ export class Bikes {
 
   openDetails(bike: any) {
     this.selectedBike = bike;
+  }
+
+  openDetailsFromCard(bike: any, event: Event) {
+    // če user klikne na button/link v kartici, tega NE štej kot open
+    const target = event.target as HTMLElement | null;
+    if (target && (target.closest('button') || target.closest('a'))) return;
+
+    this.openDetails(bike);
   }
 
   closeDetails() {

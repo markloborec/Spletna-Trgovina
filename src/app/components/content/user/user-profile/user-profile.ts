@@ -9,7 +9,7 @@ import { UserService } from '../../../../services/user.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './user-profile.html',
-  styleUrl: './user-profile.scss',
+  styleUrls: ['./user-profile.scss'],
 })
 export class UserProfileComponent implements OnInit {
   profile: UserProfile | null = null;

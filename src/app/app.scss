@@ -3,17 +3,23 @@
   height: 100%;
 }
 
-/* Glavni layout aplikacije */
 .app-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; // ključno: zapolni cel viewport
+  min-height: 100vh;
 }
 
-/* Glavna vsebina */
 .main-content {
-  flex: 1; // potisne footer na dno
+  flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0; // prepreči overflow bug pri flex + router-outlet
+  min-height: 0;
+
+  overflow: hidden;
+  position: relative;
+}
+
+.route-wrapper {
+  flex: 1;
+  min-height: 0;
 }

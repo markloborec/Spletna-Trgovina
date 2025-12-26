@@ -1,13 +1,21 @@
-<div class="backdrop" (click)="closeModal()">
-    <div class="modal" (click)="$event.stopPropagation()">
-        <button class="close-btn" type="button" (click)="closeModal()">✕</button>
+<div class="backdrop" (click)="closeModal()" (keydown)="onKeydown($event)" tabindex="-1">
+    <div class="modal" role="dialog" aria-modal="true" [attr.aria-labelledby]="titleId" [attr.aria-describedby]="descId"
+        (click)="$event.stopPropagation()">
+        <p class="sr-only" [id]="descId">
+            Okno s podrobnostmi izdelka. Za zapiranje pritisni Escape. Premikaš se lahko s tipko Tab.
+        </p>
 
-        <!-- HEADER -->
+        <button #closeBtn class="close-btn" type="button" (click)="closeModal()" aria-label="Zapri" title="Zapri">
+            ✕
+        </button>
+
         <div class="header">
-            <h2 class="title">{{ product?.name }}</h2>
+            <h2 #dialogTitle class="title" [id]="titleId" tabindex="-1">
+                {{ (productFull ?? product)?.name }}
+            </h2>
 
             <div class="meta">
-                <span class="chip" *ngIf="product?.type as t">
+                <span class="chip" *ngIf="(productFull ?? product)?.type as t">
                     Tip:
                     <ng-container [ngSwitch]="t">
                         <span *ngSwitchCase="'cycles'">Kolo</span>
@@ -17,180 +25,174 @@
                     </ng-container>
                 </span>
 
-                <span class="chip" *ngIf="product?.id">ID: {{ product.id }}</span>
-
-                <span class="chip" [class.ok]="product?.isAvailable" [class.bad]="product && !product.isAvailable">
-                    {{ product?.isAvailable ? 'Na zalogi' : 'Ni na zalogi' }}
-                </span>
+                <span class="chip" *ngIf="(productFull ?? product)?.isAvailable === false">Ni na zalogi</span>
+                <span class="chip chip-ok" *ngIf="(productFull ?? product)?.isAvailable !== false">Na zalogi</span>
             </div>
         </div>
 
-        <!-- IMAGE -->
         <div class="image-wrap">
-            <img *ngIf="product?.imageUrl; else noImage" [src]="product.imageUrl" [alt]="product?.name || 'Produkt'"
-                class="product-image" loading="lazy" />
-            <ng-template #noImage>
-                <div class="no-image">
-                    <span class="emoji">
-                        {{
-                        product?.type === 'cycles'
-                        ? '🚲'
-                        : product?.type === 'clothing'
-                        ? '👕'
-                        : '🧰'
-                        }}
-                    </span>
-                    <div class="no-image-text">Ni slike</div>
-                </div>
-            </ng-template>
+            <img *ngIf="(productFull ?? product)?.imageUrl" [src]="(productFull ?? product).imageUrl"
+                [alt]="(productFull ?? product)?.name" class="product-image" loading="lazy" />
+            <div class="no-image" *ngIf="!(productFull ?? product)?.imageUrl">
+                <div class="emoji">🛍️</div>
+                <div>Ni slike</div>
+            </div>
         </div>
 
-        <!-- PRICE -->
-        <p class="price">
-            {{ product?.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
-        </p>
+        <div class="price">
+            <div class="price-label">Cena</div>
+            <div class="price-value">
+                {{ (productFull ?? product)?.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
+            </div>
+        </div>
 
-        <!-- COMMON FIELDS -->
         <div class="section">
-            <h3>Osnovne informacije</h3>
-
             <div class="row">
                 <span class="label">Kratki opis</span>
-                <span class="value">
-                    {{ product?.shortDescription || '—' }}
-                </span>
+                <span class="value">{{ (productFull ?? product)?.shortDescription || '—' }}</span>
             </div>
 
             <div class="row">
                 <span class="label">Dolgi opis</span>
-                <span class="value">
-                    {{ product?.longDescription || '—' }}
-                </span>
+                <span class="value">{{ (productFull ?? product)?.longDescription || '—' }}</span>
             </div>
 
             <div class="row">
                 <span class="label">Garancija</span>
                 <span class="value">
-                    {{ product?.warrantyMonths ?? '—' }} <ng-container
-                        *ngIf="product?.warrantyMonths != null">mesecev</ng-container>
+                    {{ (productFull ?? product)?.warrantyMonths ?? '—' }}
+                    <ng-container *ngIf="(productFull ?? product)?.warrantyMonths != null"> mesecev</ng-container>
                 </span>
             </div>
 
             <div class="row">
                 <span class="label">Uradna stran</span>
                 <span class="value">
-                    <a *ngIf="product?.officialProductSite; else noSite" [href]="product.officialProductSite"
-                        target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
+                    <a *ngIf="(productFull ?? product)?.officialProductSite; else noSite"
+                        [href]="(productFull ?? product).officialProductSite" target="_blank" rel="noopener noreferrer"
+                        (click)="$event.stopPropagation()" (dblclick)="$event.stopPropagation()">
                         Odpri uradno stran
                     </a>
                     <ng-template #noSite>—</ng-template>
                 </span>
             </div>
+
+            <ng-container [ngSwitch]="(productFull ?? product)?.type">
+                <ng-container *ngSwitchCase="'cycles'">
+                    <div class="row">
+                        <span class="label">Velikost obročev</span>
+                        <span class="value">{{ (productFull ?? product)?.wheelSize ?? '—' }}"</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Okvir</span>
+                        <span class="value">{{ (productFull ?? product)?.frameMaterial ?? '—' }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Prestav</span>
+                        <span class="value">{{ (productFull ?? product)?.gearCount ?? '—' }}</span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'clothing'">
+                    <div class="row">
+                        <span class="label">Velikost</span>
+                        <span class="value">{{ (productFull ?? product)?.size || '—' }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Spol</span>
+                        <span class="value">
+                            <ng-container *ngIf="(productFull ?? product)?.gender as g; else genderDash">
+                                <ng-container [ngSwitch]="g">
+                                    <span *ngSwitchCase="'male'">moški</span>
+                                    <span *ngSwitchCase="'female'">ženski</span>
+                                    <span *ngSwitchCase="'unisex'">unisex</span>
+                                    <span *ngSwitchDefault>{{ g }}</span>
+                                </ng-container>
+                            </ng-container>
+                            <ng-template #genderDash>—</ng-template>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Material</span>
+                        <span class="value">{{ (productFull ?? product)?.material || '—' }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Barva</span>
+                        <span class="value">{{ (productFull ?? product)?.color || '—' }}</span>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'equipment'">
+                    <div class="row">
+                        <span class="label">Znamka</span>
+                        <span class="value">{{ (productFull ?? product)?.brand || '—' }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Material</span>
+                        <span class="value">{{ (productFull ?? product)?.material || '—' }}</span>
+                    </div>
+                    <div class="row">
+                        <span class="label">Teža</span>
+                        <span class="value">
+                            <ng-container *ngIf="(productFull ?? product)?.weight != null; else wDash">
+                                {{ (productFull ?? product)?.weight }} g
+                            </ng-container>
+                            <ng-template #wDash>—</ng-template>
+                        </span>
+                    </div>
+
+                    <div class="row">
+                        <span class="label">Kompatibilnost</span>
+                        <span class="value">
+                            <ng-container *ngIf="(productFull ?? product)?.compatibility?.length; else compDash">
+                                <ul class="list">
+                                    <li *ngFor="let c of (productFull ?? product).compatibility">{{ c }}</li>
+                                </ul>
+                            </ng-container>
+                            <ng-template #compDash>—</ng-template>
+                        </span>
+                    </div>
+                </ng-container>
+            </ng-container>
         </div>
 
-        <!-- BICYCLE FIELDS -->
-        <div class="section" *ngIf="product?.type === 'cycles'">
-            <h3>Specifikacije kolesa</h3>
+        <div class="section reviews">
+            <div class="reviews-header">
+                <div class="reviews-title">Ocene in mnenja</div>
 
-            <div class="row">
-                <span class="label">Velikost obročev</span>
-                <span class="value">
-                    {{ product?.wheelSize ?? '—' }}<ng-container *ngIf="product?.wheelSize != null">"</ng-container>
-                </span>
+                <div class="rating-summary">
+                    <div class="stars" aria-label="povprečna ocena">
+                        <span class="star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= avgRating">★</span>
+                    </div>
+                    <div class="rating-numbers">
+                        <span class="avg">{{ avgRating | number:'1.1-1' }}</span>
+                        <span class="count">({{ ratingCount }} ocen)</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="row">
-                <span class="label">Material okvirja</span>
-                <span class="value">
-                    {{ product?.frameMaterial || '—' }}
-                </span>
-            </div>
+            <div class="reviews-body">
+                <div class="reviews-loading" *ngIf="loadingReviews">Nalagam mnenja…</div>
+                <div class="reviews-error" *ngIf="!loadingReviews && reviewsError">{{ reviewsError }}</div>
 
-            <div class="row">
-                <span class="label">Število prestav</span>
-                <span class="value">
-                    {{ product?.gearCount ?? '—' }}
-                </span>
-            </div>
-        </div>
+                <div class="reviews-empty"
+                    *ngIf="!loadingReviews && !reviewsError && (!reviews || reviews.length === 0)">
+                    Ta izdelek še nima mnenj.
+                </div>
 
-        <!-- CLOTHING FIELDS -->
-        <div class="section" *ngIf="product?.type === 'clothing'">
-            <h3>Specifikacije oblačila</h3>
+                <div class="review-card" *ngFor="let r of reviews">
+                    <div class="review-top">
+                        <div class="stars small" aria-label="ocena mnenja">
+                            <span class="star" *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= r.rating">★</span>
+                        </div>
+                        <div class="date">{{ r.createdAt | date:'dd.MM.yyyy' }}</div>
+                    </div>
 
-            <div class="row">
-                <span class="label">Velikost</span>
-                <span class="value">
-                    {{ product?.size || '—' }}
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Spol</span>
-                <span class="value">
-                    <ng-container *ngIf="product?.gender as g; else genderDash">
-                        <ng-container [ngSwitch]="g">
-                            <span *ngSwitchCase="'male'">moški</span>
-                            <span *ngSwitchCase="'female'">ženski</span>
-                            <span *ngSwitchCase="'unisex'">unisex</span>
-                            <span *ngSwitchDefault>{{ g }}</span>
-                        </ng-container>
-                    </ng-container>
-                    <ng-template #genderDash>—</ng-template>
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Material</span>
-                <span class="value">
-                    {{ product?.material || '—' }}
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Barva</span>
-                <span class="value">
-                    {{ product?.color || '—' }}
-                </span>
-            </div>
-        </div>
-
-        <!-- EQUIPMENT FIELDS -->
-        <div class="section" *ngIf="product?.type === 'equipment'">
-            <h3>Specifikacije opreme</h3>
-
-            <div class="row">
-                <span class="label">Znamka</span>
-                <span class="value">
-                    {{ product?.brand || '—' }}
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Material</span>
-                <span class="value">
-                    {{ product?.material || '—' }}
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Teža</span>
-                <span class="value">
-                    {{ product?.weight ?? '—' }}
-                    <ng-container *ngIf="product?.weight != null"> g</ng-container>
-                </span>
-            </div>
-
-            <div class="row">
-                <span class="label">Kompatibilnost</span>
-                <span class="value">
-                    <ng-container *ngIf="product?.compatibility?.length; else compDash">
-                        <ul class="list">
-                            <li *ngFor="let c of product.compatibility">{{ c }}</li>
-                        </ul>
-                    </ng-container>
-                    <ng-template #compDash>—</ng-template>
-                </span>
+                    <div class="comment" *ngIf="r.comment; else noComment">{{ r.comment }}</div>
+                    <ng-template #noComment>
+                        <div class="comment muted">—</div>
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>

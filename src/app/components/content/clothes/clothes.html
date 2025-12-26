@@ -1,12 +1,12 @@
-<div class="clothes-page">
+<div class="clothes-page" aria-labelledby="clothes-title">
     <div class="clothes-header">
-        <h1>Oblačila</h1>
+        <h1 id="clothes-title">Oblačila</h1>
     </div>
 
-    <div class="clothes-filters">
+    <div class="clothes-filters" role="region" aria-label="Filtri in razvrščanje">
         <div class="filter-group">
-            <label>Velikost</label>
-            <select [(ngModel)]="filter.size">
+            <label for="clothesSize">Velikost</label>
+            <select id="clothesSize" name="clothesSize" [(ngModel)]="filter.size">
                 <option value="">Vse</option>
                 <option value="XS">XS</option>
                 <option value="S">S</option>
@@ -18,8 +18,8 @@
         </div>
 
         <div class="filter-group">
-            <label>Spol</label>
-            <select [(ngModel)]="filter.gender">
+            <label for="clothesGender">Spol</label>
+            <select id="clothesGender" name="clothesGender" [(ngModel)]="filter.gender">
                 <option value="">Vse</option>
                 <option value="male">Moški</option>
                 <option value="female">Ženske</option>
@@ -28,18 +28,20 @@
         </div>
 
         <div class="filter-group">
-            <label>Barva</label>
-            <input type="text" [(ngModel)]="filter.color" placeholder="Npr. črna" />
+            <label for="clothesColor">Barva</label>
+            <input id="clothesColor" name="clothesColor" type="text" [(ngModel)]="filter.color" placeholder="Npr. črna"
+                autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Material</label>
-            <input type="text" [(ngModel)]="filter.material" placeholder="Npr. poliester" />
+            <label for="clothesMaterial">Material</label>
+            <input id="clothesMaterial" name="clothesMaterial" type="text" [(ngModel)]="filter.material"
+                placeholder="Npr. poliester" autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Razpoložljivost</label>
-            <select [(ngModel)]="filter.availability">
+            <label for="clothesAvailability">Razpoložljivost</label>
+            <select id="clothesAvailability" name="clothesAvailability" [(ngModel)]="filter.availability">
                 <option value="">Vse</option>
                 <option value="available">Na zalogi</option>
                 <option value="unavailable">Ni na zalogi</option>
@@ -47,89 +49,105 @@
         </div>
 
         <div class="filter-group">
-            <label>Sortiraj</label>
-            <select [(ngModel)]="sortBy">
+            <label for="clothesSortBy">Sortiraj</label>
+            <select id="clothesSortBy" name="clothesSortBy" [(ngModel)]="sortBy">
                 <option value="name">Ime</option>
                 <option value="price">Cena</option>
             </select>
         </div>
 
         <div class="filter-group filter-group-button">
-            <label>&nbsp;</label>
-            <button class="sort-dir" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+            <span class="sr-only" id="clothesSortDirHelp">Spremeni smer razvrščanja</span>
+            <button class="sort-dir" type="button" (click)="toggleSortDirection()"
+                [attr.aria-pressed]="sortDirection === 'desc'" aria-describedby="clothesSortDirHelp">
                 {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
             </button>
         </div>
     </div>
 
-    <div class="clothes-grid">
-        <div class="clothes-card" *ngFor="let item of filteredAndSortedClothes; trackBy: trackByClothesId"
-            (dblclick)="openDetails(item)">
-            <div class="clothes-image-wrapper">
-                <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="item.name" class="clothes-image" loading="lazy"
-                    (error)="onImageError(item)" />
+    <div class="clothes-grid" role="list" aria-label="Seznam oblačil">
+        <div class="clothes-card" role="listitem"
+            *ngFor="let item of filteredAndSortedClothes; trackBy: trackByClothesId">
+            <!-- Tipkovnično dostopna klikljiva površina kartice -->
+            <div class="clothes-card-click" role="button" tabindex="0"
+                [attr.aria-label]="'Odpri podrobnosti: ' + (item.name || 'izdelek')"
+                (click)="openDetailsFromCard(item, $event)" (keydown)="onCardKeydown($event, item)">
+                <div class="clothes-image-wrapper">
+                    <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="getClothesImageAlt(item)"
+                        class="clothes-image" loading="lazy" (error)="onImageError(item)" />
 
-                <div class="clothes-image-placeholder" *ngIf="!item.imageUrl">
-                    <span class="placeholder-icon">👕</span>
-                    <span class="placeholder-name">{{ item.name }}</span>
+                    <div class="clothes-image-placeholder" *ngIf="!item.imageUrl" aria-hidden="true">
+                        <span class="placeholder-icon">👕</span>
+                        <span class="placeholder-name">{{ item.name }}</span>
+                    </div>
+
+                    <span class="badge badge-unavailable" *ngIf="!item.isAvailable" aria-label="Ni na zalogi">
+                        Ni na zalogi
+                    </span>
                 </div>
 
-                <span class="badge badge-unavailable" *ngIf="!item.isAvailable">
-                    Ni na zalogi
-                </span>
-            </div>
+                <div class="clothes-info">
+                    <div class="clothes-name">{{ item.name }}</div>
 
-            <div class="clothes-info">
-                <div class="clothes-name">{{ item.name }}</div>
-
-                <div class="clothes-description">
-                    {{ item.shortDescription }}
-                </div>
-
-                <div class="clothes-specs">
-                    <div class="spec">
-                        <span class="label">Velikost</span>
-                        <span class="value">{{ item.size }}</span>
-                    </div>
-                    <div class="spec" *ngIf="item.gender">
-                        <span class="label">Za</span>
-                        <span class="value">
-                            {{ item.gender === 'male' ? 'Moške' : item.gender === 'female' ? 'Ženske' : 'Unisex'}}
-                        </span>
-                    </div>
-                    <div class="spec" *ngIf="item.material">
-                        <span class="label">Material</span>
-                        <span class="value">{{ item.material }}</span>
-                    </div>
-                    <div class="spec" *ngIf="item.color">
-                        <span class="label">Barva</span>
-                        <span class="value">{{ item.color }}</span>
-                    </div>
-                    <div class="spec">
-                        <span class="label">Garancija</span>
-                        <span class="value">{{ item.warrantyMonths }} mesecev</span>
-                    </div>
-                </div>
-
-                <div class="clothes-bottom">
-                    <div class="clothes-price">
-                        {{ item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+                    <div class="clothes-description">
+                        {{ item.shortDescription }}
                     </div>
 
-                    <div class="actions">
-                        <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
-                            (click)="addToCart(item)" (dblclick)="$event.stopPropagation()">
-                            {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
-                        </button>
+                    <div class="clothes-specs" aria-label="Specifikacije">
+                        <div class="spec">
+                            <span class="label">Velikost</span>
+                            <span class="value">{{ item.size }}</span>
+                        </div>
 
-                        <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
-                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
-                            Uradna stran
-                        </a>
+                        <div class="spec" *ngIf="item.gender">
+                            <span class="label">Za</span>
+                            <span class="value">
+                                {{ item.gender === 'male' ? 'Moške' : item.gender === 'female' ? 'Ženske' : 'Unisex' }}
+                            </span>
+                        </div>
+
+                        <div class="spec" *ngIf="item.material">
+                            <span class="label">Material</span>
+                            <span class="value">{{ item.material }}</span>
+                        </div>
+
+                        <div class="spec" *ngIf="item.color">
+                            <span class="label">Barva</span>
+                            <span class="value">{{ item.color }}</span>
+                        </div>
+
+                        <div class="spec">
+                            <span class="label">Garancija</span>
+                            <span class="value">{{ item.warrantyMonths }} mesecev</span>
+                        </div>
+                    </div>
+
+                    <div class="clothes-bottom">
+                        <div class="clothes-price"
+                            [attr.aria-label]="'Cena: ' + (item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI')">
+                            {{ item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+                        </div>
+
+                        <!-- Akcije: ustavijo propagacijo klika -->
+                        <div class="actions" (click)="$event.stopPropagation()">
+                            <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
+                                [attr.aria-disabled]="!item.isAvailable"
+                                [attr.aria-label]="item.isAvailable ? ('Dodaj v košarico: ' + item.name) : ('Ni na zalogi: ' + item.name)"
+                                (click)="addToCart(item)">
+                                {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
+                            </button>
+
+                            <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
+                                target="_blank" rel="noopener noreferrer"
+                                [attr.aria-label]="'Odpri uradno stran za ' + (item.name || 'produkt') + ' (odpre se v novem zavihku)'">
+                                Uradna stran
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <app-product-info *ngIf="selectedCloth" [product]="selectedCloth" (close)="closeDetails()" />

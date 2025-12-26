@@ -1,8 +1,17 @@
-<div class="app-layout"> <app-header (registerClick)="onRegisterClick()" (loginClick)="onLoginClick()"></app-header>
+<a class="skip-link" href="#main-content">Preskoči na vsebino</a>
+
+<div class="app-layout">
+    <app-header (registerClick)="onRegisterClick()" (loginClick)="onLoginClick()">
+    </app-header>
+
     <main id="main-content" class="main-content" tabindex="-1">
-        <router-outlet></router-outlet>
+        <div class="route-wrapper" [@routeAnimations]="routeKey">
+            <router-outlet (activate)="onRouteActivate()" (deactivate)="onRouteDeactivate()"></router-outlet>
+        </div>
     </main>
+
     <app-footer></app-footer>
 </div>
+
 <app-registration *ngIf="showRegistration" (close)="onRegistrationClose()" />
 <app-login *ngIf="showLogin" (close)="onLoginClose()" />

@@ -6,6 +6,10 @@
     @media (min-width: 900px) {
         padding: 2.5rem 2rem 3.5rem;
     }
+
+    @media (max-width: 600px) {
+        padding: 1.25rem 1rem 2.25rem;
+    }
 }
 
 .clothes-header {
@@ -14,6 +18,15 @@
     h1 {
         font-size: 2rem;
         margin: 0 0 0.4rem;
+    }
+
+    @media (max-width: 600px) {
+        margin-bottom: 1.25rem;
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 0.35rem;
+        }
     }
 }
 
@@ -28,18 +41,35 @@
     padding: 1rem 1.25rem;
     border-radius: 0.9rem;
     margin-bottom: 1.5rem;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        padding: 0.9rem;
+        row-gap: 0.85rem;
+        column-gap: 0;
+        margin-bottom: 1.2rem;
+        border-radius: 0.85rem;
+    }
 }
 
 .filter-group {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+
+    @media (max-width: 600px) {
+        gap: 0.35rem;
+    }
 }
 
 .filter-group label {
     font-size: 0.9rem;
     font-weight: 600;
     color: #111827;
+
+    @media (max-width: 600px) {
+        font-size: 0.88rem;
+    }
 }
 
 .filter-group input,
@@ -51,16 +81,27 @@
     font-size: 0.9rem;
     outline: none;
     background: #ffffff;
+
+    @media (max-width: 600px) {
+        padding: 0.55rem 0.7rem;
+        font-size: 0.95rem;
+        border-radius: 0.5rem;
+    }
 }
 
+/* bolj kontrastno fokus stanje */
 .filter-group input:focus,
 .filter-group select:focus {
-    border-color: #3daa56;
-    box-shadow: 0 0 0 1px rgba(61, 170, 86, 0.25);
+    border-color: #1f7a35;
+    box-shadow: 0 0 0 3px rgba(31, 122, 53, 0.25);
 }
 
 .filter-group-button {
     align-self: stretch;
+
+    @media (max-width: 600px) {
+        align-self: auto;
+    }
 }
 
 .sort-dir {
@@ -69,30 +110,48 @@
     border-radius: 0.55rem;
     border: none;
     cursor: pointer;
-    background: #3daa56;
+    background: #1f7a35;
     color: #fff;
     font-size: 0.9rem;
-    font-weight: 600;
-    transition: background 0.18s ease, transform 0.12s ease,
-        box-shadow 0.15s ease;
+    font-weight: 700;
+    transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
     text-align: center;
+
+    @media (max-width: 600px) {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.95rem;
+    }
 }
 
 .sort-dir:hover {
-    background: #2f8e44;
+    background: #176129;
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(47, 142, 68, 0.25);
+    box-shadow: 0 4px 10px rgba(23, 97, 41, 0.25);
 }
 
 .sort-dir:active {
     transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(47, 142, 68, 0.2);
+    box-shadow: 0 2px 6px rgba(23, 97, 41, 0.2);
+}
+
+.sort-dir:focus-visible {
+    outline: 3px solid rgba(15, 23, 42, 0.55);
+    outline-offset: 2px;
 }
 
 .clothes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.75rem;
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        gap: 1.1rem;
+    }
+
+    @media (min-width: 601px) and (max-width: 900px) {
+        gap: 1.3rem;
+    }
 }
 
 .clothes-card {
@@ -108,6 +167,27 @@
         transform: translateY(-3px);
         box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
     }
+
+    @media (max-width: 600px) {
+        border-radius: 0.85rem;
+
+        &:hover {
+            transform: none;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
+        }
+    }
+}
+
+.clothes-card-click {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.clothes-card-click:focus-visible {
+    outline: 3px solid rgba(15, 23, 42, 0.55);
+    outline-offset: 3px;
+    border-radius: 0.9rem;
 }
 
 .clothes-image-wrapper {
@@ -119,6 +199,11 @@
     justify-content: center;
     height: 220px;
     overflow: hidden;
+
+    @media (max-width: 600px) {
+        height: 190px;
+        padding: 0.95rem;
+    }
 }
 
 .clothes-image {
@@ -148,8 +233,21 @@
 
     .placeholder-name {
         font-size: 0.9rem;
-        font-weight: 500;
-        color: #475569;
+        font-weight: 600;
+        color: #334155;
+        /* bolj kontrastno */
+    }
+
+    @media (max-width: 600px) {
+        padding: 0.85rem;
+
+        .placeholder-icon {
+            font-size: 1.5rem;
+        }
+
+        .placeholder-name {
+            font-size: 0.92rem;
+        }
     }
 }
 
@@ -159,12 +257,20 @@
     left: 0.75rem;
     padding: 0.18rem 0.6rem;
     border-radius: 999px;
-    font-size: 0.7rem;
+    font-size: 0.74rem;
     color: #fff;
+
+    @media (max-width: 600px) {
+        top: 0.65rem;
+        left: 0.65rem;
+        font-size: 0.76rem;
+        padding: 0.2rem 0.6rem;
+    }
 }
 
+/* bolj kontrastna oznaka */
 .badge-unavailable {
-    background: #94a3b8;
+    background: #475569;
 }
 
 .clothes-info {
@@ -172,16 +278,31 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    @media (max-width: 600px) {
+        padding: 0.95rem 0.95rem 1rem;
+        gap: 0.55rem;
+    }
 }
 
 .clothes-name {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.1rem;
+
+    @media (max-width: 600px) {
+        font-size: 1.05rem;
+    }
 }
 
 .clothes-description {
-    font-size: 0.85rem;
-    color: #555;
+    font-size: 0.9rem;
+    color: #334155;
+    /* bolj kontrastno kot #555 */
+
+    @media (max-width: 600px) {
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
 }
 
 .clothes-specs {
@@ -196,15 +317,31 @@
 
         .label {
             font-size: 0.75rem;
-            color: #94a3b8;
+            color: #475569;
+            /* bolj kontrastno */
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
 
         .value {
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.92rem;
+            font-weight: 600;
             color: #0f172a;
+        }
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+
+        .spec {
+            .label {
+                font-size: 0.76rem;
+            }
+
+            .value {
+                font-size: 0.98rem;
+            }
         }
     }
 }
@@ -215,11 +352,22 @@
     align-items: flex-end;
     justify-content: space-between;
     gap: 0.75rem;
+
+    @media (max-width: 600px) {
+        margin-top: 0.9rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+    }
 }
 
 .clothes-price {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 1.1rem;
+
+    @media (max-width: 600px) {
+        font-size: 1.15rem;
+    }
 }
 
 .actions {
@@ -227,6 +375,11 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 0.35rem;
+
+    @media (max-width: 600px) {
+        align-items: stretch;
+        gap: 0.5rem;
+    }
 }
 
 .add-to-cart {
@@ -234,38 +387,81 @@
     border-radius: 0.55rem;
     border: none;
     cursor: pointer;
-    background: #3daa56;
+    background: #1f7a35;
+    /* bolj kontrastno */
     color: #fff;
-    font-size: 0.87rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
 
     &:hover:not(:disabled) {
-        background: #2f8e44;
+        background: #176129;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(47, 142, 68, 0.25);
+        box-shadow: 0 4px 12px rgba(23, 97, 41, 0.25);
     }
 
     &:active:not(:disabled) {
         transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(47, 142, 68, 0.2);
+        box-shadow: 0 2px 6px rgba(23, 97, 41, 0.2);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(15, 23, 42, 0.55);
+        outline-offset: 2px;
     }
 
     &:disabled {
-        background: #c8d8c3;
-        color: #4b5e4a;
-        cursor: default;
+        background: #d1d5db;
+        color: #374151;
+        cursor: not-allowed;
         transform: none;
         box-shadow: none;
+    }
+
+    @media (max-width: 600px) {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        font-size: 0.98rem;
+
+        &:hover:not(:disabled) {
+            transform: none;
+            box-shadow: 0 3px 10px rgba(23, 97, 41, 0.2);
+        }
     }
 }
 
 .official-link {
-    font-size: 0.78rem;
-    color: #1e88e5;
+    font-size: 0.88rem;
+    color: #0b63ce;
+    /* temnejši modri */
     text-decoration: none;
 
     &:hover {
         text-decoration: underline;
     }
+
+    &:focus-visible {
+        outline: 3px solid rgba(15, 23, 42, 0.55);
+        outline-offset: 2px;
+        border-radius: 0.35rem;
+    }
+
+    @media (max-width: 600px) {
+        font-size: 0.95rem;
+        padding: 0.2rem 0;
+        align-self: flex-start;
+    }
+}
+
+/* Screen-reader only */
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }

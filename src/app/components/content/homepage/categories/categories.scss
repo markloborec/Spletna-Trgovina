@@ -38,6 +38,12 @@
     border-color: rgba(0, 0, 0, 0.12);
   }
 
+  /* ✅ TIPKOVNICA – jasno viden fokus */
+  &:focus-visible {
+    outline: 3px solid #1f7a34;
+    outline-offset: 4px;
+  }
+
   h3 {
     font-size: 1.25rem;
     margin: 0;
@@ -54,10 +60,22 @@
 
   .link {
     margin-top: 0.5rem;
+    align-self: flex-start;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    width: fit-content;
+    max-width: 100%;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+
     font-size: 0.92rem;
     color: #1f7a34;
+    font-weight: 700;
     text-decoration: none;
-    font-weight: 600;
 
     display: inline-flex;
     align-items: center;
@@ -68,6 +86,12 @@
     &:hover {
       color: #145726;
       text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #1f7a34;
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
     &::after {

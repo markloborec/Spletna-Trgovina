@@ -1,13 +1,12 @@
-<div class="bikes-page">
+<div class="bikes-page" aria-labelledby="bikes-title">
     <div class="bikes-header">
-        <h1>Kolesa</h1>
+        <h1 id="bikes-title">Kolesa</h1>
     </div>
 
-    <!-- FILTER & SORT BAR -->
-    <div class="bikes-filters">
+    <div class="bikes-filters" role="region" aria-label="Filtri in razvrščanje">
         <div class="filter-group">
-            <label>Velikost obročev</label>
-            <select [(ngModel)]="filter.wheelSize">
+            <label for="wheelSize">Velikost obročev</label>
+            <select id="wheelSize" name="wheelSize" [(ngModel)]="filter.wheelSize">
                 <option [ngValue]="''">Vse</option>
                 <option [ngValue]="26">26"</option>
                 <option [ngValue]="27.5">27.5"</option>
@@ -17,18 +16,20 @@
         </div>
 
         <div class="filter-group">
-            <label>Okvir</label>
-            <input type="text" [(ngModel)]="filter.frameMaterial" placeholder="Npr. Aluminij" />
+            <label for="frameMaterial">Okvir</label>
+            <input id="frameMaterial" name="frameMaterial" type="text" [(ngModel)]="filter.frameMaterial"
+                placeholder="Npr. Aluminij" autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Min. prestav</label>
-            <input type="number" min="1" [(ngModel)]="filter.minGears" placeholder="Npr. 10" />
+            <label for="minGears">Min. prestav</label>
+            <input id="minGears" name="minGears" type="number" min="1" [(ngModel)]="filter.minGears"
+                placeholder="Npr. 10" inputmode="numeric" />
         </div>
 
         <div class="filter-group">
-            <label>Razpoložljivost</label>
-            <select [(ngModel)]="filter.availability">
+            <label for="availability">Razpoložljivost</label>
+            <select id="availability" name="availability" [(ngModel)]="filter.availability">
                 <option value="">Vse</option>
                 <option value="available">Na zalogi</option>
                 <option value="unavailable">Ni na zalogi</option>
@@ -36,8 +37,8 @@
         </div>
 
         <div class="filter-group">
-            <label>Sortiraj</label>
-            <select [(ngModel)]="sortBy">
+            <label for="sortBy">Sortiraj</label>
+            <select id="sortBy" name="sortBy" [(ngModel)]="sortBy">
                 <option value="name">Ime</option>
                 <option value="price">Cena</option>
                 <option value="wheelSize">Velikost obročev</option>
@@ -46,72 +47,85 @@
         </div>
 
         <div class="filter-group filter-group-button">
-            <label>&nbsp;</label>
-            <button class="sort-dir" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+            <span class="sr-only" id="sortDirectionHelp">Spremeni smer razvrščanja</span>
+            <button class="sort-dir" type="button" (click)="toggleSortDirection()"
+                [attr.aria-pressed]="sortDirection === 'desc'" aria-describedby="sortDirectionHelp">
                 {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
             </button>
         </div>
     </div>
 
-    <div class="bikes-grid">
-        <div class="bike-card" *ngFor="let bike of filteredAndSortedBicycles; trackBy: trackByBikeId"
-            (dblclick)="openDetails(bike)">
-            <div class="bike-image-wrapper">
-                <img *ngIf="bike.imageUrl" [src]="bike.imageUrl" [alt]="bike.name" class="bike-image" loading="lazy"
-                    (error)="onImageError(bike)" />
+    <div class="bikes-grid" role="list" aria-label="Seznam koles">
+        <div class="bike-card" role="listitem" *ngFor="let bike of filteredAndSortedBicycles; trackBy: trackByBikeId">
+            <!-- Klik na kartico (dostopno s tipkovnico) -->
+            <div class="bike-card-click" role="button" tabindex="0"
+                [attr.aria-label]="'Odpri podrobnosti: ' + (bike.name || 'kolo')"
+                (click)="openDetailsFromCard(bike, $event)" (keydown)="onCardKeydown($event, bike)">
+                <div class="bike-image-wrapper">
+                    <img *ngIf="bike.imageUrl" [src]="bike.imageUrl" [alt]="getBikeImageAlt(bike)" class="bike-image"
+                        loading="lazy" (error)="onImageError(bike)" />
 
-                <div class="bike-image-placeholder" *ngIf="!bike.imageUrl">
-                    <span class="placeholder-icon">🚲</span>
-                    <span class="placeholder-name">{{ bike.name }}</span>
+                    <div class="bike-image-placeholder" *ngIf="!bike.imageUrl" aria-hidden="true">
+                        <span class="placeholder-icon">🚲</span>
+                        <span class="placeholder-name">{{ bike.name }}</span>
+                    </div>
+
+                    <span class="badge badge-unavailable" *ngIf="!bike.isAvailable" aria-label="Ni na zalogi">Ni na
+                        zalogi</span>
                 </div>
 
-                <span class="badge badge-unavailable" *ngIf="!bike.isAvailable">Ni na zalogi</span>
-            </div>
+                <div class="bike-info">
+                    <div class="bike-name">{{ bike.name }}</div>
 
-            <div class="bike-info">
-                <div class="bike-name">{{ bike.name }}</div>
-
-                <div class="bike-description">
-                    {{ bike.shortDescription }}
-                </div>
-
-                <div class="bike-specs">
-                    <div class="spec">
-                        <span class="label">Velikost obročev</span>
-                        <span class="value">{{ bike.wheelSize }}"</span>
+                    <div class="bike-description">
+                        {{ bike.shortDescription }}
                     </div>
-                    <div class="spec">
-                        <span class="label">Okvir</span>
-                        <span class="value">{{ bike.frameMaterial }}</span>
-                    </div>
-                    <div class="spec">
-                        <span class="label">Prestav</span>
-                        <span class="value">{{ bike.gearCount }}</span>
-                    </div>
-                    <div class="spec">
-                        <span class="label">Garancija</span>
-                        <span class="value">{{ bike.warrantyMonths }} mesecev</span>
-                    </div>
-                </div>
 
-                <div class="bike-bottom">
-                    <div class="bike-price">
-                        {{ bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }} </div>
-                    <div class="actions">
+                    <div class="bike-specs" aria-label="Specifikacije">
+                        <div class="spec">
+                            <span class="label">Velikost obročev</span>
+                            <span class="value">{{ bike.wheelSize }}"</span>
+                        </div>
+                        <div class="spec">
+                            <span class="label">Okvir</span>
+                            <span class="value">{{ bike.frameMaterial }}</span>
+                        </div>
+                        <div class="spec">
+                            <span class="label">Prestav</span>
+                            <span class="value">{{ bike.gearCount }}</span>
+                        </div>
+                        <div class="spec">
+                            <span class="label">Garancija</span>
+                            <span class="value">{{ bike.warrantyMonths }} mesecev</span>
+                        </div>
+                    </div>
 
-                        <button class="add-to-cart" type="button" [disabled]="!bike.isAvailable"
-                            (click)="addToCart(bike)" (dblclick)="$event.stopPropagation()">
-                            {{ bike.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
-                        </button>
+                    <div class="bike-bottom">
+                        <div class="bike-price"
+                            [attr.aria-label]="'Cena: ' + (bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI')">
+                            {{ bike.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+                        </div>
 
-                        <a *ngIf="bike.officialProductSite" class="official-link" [href]="bike.officialProductSite"
-                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
-                            Uradna stran
-                        </a>
+                        <!-- Akcije (ne klikajo kartice) -->
+                        <div class="actions" (click)="$event.stopPropagation()">
+                            <button class="add-to-cart" type="button" [disabled]="!bike.isAvailable"
+                                [attr.aria-disabled]="!bike.isAvailable"
+                                [attr.aria-label]="bike.isAvailable ? ('Dodaj v košarico: ' + bike.name) : ('Ni na zalogi: ' + bike.name)"
+                                (click)="addToCart(bike)">
+                                {{ bike.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
+                            </button>
+
+                            <a *ngIf="bike.officialProductSite" class="official-link" [href]="bike.officialProductSite"
+                                target="_blank" rel="noopener noreferrer"
+                                [attr.aria-label]="'Odpri uradno stran za ' + (bike.name || 'produkt') + ' (odpre se v novem zavihku)'">
+                                Uradna stran
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <app-product-info *ngIf="selectedBike" [product]="selectedBike" (close)="closeDetails()" />

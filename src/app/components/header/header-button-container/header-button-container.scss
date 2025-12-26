@@ -236,3 +236,41 @@
     transform: translateY(0);
   }
 }
+
+/* ICON BUTTONS */
+.icon-btn {
+  cursor: pointer;
+  color: #fff;
+  background: #218838;
+  border-radius: 50%;
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.icon-btn svg {
+  display: block;
+}
+
+.icon-btn:focus-visible,
+.icon-btn:hover {
+  background: #28a745;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.14);
+}
+
+/* CART BADGE */
+.icon-btn.cart {
+  position: relative;
+}

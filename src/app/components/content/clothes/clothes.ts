@@ -7,7 +7,9 @@ import { CartService } from '../../../services/cart.service';
 import { ProductService } from '../../../services/product.service';
 
 type BackendProduct = {
-  id: string;
+  id?: string;
+  _id?: string;
+
   name: string;
   price: number;
 
@@ -21,13 +23,17 @@ type BackendProduct = {
   gender?: 'male' | 'female' | 'unisex';
   color?: string;
   material?: string;
+
+  ratingAvg?: number;
+  ratingCount?: number;
 };
 
 @Component({
   selector: 'app-clothes',
+  standalone: true,
   imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './clothes.html',
-  styleUrl: './clothes.scss',
+  styleUrls: ['./clothes.scss'], // <-- FIX: styleUrl -> styleUrls
 })
 export class Clothes {
   constructor(private productService: ProductService, private cart: CartService) { }
@@ -58,13 +64,39 @@ export class Clothes {
     });
   }
 
+  toggleSortDirection() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  }
+
+  /** Tipkovnična podpora za kartico: Enter / Space odpre podrobnosti */
+  onCardKeydown(event: KeyboardEvent, item: Clothing) {
+    const key = event.key;
+    if (key === 'Enter' || key === ' ') {
+      event.preventDefault();
+      this.openDetails(item);
+    }
+  }
+
+  /** Bolj opisni ALT (WAVE opozori, če je alt generičen ali manjka) */
+  getClothesImageAlt(item: Clothing): string {
+    const name = (item?.name || '').trim();
+    if (!name) return 'Fotografija oblačila';
+    const availability = item.isAvailable ? 'na zalogi' : 'ni na zalogi';
+    return `Fotografija oblačila: ${name} (${availability})`;
+  }
+
   private mapBackendToClothing(p: BackendProduct): Clothing {
     const derived = this.deriveClothingSpecs(p);
 
+    const id = String(p.id ?? p._id ?? '');
+    if (!id) {
+      console.warn('Clothing item WITHOUT id/_id from backend:', p);
+    }
+
     return {
-      id: p.id,
+      id,
       name: p.name,
-      price: p.price,
+      price: Number(p.price ?? 0),
       imageUrl: p.imageUrl ?? '',
       shortDescription: p.shortDescription ?? '',
       longDescription: p.longDescription ?? '',
@@ -73,7 +105,6 @@ export class Clothes {
       warrantyMonths: 24,
       officialProductSite: p.officialProductSite,
 
-      // če backend pošlje, uporabimo; sicer fallback
       size: p.size ?? derived.size,
       gender: p.gender ?? derived.gender,
       color: p.color ?? derived.color,
@@ -89,25 +120,27 @@ export class Clothes {
   } {
     const name = (p.name || '').toLowerCase();
 
-    // gender (heuristika iz imena)
     const gender: 'male' | 'female' | 'unisex' =
-      name.includes('women') || name.includes('žensk') ? 'female'
-        : name.includes('men') || name.includes('mošk') ? 'male'
+      name.includes('women') || name.includes('žensk')
+        ? 'female'
+        : name.includes('men') || name.includes('mošk')
+          ? 'male'
           : 'unisex';
 
-    // size (default)
     const size: Clothing['size'] = 'M';
 
-    // material (default)
     const material =
-      name.includes('merino') ? 'Merino volna'
-        : name.includes('gore-tex') || name.includes('goretex') ? 'Gore-Tex'
+      name.includes('merino')
+        ? 'Merino volna'
+        : name.includes('gore-tex') || name.includes('goretex')
+          ? 'Gore-Tex'
           : 'Poliester';
 
-    // color (default)
     const color =
-      name.includes('black') || name.includes('črn') ? 'Črna'
-        : name.includes('blue') || name.includes('moder') ? 'Modra'
+      name.includes('black') || name.includes('črn')
+        ? 'Črna'
+        : name.includes('blue') || name.includes('moder')
+          ? 'Modra'
           : '';
 
     return { size, gender, color, material };
@@ -116,30 +149,28 @@ export class Clothes {
   get filteredAndSortedClothes(): Clothing[] {
     let result = [...this.clothes];
 
-    if (this.filter.size) result = result.filter(c => c.size === this.filter.size);
-    if (this.filter.gender) result = result.filter(c => c.gender === this.filter.gender);
+    if (this.filter.size) result = result.filter((c) => c.size === this.filter.size);
+    if (this.filter.gender) result = result.filter((c) => c.gender === this.filter.gender);
 
     if (this.filter.color) {
       const q = this.filter.color.toLowerCase();
-      result = result.filter(c => (c.color ?? '').toLowerCase().includes(q));
+      result = result.filter((c) => (c.color ?? '').toLowerCase().includes(q));
     }
 
     if (this.filter.material) {
       const q = this.filter.material.toLowerCase();
-      result = result.filter(c => (c.material ?? '').toLowerCase().includes(q));
+      result = result.filter((c) => (c.material ?? '').toLowerCase().includes(q));
     }
 
-    if (this.filter.availability === 'available') result = result.filter(c => c.isAvailable);
-    else if (this.filter.availability === 'unavailable') result = result.filter(c => !c.isAvailable);
+    if (this.filter.availability === 'available') result = result.filter((c) => c.isAvailable);
+    else if (this.filter.availability === 'unavailable') result = result.filter((c) => !c.isAvailable);
 
     result.sort((a, b) => {
       const valA = a[this.sortBy];
       const valB = b[this.sortBy];
 
       if (typeof valA === 'string' && typeof valB === 'string') {
-        return this.sortDirection === 'asc'
-          ? valA.localeCompare(valB)
-          : valB.localeCompare(valA);
+        return this.sortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
       }
 
       return this.sortDirection === 'asc'
@@ -156,13 +187,20 @@ export class Clothes {
     item.imageUrl = '';
   }
 
-  addToCart(bike: Clothing) {
-    if (!bike.isAvailable) return;
-    this.cart.add(bike, 1);
+  addToCart(item: Clothing) {
+    if (!item.isAvailable) return;
+    this.cart.add(item, 1);
   }
 
   openDetails(item: Clothing) {
+    if (!item?.id) return;
     this.selectedCloth = item;
+  }
+
+  openDetailsFromCard(item: Clothing, event: Event) {
+    const target = event.target as HTMLElement | null;
+    if (target && (target.closest('button') || target.closest('a'))) return;
+    this.openDetails(item);
   }
 
   closeDetails() {

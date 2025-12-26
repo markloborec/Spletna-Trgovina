@@ -1,43 +1,55 @@
-<div class="cart-page">
-    <h1>Košarica</h1>
+<div class="cart-page" aria-labelledby="cart-title">
+    <h1 id="cart-title">Košarica</h1>
 
-    <div class="empty" *ngIf="cart.items.length === 0">Košarica je prazna.</div>
+    <div class="empty" *ngIf="cart.items.length === 0" role="status" aria-live="polite">
+        Košarica je prazna.
+    </div>
 
     <div class="cart-layout" *ngIf="cart.items.length > 0">
-        <div class="cart-list">
-            <div class="row head">
-                <div class="name">Izdelek</div>
-                <div class="qty-wrap">Količina</div>
-                <div class="price">Cena</div>
-                <div class="subtotal">Skupaj</div>
-                <div></div>
+        <div class="cart-list" role="region" aria-label="Seznam izdelkov v košarici">
+            <div class="row head" role="row">
+                <div class="name" role="columnheader">Izdelek</div>
+                <div class="qty-wrap" role="columnheader">Količina</div>
+                <div class="price" role="columnheader">Cena</div>
+                <div class="subtotal" role="columnheader">Skupaj</div>
+                <div role="columnheader"><span class="sr-only">Odstrani</span></div>
             </div>
 
-            <div class="row" *ngFor="let it of cart.items">
-                <div class="name">{{ it.product.name }}</div>
+            <div class="row" *ngFor="let it of cart.items" role="row">
+                <div class="name" role="cell">{{ it.product.name }}</div>
 
-                <input class="qty" type="number" min="1" [value]="it.qty"
-                    (change)="setQty(it.product.id, $any($event.target).value)" />
+                <div class="qty-wrap" role="cell">
+                    <label class="sr-only" [attr.for]="'qty-' + getProductId(it)">
+                        Količina za {{ it.product.name }}
+                    </label>
+                    <input class="qty" [id]="'qty-' + getProductId(it)" type="number" min="1" inputmode="numeric"
+                        [value]="it.qty" (change)="setQty(getProductId(it), $any($event.target).value)"
+                        [attr.aria-label]="'Količina za ' + it.product.name" />
+                </div>
 
-                <div class="price">
+                <div class="price" role="cell">
                     {{ it.product.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
                 </div>
 
-                <div class="subtotal">
+                <div class="subtotal" role="cell">
                     {{ (it.qty * it.product.price) | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
                 </div>
 
-                <button class="remove" type="button" (click)="remove(it.product.id)">✕</button>
+                <button class="remove" type="button" (click)="remove(getProductId(it))"
+                    [attr.aria-label]="'Odstrani iz košarice: ' + it.product.name">
+                    ✕
+                </button>
             </div>
 
             <div class="list-actions">
-                <button class="clear" type="button" (click)="clear()">Izprazni košarico</button>
+                <button class="clear" type="button" (click)="clear()" aria-label="Izprazni košarico">
+                    Izprazni košarico
+                </button>
             </div>
         </div>
 
-        <!-- RIGHT: checkout povzetek + izbire -->
-        <div class="checkout">
-            <div class="card">
+        <div class="checkout" aria-label="Zaključek nakupa">
+            <div class="card" role="region" aria-label="Povzetek naročila">
                 <h3>Povzetek</h3>
 
                 <div class="line">
@@ -63,80 +75,92 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Dostava</h3>
+            <div class="card" role="group" aria-labelledby="delivery-title">
+                <h3 id="delivery-title">Dostava</h3>
 
                 <div class="options">
-                    <label class="opt">
-                        <input type="radio" name="delivery" [(ngModel)]="delivery" value="courier" />
+                    <label class="opt" [attr.for]="'delivery-courier'">
+                        <input id="delivery-courier" type="radio" name="delivery" [(ngModel)]="delivery"
+                            value="courier" />
                         <span>Dostava na naslov</span>
                     </label>
 
-                    <label class="opt">
-                        <input type="radio" name="delivery" [(ngModel)]="delivery" value="pickup" />
+                    <label class="opt" [attr.for]="'delivery-pickup'">
+                        <input id="delivery-pickup" type="radio" name="delivery" [(ngModel)]="delivery"
+                            value="pickup" />
                         <span>Osebni prevzem</span>
                     </label>
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Plačilo</h3>
+            <div class="card" role="group" aria-labelledby="payment-title">
+                <h3 id="payment-title">Plačilo</h3>
 
                 <div class="options">
-                    <label class="opt">
-                        <input type="radio" name="payment" [(ngModel)]="payment" value="card" />
+                    <label class="opt" [attr.for]="'payment-card'">
+                        <input id="payment-card" type="radio" name="payment" [(ngModel)]="payment" value="card" />
                         <span>Kartica</span>
                     </label>
 
-                    <label class="opt">
-                        <input type="radio" name="payment" [(ngModel)]="payment" value="cod" />
+                    <label class="opt" [attr.for]="'payment-cod'">
+                        <input id="payment-cod" type="radio" name="payment" [(ngModel)]="payment" value="cod" />
                         <span>Po povzetju</span>
                     </label>
 
-                    <label class="opt">
-                        <input type="radio" name="payment" [(ngModel)]="payment" value="bank" />
+                    <label class="opt" [attr.for]="'payment-bank'">
+                        <input id="payment-bank" type="radio" name="payment" [(ngModel)]="payment" value="bank" />
                         <span>Nakazilo</span>
                     </label>
                 </div>
             </div>
 
-            <div class="card" *ngIf="!isLoggedIn && delivery === 'courier'">
+            <div class="card" *ngIf="!isLoggedIn && delivery === 'courier'" role="region"
+                aria-label="Naslov za dostavo">
                 <h3>Naslov za dostavo</h3>
 
                 <div class="form">
                     <div class="field">
-                        <label>Ime in priimek *</label>
-                        <input type="text" [(ngModel)]="address.fullName" name="fullName" />
+                        <label for="fullName">Ime in priimek <span aria-hidden="true">*</span></label>
+                        <input id="fullName" type="text" [(ngModel)]="address.fullName" name="fullName"
+                            autocomplete="name" />
                     </div>
 
                     <div class="field">
-                        <label>Ulica in hišna št. *</label>
-                        <input type="text" [(ngModel)]="address.street" name="street" />
+                        <label for="street">Ulica in hišna št. <span aria-hidden="true">*</span></label>
+                        <input id="street" type="text" [(ngModel)]="address.street" name="street"
+                            autocomplete="street-address" />
                     </div>
 
                     <div class="grid2">
                         <div class="field">
-                            <label>Mesto *</label>
-                            <input type="text" [(ngModel)]="address.city" name="city" />
+                            <label for="city">Mesto <span aria-hidden="true">*</span></label>
+                            <input id="city" type="text" [(ngModel)]="address.city" name="city"
+                                autocomplete="address-level2" />
                         </div>
 
                         <div class="field">
-                            <label>Poštna št. *</label>
-                            <input type="text" [(ngModel)]="address.postalCode" name="postalCode" />
+                            <label for="postalCode">Poštna št. <span aria-hidden="true">*</span></label>
+                            <input id="postalCode" type="text" [(ngModel)]="address.postalCode" name="postalCode"
+                                inputmode="numeric" autocomplete="postal-code" />
                         </div>
                     </div>
 
                     <div class="field">
-                        <label>Telefon *</label>
-                        <input type="tel" [(ngModel)]="address.phone" name="phone" />
+                        <label for="phone">Telefon <span aria-hidden="true">*</span></label>
+                        <input id="phone" type="tel" [(ngModel)]="address.phone" name="phone" autocomplete="tel" />
                     </div>
                 </div>
             </div>
 
-            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-            <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+            <p class="error" *ngIf="errorMessage" role="alert" aria-live="assertive">
+                {{ errorMessage }}
+            </p>
+            <p class="success" *ngIf="successMessage" role="status" aria-live="polite">
+                {{ successMessage }}
+            </p>
 
-            <button class="place" type="button" (click)="placeOrder()" [disabled]="isPlacingOrder">
+            <button class="place" type="button" (click)="placeOrder()" [disabled]="isPlacingOrder"
+                [attr.aria-disabled]="isPlacingOrder">
                 {{ isPlacingOrder ? 'Oddajanje...' : 'Oddaj naročilo' }}
             </button>
         </div>

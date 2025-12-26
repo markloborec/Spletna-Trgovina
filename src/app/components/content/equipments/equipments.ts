@@ -8,9 +8,10 @@ import { ProductInfo } from '../../dialogs/product-info/product-info';
 
 @Component({
   selector: 'app-equipments',
+  standalone: true,
   imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './equipments.html',
-  styleUrl: './equipments.scss',
+  styleUrls: ['./equipments.scss'], // FIX: styleUrl -> styleUrls
 })
 export class Equipments {
   constructor(private productService: ProductService, private cart: CartService) { }
@@ -24,16 +25,20 @@ export class Equipments {
     compatibility: '',
   };
 
-  // SORT
   sortBy: 'name' | 'price' | 'weight' = 'name';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  // MODAL STATE
   selectedEquipment: Equipment | null = null;
 
   ngOnInit(): void {
     this.productService.getEquipment(100).subscribe({
-      next: (items) => (this.equipments = items ?? []),
+      next: (items) => {
+        this.equipments = (items ?? []).map((it: any) => {
+          const id = String(it?.id ?? it?._id ?? '');
+          if (!id) console.warn('Equipment item WITHOUT id/_id from backend:', it);
+          return { ...it, id } as Equipment;
+        });
+      },
       error: (err) => {
         console.error('PRODUCTS ERROR:', err);
         this.equipments = [];
@@ -41,8 +46,39 @@ export class Equipments {
     });
   }
 
+  toggleSortDirection() {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  }
+
+  /** Tipkovnična podpora za kartico: Enter / Space odpre podrobnosti */
+  onCardKeydown(event: KeyboardEvent, item: Equipment) {
+    const key = event.key;
+    if (key === 'Enter' || key === ' ') {
+      event.preventDefault();
+      this.openDetails(item);
+    }
+  }
+
+  /** Bolj opisni ALT (WAVE opozori, če je alt generičen ali manjka) */
+  getEquipmentImageAlt(item: Equipment): string {
+    const name = (item?.name || '').trim();
+    if (!name) return 'Fotografija opreme';
+    const availability = item.isAvailable ? 'na zalogi' : 'ni na zalogi';
+    return `Fotografija opreme: ${name} (${availability})`;
+  }
+
   openDetails(item: Equipment) {
+    if (!item?.id) {
+      console.warn('openDetails called with equipment without id:', item);
+      return;
+    }
     this.selectedEquipment = item;
+  }
+
+  openDetailsFromCard(item: Equipment, event: Event) {
+    const target = event.target as HTMLElement | null;
+    if (target && (target.closest('button') || target.closest('a'))) return;
+    this.openDetails(item);
   }
 
   closeDetails() {
@@ -58,7 +94,11 @@ export class Equipments {
     }
 
     if (this.filter.compatibility) {
-      result = result.filter((e) => (e.compatibility ?? []).includes(this.filter.compatibility));
+      const q = this.filter.compatibility.trim();
+      if (q) {
+        const qLower = q.toLowerCase();
+        result = result.filter((e) => (e.compatibility ?? []).some((c) => (c ?? '').toLowerCase().includes(qLower)));
+      }
     }
 
     if (this.filter.material) {

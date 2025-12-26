@@ -10,7 +10,6 @@
     justify-content: center;
 }
 
-/* --- LINKS --- */
 .navbar-list {
     display: flex;
     gap: 2.2rem;
@@ -176,4 +175,26 @@
         border-radius: 6px;
         color: whitesmoke;
     }
+}
+
+/* FOCUS STYLES (WCAG) */
+.navbar-link:focus-visible,
+.navbar-toggle:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+}
+
+/* ACTIVE LINK */
+.navbar-link.active {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* Screen reader helper (če boš rabil kasneje) */
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
 }

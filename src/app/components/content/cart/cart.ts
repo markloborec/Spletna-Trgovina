@@ -23,7 +23,7 @@ type Address = {
   standalone: true,
   imports: [CommonModule, CurrencyPipe, FormsModule],
   templateUrl: './cart.html',
-  styleUrl: './cart.scss',
+  styleUrls: ['./cart.scss'],
 })
 export class Cart implements OnInit, OnDestroy {
   readonly VAT_RATE = 0.22;
@@ -35,7 +35,6 @@ export class Cart implements OnInit, OnDestroy {
   payment: PaymentMethod = 'card';
   delivery: DeliveryMethod = 'courier';
 
-  // uporablja se samo za guest checkout
   address: Address = {
     fullName: '',
     street: '',
@@ -50,14 +49,10 @@ export class Cart implements OnInit, OnDestroy {
 
   private readonly ordersUrl = `${API_BASE_URL}/orders`;
 
-  constructor(
-    public cart: CartService,
-    private auth: AuthService,
-    private http: HttpClient
-  ) { }
+  constructor(public cart: CartService, private auth: AuthService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.sub = this.auth.isLoggedIn$.subscribe(v => (this.isLoggedIn = v));
+    this.sub = this.auth.isLoggedIn$.subscribe((v) => (this.isLoggedIn = v));
   }
 
   ngOnDestroy(): void {
@@ -85,7 +80,9 @@ export class Cart implements OnInit, OnDestroy {
   }
 
   setQty(id: string, value: any) {
-    this.cart.setQty(id, Number(value));
+    const num = Number(value);
+    const safeQty = Number.isFinite(num) && num >= 1 ? Math.floor(num) : 1;
+    this.cart.setQty(id, safeQty);
   }
 
   clear() {
@@ -99,7 +96,6 @@ export class Cart implements OnInit, OnDestroy {
   }
 
   private validateGuestAddressIfNeeded(): boolean {
-    // naslov je obvezen samo za guest + courier
     if (this.delivery !== 'courier') return true;
     if (this.isLoggedIn) return true;
 
@@ -111,8 +107,8 @@ export class Cart implements OnInit, OnDestroy {
     return true;
   }
 
-  private getProductId(it: any): string {
-    // ✅ podpira _id ali id (odvisno kako dobiš iz API)
+  // IMPORTANT: public (template ga kliče)
+  getProductId(it: any): string {
     const p: any = it?.product ?? {};
     return (p._id ?? p.id ?? '').toString();
   }
@@ -125,7 +121,6 @@ export class Cart implements OnInit, OnDestroy {
       return;
     }
 
-    // če UI kaže da si prijavljen, token mora obstajati, sicer backend te vidi kot guest
     const token = this.auth.getToken();
     if (this.isLoggedIn && !token) {
       this.errorMessage = 'Seja ni veljavna (manjka token). Prosim odjavi/prijavi se znova.';
@@ -136,13 +131,12 @@ export class Cart implements OnInit, OnDestroy {
       return;
     }
 
-    const itemsPayload = this.cart.items.map(it => ({
+    const itemsPayload = this.cart.items.map((it) => ({
       productId: this.getProductId(it),
       qty: it.qty,
     }));
 
-    // extra safety: če je kak productId prazen, pokaži razumljiv error
-    if (itemsPayload.some(x => !x.productId)) {
+    if (itemsPayload.some((x) => !x.productId)) {
       this.errorMessage = 'Napaka v košarici (izdelek nima ID). Osveži stran in dodaj izdelek znova.';
       return;
     }
@@ -151,8 +145,6 @@ export class Cart implements OnInit, OnDestroy {
       items: itemsPayload,
       payment: this.payment,
       delivery: this.delivery,
-
-      // ✅ shippingAddress pošlje samo guest + courier
       shippingAddress:
         !this.isLoggedIn && this.delivery === 'courier'
           ? {
@@ -165,9 +157,7 @@ export class Cart implements OnInit, OnDestroy {
           : null,
     };
 
-    const options = token
-      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
-      : {};
+    const options = token ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) } : {};
 
     this.isPlacingOrder = true;
 
@@ -180,7 +170,6 @@ export class Cart implements OnInit, OnDestroy {
           this.successMessage = `Naročilo oddano. Št. naročila: ${id}`;
           this.cart.clear();
 
-          // počisti guest naslov samo, če je bil guest
           if (!this.isLoggedIn) {
             this.address = { fullName: '', street: '', city: '', postalCode: '', phone: '' };
           }

@@ -1,22 +1,25 @@
 <div class="contact-wrapper">
     <div class="contact-container">
-        <!-- LEVA STRAN – naslov, glavna pisarna, seznam poslovalnic -->
         <div class="contact-info">
             <div>
-                <h1 class="contact-title">Kontakt</h1>
-                <p class="contact-subtitle">
+                <h1 class="contact-title" id="contact-title">Kontakt</h1>
+                <p class="contact-subtitle" id="contact-subtitle">
                     Pišite nam ali nas obiščite v eni izmed poslovalnic.
                 </p>
             </div>
-            <div class="store-list">
-                <div class="store-item" *ngFor="let store of stores" (click)="selectStore(store)">
+
+            <div class="store-list" role="listbox" aria-labelledby="contact-title" aria-describedby="contact-subtitle">
+                <div class="store-item" *ngFor="let store of stores; let i = index" role="option" tabindex="0"
+                    [attr.aria-selected]="store === selectedStore"
+                    [attr.aria-label]="'Izberi poslovalnico: ' + store.city" (click)="selectStore(store)"
+                    (keydown)="onStoreKeydown($event, store)">
                     <app-store-info [store]="store" [selected]="store === selectedStore"></app-store-info>
                 </div>
             </div>
         </div>
 
-        <div class="contact-map-wrapper">
-            <div id="map"></div>
+        <div class="contact-map-wrapper" role="region" aria-label="Zemljevid lokacij poslovalnic">
+            <div id="map" tabindex="0" role="region" aria-label="Interaktiven zemljevid (Leaflet)"></div>
         </div>
     </div>
 </div>

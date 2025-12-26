@@ -23,31 +23,68 @@ export class HeaderButtonContainer {
   isUserMenuOpen = false;
   isCartMenuOpen = false;
   isLangMenuOpen = false;
-  isLoggedIn = localStorage.getItem('auth_token') ? true : false;
 
-  constructor(private elementRef: ElementRef, private router: Router, public cart: CartService, private authService: AuthService) { }
+  isLoggedIn = !!localStorage.getItem('auth_token');
 
-  OpenUser() {
+  currentLang: 'sl' | 'en' | 'de' = 'sl';
+
+  constructor(
+    private elementRef: ElementRef,
+    private router: Router,
+    public cart: CartService,
+    private authService: AuthService
+  ) { }
+
+  ngOnInit() {
+    this.authService.isLoggedIn$.subscribe((v) => (this.isLoggedIn = v));
+
+    // ob refreshu nastavi jezik iz cookie-ja
+    const gt = this.getCookie('googtrans');
+    if (gt?.endsWith('/en')) this.currentLang = 'en';
+    else if (gt?.endsWith('/de')) this.currentLang = 'de';
+    else this.currentLang = 'sl';
+  }
+
+  /** WCAG: tipkovnica (Enter/Space) na ikonah */
+  onIconKeydown(event: KeyboardEvent, which: 'user' | 'cart') {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (which === 'user') this.toggleUserMenu();
+      else this.toggleCartMenu();
+    }
+  }
+
+  /** Escape zapre menije (če dodaš (keydown.escape)="closeAllMenus()" na wrapper) */
+  closeAllMenus() {
+    this.isUserMenuOpen = false;
+    this.isCartMenuOpen = false;
+    this.isLangMenuOpen = false;
+  }
+
+  toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
     this.isCartMenuOpen = false;
     this.isLangMenuOpen = false;
   }
 
-  OpenCard() {
+  toggleCartMenu() {
     this.isCartMenuOpen = !this.isCartMenuOpen;
     this.isUserMenuOpen = false;
     this.isLangMenuOpen = false;
   }
 
+  // Backward compatibility: če imaš še vedno kje v HTML OpenUser/OpenCard
+  OpenUser() {
+    this.toggleUserMenu();
+  }
+
+  OpenCard() {
+    this.toggleCartMenu();
+  }
+
   goToCart() {
     this.router.navigate(['/cart']);
     this.closeAllMenus();
-  }
-
-  closeAllMenus() {
-    this.isUserMenuOpen = false;
-    this.isCartMenuOpen = false;
-    this.isLangMenuOpen = false;
   }
 
   openRegistration() {
@@ -60,20 +97,10 @@ export class HeaderButtonContainer {
     this.loginClick.emit();
   }
 
-  ngOnInit() {
-    this.authService.isLoggedIn$.subscribe(v => this.isLoggedIn = v);
-  }
-
   logout() {
     this.authService.logout();
     this.closeAllMenus();
     this.router.navigate(['/']);
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const clickedInside = this.elementRef.nativeElement.contains(event.target);
-    if (!clickedInside) this.closeAllMenus();
   }
 
   routeToUserProfile() {
@@ -86,14 +113,45 @@ export class HeaderButtonContainer {
     this.closeAllMenus();
   }
 
-  currentLang: 'sl' | 'en' = 'sl';
-
   toggleLanguage() {
-    const googleCombo = document.querySelector('select.goog-te-combo') as HTMLSelectElement | null;
-    if (!googleCombo) return;
+    const order: Array<'sl' | 'en' | 'de'> = ['sl', 'en', 'de'];
+    const idx = order.indexOf(this.currentLang);
+    const next = order[(idx + 1) % order.length];
 
-    this.currentLang = this.currentLang === 'sl' ? 'en' : 'sl';
-    googleCombo.value = this.currentLang;
-    googleCombo.dispatchEvent(new Event('change'));
+    this.currentLang = next;
+
+    if (next === 'sl') {
+      this.deleteGoogTransCookie();
+    } else {
+      // pageLanguage = sl
+      this.setGoogTransCookie(`/sl/${next}`);
+    }
+
+    // reset Google Translate stanja
+    window.location.reload();
+  }
+
+  private setGoogTransCookie(value: string) {
+    document.cookie = `googtrans=${encodeURIComponent(value)}; path=/`;
+  }
+
+  private deleteGoogTransCookie() {
+    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+  }
+
+  private getCookie(name: string): string | null {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    if (!clickedInside) this.closeAllMenus();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.closeAllMenus();
   }
 }

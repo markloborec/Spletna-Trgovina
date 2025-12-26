@@ -1,50 +1,61 @@
-<div class="profile-container" *ngIf="profile">
-    <h2>Moj profil</h2>
+<div class="profile-container" *ngIf="profile" aria-labelledby="profile-title"
+    [attr.aria-busy]="loading ? 'true' : 'false'">
+    <h2 id="profile-title">Moj profil</h2>
 
-    <form (ngSubmit)="onSave()" #profileForm="ngForm" novalidate>
+    <form (ngSubmit)="onSave()" #profileForm="ngForm" novalidate aria-describedby="profile-messages">
         <div class="form-row">
             <div class="field">
                 <label for="firstName">Ime *</label>
                 <input id="firstName" name="firstName" type="text" required [(ngModel)]="profile.firstName"
-                    [readonly]="!isEditing" />
+                    [readonly]="!isEditing" [attr.aria-readonly]="!isEditing ? 'true' : null"
+                    [attr.aria-disabled]="!isEditing ? 'true' : null" />
             </div>
 
             <div class="field">
                 <label for="lastName">Priimek *</label>
                 <input id="lastName" name="lastName" type="text" required [(ngModel)]="profile.lastName"
-                    [readonly]="!isEditing" />
+                    [readonly]="!isEditing" [attr.aria-readonly]="!isEditing ? 'true' : null"
+                    [attr.aria-disabled]="!isEditing ? 'true' : null" />
             </div>
         </div>
 
         <div class="field">
             <label for="email">E-pošta *</label>
-            <input id="email" name="email" type="email" required [(ngModel)]="profile.email" [readonly]="!isEditing" />
+            <input id="email" name="email" type="email" required [(ngModel)]="profile.email" [readonly]="!isEditing"
+                [attr.aria-readonly]="!isEditing ? 'true' : null" [attr.aria-disabled]="!isEditing ? 'true' : null" />
         </div>
 
         <div class="field">
             <label for="deliveryAddress">Naslov za dostavo *</label>
             <textarea id="deliveryAddress" name="deliveryAddress" required rows="2"
-                [(ngModel)]="profile.deliveryAddress" [readonly]="!isEditing"></textarea>
+                [(ngModel)]="profile.deliveryAddress" [readonly]="!isEditing"
+                [attr.aria-readonly]="!isEditing ? 'true' : null"
+                [attr.aria-disabled]="!isEditing ? 'true' : null"></textarea>
         </div>
 
         <div class="field">
             <label for="phone">Telefon *</label>
-            <input id="phone" name="phone" type="tel" required [(ngModel)]="profile.phone" [readonly]="!isEditing" />
+            <input id="phone" name="phone" type="tel" required [(ngModel)]="profile.phone" [readonly]="!isEditing"
+                [attr.aria-readonly]="!isEditing ? 'true' : null" [attr.aria-disabled]="!isEditing ? 'true' : null" />
         </div>
 
-        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <div id="profile-messages">
+            <p class="error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+            <p class="success" *ngIf="successMessage" role="status" aria-live="polite">{{ successMessage }}</p>
+        </div>
 
         <div class="actions">
-            <button type="button" class="btn ghost" *ngIf="!isEditing" (click)="onEdit()">
+            <button type="button" class="btn ghost" *ngIf="!isEditing" (click)="onEdit()" aria-label="Uredi profil">
                 Uredi profil
             </button>
 
-            <button type="button" class="btn ghost" *ngIf="isEditing" (click)="onCancelEdit()">
+            <button type="button" class="btn ghost" *ngIf="isEditing" (click)="onCancelEdit()"
+                aria-label="Prekliči urejanje profila">
                 Prekliči
             </button>
 
-            <button type="submit" class="btn primary" [disabled]="!isEditing || isSaving">
+            <button type="submit" class="btn primary" [disabled]="!isEditing || isSaving"
+                [attr.aria-disabled]="(!isEditing || isSaving) ? 'true' : null" aria-label="Shrani spremembe profila">
                 {{ isSaving ? 'Shranjevanje...' : 'Shrani spremembe' }}
             </button>
         </div>
@@ -52,5 +63,5 @@
 </div>
 
 <div class="profile-container" *ngIf="!profile && !loading">
-    <p>Profil ni naložen.</p>
+    <p role="status" aria-live="polite">Profil ni naložen.</p>
 </div>

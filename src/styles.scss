@@ -25,14 +25,21 @@ html {
 body {
   min-width: 320px;
   min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-
   font-family: Arial, Helvetica, sans-serif;
   background: #fff;
+
+  /* IMPORTANT: prepreči Google Translate premik strani */
+  top: 0 !important;
+  position: static !important;
 }
 
+/* Angular root naj se normalno obnaša */
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
+/* Responsive font-size */
 @media (max-width: 600px) {
   html {
     font-size: 15px;
@@ -45,9 +52,45 @@ body {
   }
 }
 
-#google_translate_element,
+/* =====================================================
+   Google Translate – popolnoma skrit UI
+   ===================================================== */
+
+#google_translate_element {
+  display: none !important;
+}
+
+.goog-te-banner-frame.skiptranslate,
 .goog-te-banner-frame,
 .goog-logo-link,
 .goog-te-gadget {
   display: none !important;
+}
+
+/* včasih Google doda inline style na body */
+body>.skiptranslate {
+  display: none !important;
+}
+
+/* =====================================================
+   Skip to content (dostopnost)
+   ===================================================== */
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+
+  text-decoration: none;
+
+  transform: translateY(-200%);
+  z-index: 10000;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
 }

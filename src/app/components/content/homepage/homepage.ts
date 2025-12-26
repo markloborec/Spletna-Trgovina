@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Categories } from "./categories/categories";
+import { Router } from '@angular/router';
+import { Categories } from './categories/categories';
+
+type AppRoute = 'bikes' | 'equipment' | 'clothes' | 'contact' | '';
 
 @Component({
   selector: 'app-homepage',
@@ -9,4 +12,10 @@ import { Categories } from "./categories/categories";
   templateUrl: './homepage.html',
   styleUrls: ['./homepage.scss'],
 })
-export class Homepage {}
+export class Homepage {
+  constructor(private router: Router) { }
+
+  go(path: AppRoute) {
+    this.router.navigate([path]);
+  }
+}

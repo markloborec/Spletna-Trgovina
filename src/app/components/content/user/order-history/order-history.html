@@ -1,19 +1,19 @@
 <div class="orders-page">
-    <h2>Pretekla naročila</h2>
+    <h2 id="orders-title">Pretekla naročila</h2>
 
-    <div *ngIf="!isLoggedIn" class="info">
+    <div *ngIf="!isLoggedIn" class="info" role="note" aria-live="polite">
         Ta stran je na voljo samo registriranim/prijavljenim uporabnikom.
     </div>
 
-    <div *ngIf="isLoggedIn">
-        <div *ngIf="loading" class="info">Nalagam naročila...</div>
-        <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="isLoggedIn" aria-labelledby="orders-title">
+        <div *ngIf="loading" class="info" role="status" aria-live="polite">Nalagam naročila...</div>
+        <div *ngIf="error" class="error" role="alert">{{ error }}</div>
 
-        <div *ngIf="!loading && !error && orders.length === 0" class="info">
+        <div *ngIf="!loading && !error && orders.length === 0" class="info" role="status" aria-live="polite">
             Trenutno še nimaš nobenega naročila.
         </div>
 
-        <div *ngFor="let o of orders" class="order-card">
+        <div *ngFor="let o of orders" class="order-card" role="region" [attr.aria-label]="'Naročilo ' + o.orderId">
             <div class="order-top">
                 <div><strong>Št. naročila:</strong> {{ o.orderId }}</div>
                 <div><strong>Status:</strong> {{ o.status }}</div>
@@ -23,10 +23,63 @@
 
             <div class="order-items">
                 <div class="items-title"><strong>Izdelki</strong></div>
+
                 <ul>
-                    <li *ngFor="let it of o.items" class="order-item">
-                        <span class="item-name">{{ it.name }}</span>
-                        <span class="item-qty">× {{ it.qty }}</span>
+                    <li *ngFor="let it of o.items; let idx = index" class="order-item">
+                        <div class="item-row">
+                            <span class="item-name">{{ it.name }}</span>
+                            <span class="item-qty">× {{ it.qty }}</span>
+                        </div>
+
+                        <div *ngIf="!it.productId" class="info" role="note">
+                            Za ta izdelek v naročilu ni shranjenega productId (staro/legacy naročilo), zato mnenja ni
+                            mogoče oddati.
+                        </div>
+
+                        <div class="review" *ngIf="it.productId && !it.reviewed; else reviewedTpl">
+                            <div class="stars" role="radiogroup" [attr.aria-label]="'Ocena za ' + it.name">
+                                <button *ngFor="let s of stars" type="button" class="star-btn" role="radio"
+                                    [attr.aria-checked]="state(o.orderId, it.productId, idx).rating === s"
+                                    [attr.aria-label]="s + ' od 5 zvezdic'"
+                                    [class.filled]="state(o.orderId, it.productId, idx).rating >= s"
+                                    [class.hovered]="state(o.orderId, it.productId, idx).hoverRating >= s"
+                                    (mouseenter)="setHover(o.orderId, it.productId, idx, s)"
+                                    (mouseleave)="setHover(o.orderId, it.productId, idx, 0)"
+                                    (focus)="setHover(o.orderId, it.productId, idx, s)"
+                                    (blur)="setHover(o.orderId, it.productId, idx, 0)"
+                                    (click)="setRating(o.orderId, it.productId, idx, s)">
+                                    ★
+                                </button>
+                            </div>
+
+                            <textarea class="comment" rows="2" maxlength="500" placeholder="Kratko mnenje (neobvezno)"
+                                [(ngModel)]="state(o.orderId, it.productId, idx).comment"
+                                [attr.aria-label]="'Mnenje za ' + it.name"></textarea>
+
+                            <div class="review-actions">
+                                <button type="button" class="btn"
+                                    [disabled]="state(o.orderId, it.productId, idx).submitting"
+                                    (click)="submitReview(o.orderId, it.productId, idx)">
+                                    {{ state(o.orderId, it.productId, idx).submitting ? 'Pošiljam…' : 'Oddaj mnenje' }}
+                                </button>
+
+                                <div class="review-error" *ngIf="state(o.orderId, it.productId, idx).error"
+                                    role="alert">
+                                    {{ state(o.orderId, it.productId, idx).error }}
+                                </div>
+
+                                <div class="review-success" *ngIf="state(o.orderId, it.productId, idx).success"
+                                    role="status" aria-live="polite">
+                                    {{ state(o.orderId, it.productId, idx).success }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-template #reviewedTpl>
+                            <div class="reviewed" *ngIf="it.reviewed" role="status" aria-live="polite">
+                                Mnenje je že oddano ✅
+                            </div>
+                        </ng-template>
                     </li>
                 </ul>
             </div>

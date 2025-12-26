@@ -17,6 +17,7 @@ export interface ProductsListResponse<T = any> {
 export type BackendProductDto = {
   id?: string | number;
   _id?: string;
+
   type?: ProductType;
   name: string;
   price: number;
@@ -45,6 +46,8 @@ export type BackendProductDto = {
   size?: Clothing['size'];
   gender?: 'male' | 'female' | 'unisex';
   color?: string;
+  ratingAvg?: number;
+  ratingCount?: number;
 };
 
 export type GetAllParams = {
@@ -53,14 +56,28 @@ export type GetAllParams = {
   pageSize?: number;
 };
 
+export type ProductReviewDto = {
+  id: string;
+  productId: string;
+  userId: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+};
+
+export type ProductReviewsResponse = {
+  items: ProductReviewDto[];
+};
+
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private readonly apiUrl = `${API_BASE_URL}/products`;
+  private apiUrl = `${API_BASE_URL}/products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(params: GetAllParams = {}): Observable<ConcreteProduct[]> {
     let httpParams = new HttpParams();
+
     if (params.type) httpParams = httpParams.set('type', params.type);
     if (params.page) httpParams = httpParams.set('page', String(params.page));
     if (params.pageSize) httpParams = httpParams.set('pageSize', String(params.pageSize));
@@ -88,67 +105,86 @@ export class ProductService {
     );
   }
 
+  getProductReviews(productId: string): Observable<ProductReviewDto[]> {
+    return this.http.get<ProductReviewsResponse>(`${this.apiUrl}/${productId}/reviews`).pipe(
+      map((res) => res?.items ?? [])
+    );
+  }
+
   create(product: Product): Observable<ConcreteProduct> {
     return of(product as ConcreteProduct);
   }
 
-  update(id: string, changes: Partial<Product>): Observable<ConcreteProduct> {
-    return of({ ...(changes as Product), id } as ConcreteProduct);
-  }
+  private mapBackendProduct(p: BackendProductDto, forcedType?: ProductType): ConcreteProduct {
+    const id = String(p.id ?? p._id ?? '');
+    const type: ProductType = forcedType ?? (p.type as ProductType) ?? 'cycles';
 
-  delete(_id: string): Observable<void> {
-    return of(void 0);
-  }
+    const imageUrl = (p.imageUrl ?? p.image_url ?? '') as string;
+    const shortDescription = (p.shortDescription ?? p.short_description ?? '') as string;
+    const longDescription = (p.longDescription ?? p.long_description ?? '') as string;
 
-  private mapBackendProduct(p: BackendProductDto, fallbackType?: ProductType): ConcreteProduct {
-    const type: ProductType = (p.type as ProductType) ?? fallbackType ?? 'equipment';
+    const isAvailable = typeof p.isAvailable === 'boolean' ? p.isAvailable: typeof p.inStock === 'boolean'
+        ? p.inStock: true;
 
-    const base: Product = {
-      id: (p.id ?? p._id ?? '').toString(),
+    const base: any = {
+      id,
+      type,
       name: p.name,
       price: Number(p.price ?? 0),
-      imageUrl: p.imageUrl ?? p.image_url ?? '',
-      shortDescription: p.shortDescription ?? p.short_description ?? '',
-      longDescription: p.longDescription ?? p.long_description ?? '',
-      type,
-      isAvailable: (p.isAvailable ?? p.inStock) ?? true,
-      warrantyMonths: Number(p.warrantyMonths ?? 24),
+      imageUrl,
+      shortDescription,
+      longDescription,
+      isAvailable,
+      warrantyMonths: typeof p.warrantyMonths === 'number' ? p.warrantyMonths : 24,
       officialProductSite: p.officialProductSite,
+
+      ratingAvg: typeof p.ratingAvg === 'number' ? p.ratingAvg : undefined,
+      ratingCount: typeof p.ratingCount === 'number' ? p.ratingCount : undefined,
     };
 
-    if (type === 'cycles') {
-      const derived = this.deriveBikeSpecs(base.name, base.price);
-      return { ...base, ...derived } as Bicycle;
-    }
-
     if (type === 'clothing') {
-      return {
+      const clothing: Clothing = {
         ...base,
-        size: p.size ?? 'M',
+        size: (p.size ?? 'M') as Clothing['size'],
         gender: p.gender,
         material: p.material,
         color: p.color,
-      } as Clothing;
+      };
+      return clothing;
     }
 
-    return {
+    if (type === 'equipment') {
+      const compatibility = Array.isArray(p.compatibility)
+        ? p.compatibility: typeof p.compatibility === 'string'
+          ? p.compatibility.split(',').map((x) => x.trim()).filter(Boolean): [];
+
+      const equipment: Equipment = {
+        ...base,
+        compatibility,
+        weight: typeof p.weight === 'number' ? p.weight : undefined,
+        material: p.material,
+        brand: p.brand,
+      };
+      return equipment;
+    }
+
+    const derived = this.deriveBikeSpecs(p.name, p.price);
+
+    const bicycle: Bicycle = {
       ...base,
-      compatibility: this.normalizeCompatibility(p.compatibility),
-      weight: p.weight,
-      material: p.material,
-      brand: p.brand,
-    } as Equipment;
+      wheelSize: derived.wheelSize,
+      frameMaterial: derived.frameMaterial,
+      gearCount: derived.gearCount,
+    };
+
+    return bicycle;
   }
 
-  private normalizeCompatibility(value: BackendProductDto['compatibility']): string[] {
-    if (Array.isArray(value)) return value.filter(Boolean);
-    if (typeof value === 'string') {
-      return value.split(',').map((s) => s.trim()).filter(Boolean);
-    }
-    return [];
-  }
-
-  private deriveBikeSpecs(nameRaw: string, priceRaw: number): { wheelSize: number; frameMaterial: string; gearCount: number } {
+  private deriveBikeSpecs(nameRaw: any, priceRaw: any): {
+    wheelSize: 26 | 27.5 | 28 | 29;
+    frameMaterial: string;
+    gearCount: number;
+  } {
     const name = (nameRaw || '').toLowerCase();
     const price = Number(priceRaw || 0);
 

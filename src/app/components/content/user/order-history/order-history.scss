@@ -51,9 +51,7 @@
         border-radius: 16px;
         padding: 16px;
         margin: 14px 0;
-        box-shadow:
-            0 4px 6px rgba(15, 23, 42, 0.08),
-            0 14px 35px rgba(15, 23, 42, 0.12);
+        box-shadow: 0 4px 6px rgba(15, 23, 42, 0.08), 0 14px 35px rgba(15, 23, 42, 0.12);
     }
 
     .order-top {
@@ -79,7 +77,6 @@
             white-space: nowrap;
         }
 
-        /* 1) Št. naročila (levo, 1. vrstica) */
         >div:nth-child(1) {
             grid-column: 1;
             grid-row: 1;
@@ -87,13 +84,13 @@
             word-break: break-word;
 
             &> :not(strong) {
-                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+                    "Courier New", monospace;
                 font-size: 13px;
                 color: #334155;
             }
         }
 
-        /* 4) Skupaj (desno, 1. vrstica) */
         >div:nth-child(4) {
             grid-column: 2;
             grid-row: 1;
@@ -107,7 +104,6 @@
             }
         }
 
-        /* 3) Datum (levo, 2. vrstica) */
         >div:nth-child(3) {
             grid-column: 1;
             grid-row: 2;
@@ -117,14 +113,12 @@
             }
         }
 
-        /* 2) Status (desno, 2. vrstica) */
         >div:nth-child(2) {
             grid-column: 2;
             grid-row: 2;
             justify-content: flex-end;
             text-align: right;
 
-            /* status kot “chip” brez spremembe HTML */
             &> :not(strong) {
                 display: inline-flex;
                 align-items: center;
@@ -156,16 +150,22 @@
             gap: 10px;
         }
 
-        /* ✅ vsaka postavka: ime levo, qty kot badge desno */
         .order-item {
             padding: 12px 14px;
             border-radius: 12px;
             background: #f8fafc;
             border: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .item-row {
+            display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 14px;
+            width: 100%;
         }
 
         .item-name {
@@ -188,6 +188,177 @@
             font-weight: 800;
             font-size: 13px;
             color: #0f172a;
+        }
+
+        .review {
+            width: 100%;
+            display: grid;
+            gap: 10px;
+        }
+
+        .stars {
+            display: inline-flex;
+            gap: 6px;
+            user-select: none;
+            direction: ltr;
+            unicode-bidi: normal;
+        }
+
+        /* zvezdice so tipke */
+        .star-btn {
+            appearance: none;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+
+            font-size: 20px;
+            line-height: 1;
+
+            opacity: 0.35;
+            transform: translateY(0);
+            transition: transform 120ms ease, opacity 120ms ease, filter 120ms ease;
+
+            &.filled {
+                opacity: 0.95;
+            }
+
+            &.hovered {
+                opacity: 0.85;
+                filter: brightness(0.85);
+                transform: translateY(-1px);
+            }
+
+            &:hover {
+                transform: translateY(-1px);
+                opacity: 0.95;
+                filter: brightness(0.85);
+            }
+
+            &:focus-visible {
+                outline: 3px solid rgba(2, 132, 199, 0.55);
+                outline-offset: 4px;
+                border-radius: 6px;
+            }
+        }
+
+        .comment {
+            width: 100%;
+            resize: vertical;
+            min-height: 42px;
+
+            border-radius: 14px;
+            border: 1px solid rgba(15, 23, 42, 0.14);
+
+            padding: 10px 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            outline: none;
+
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.96) 0%,
+                    rgba(248, 250, 252, 0.96) 100%);
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03), 0 6px 18px rgba(15, 23, 42, 0.05);
+
+            transition: box-shadow 140ms ease, border-color 140ms ease, transform 140ms ease,
+                background 140ms ease;
+
+            &::placeholder {
+                color: #64748b;
+                opacity: 0.85;
+            }
+
+            &:hover {
+                border-color: rgba(15, 23, 42, 0.22);
+                box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 10px 22px rgba(15, 23, 42, 0.07);
+            }
+
+            &:focus {
+                border-color: rgba(2, 132, 199, 0.55);
+                box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.14), 0 12px 26px rgba(15, 23, 42, 0.10);
+                background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(241, 245, 249, 1) 100%);
+            }
+        }
+
+        .review-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: 0;
+            padding: 9px 14px;
+            border-radius: 12px;
+            background: #0f172a;
+            color: #ffffff;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(2, 6, 23, 0.22);
+
+            transition: transform 120ms cubic-bezier(.34, 1.56, .64, 1),
+                box-shadow 120ms ease,
+                opacity 120ms ease;
+
+            &:hover {
+                transform: translateY(-2px) scale(1.05);
+                box-shadow: 0 14px 32px rgba(2, 6, 23, 0.32);
+            }
+
+            &:active {
+                transform: translateY(0) scale(0.97);
+                box-shadow: 0 6px 14px rgba(2, 6, 23, 0.24);
+            }
+
+            &:focus-visible {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.35), 0 10px 24px rgba(2, 6, 23, 0.30);
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                opacity: 0.55;
+                transform: none;
+                box-shadow: 0 4px 10px rgba(2, 6, 23, 0.16);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .btn,
+            .star-btn {
+                transition: none;
+
+                &:hover,
+                &:active {
+                    transform: none;
+                }
+            }
+        }
+
+        .review-error {
+            color: #7f1d1d;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .review-success {
+            color: #14532d;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .reviewed {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #ecfdf5;
+            border: 1px solid rgba(20, 83, 45, 0.18);
+            color: #14532d;
+            font-weight: 800;
+            font-size: 13px;
         }
     }
 
@@ -226,7 +397,7 @@
         }
 
         .order-items .order-item {
-            flex-direction: row;
+            flex-direction: column;
         }
 
         .order-items .item-name {

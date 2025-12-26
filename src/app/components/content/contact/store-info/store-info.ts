@@ -4,7 +4,7 @@ import { Store } from '../../../../models/store';
 
 @Component({
   selector: 'app-store-info',
-  imports: [ CommonModule],
+  imports: [CommonModule],
   templateUrl: './store-info.html',
   styleUrl: './store-info.scss',
 })

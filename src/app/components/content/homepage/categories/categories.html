@@ -1,9 +1,16 @@
 <div class="category-grid">
-    <article class="category-card" *ngFor="let category of categories">
-        <h3>{{ category.title }}</h3>
+    <article class="category-card" *ngFor="let category of categories" tabindex="0" role="region"
+        [attr.aria-labelledby]="'cat-' + category.route" (keydown.enter)="go(category.route)"
+        (keydown.space)="go(category.route); $event.preventDefault()">
+        <h3 [id]="'cat-' + category.route">
+            {{ category.title }}
+        </h3>
+
         <p>{{ category.description }}</p>
-        <a [href]="category.href" class="link">
+
+        <button type="button" class="link" (click)="go(category.route)"
+            [attr.aria-label]="category.linkText + ' – ' + category.title">
             {{ category.linkText }}
-        </a>
+        </button>
     </article>
 </div>

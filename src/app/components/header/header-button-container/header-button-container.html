@@ -1,31 +1,37 @@
-<div class="header-button-container">
-	<!-- ACCOUNT ICON -->
-	<span (click)="OpenUser()" class="icon account" tabindex="0" aria-label="Account">
-		<fa-icon [icon]="faUser"></fa-icon>
-	</span>
+<div class="header-button-container" (keydown.escape)="closeAllMenus()">
 
-	<!-- CART ICON (single) -->
-	<span (click)="OpenCard()" class="icon cart" tabindex="0" aria-label="Shopping Cart">
+	<!-- ACCOUNT -->
+	<button type="button" class="icon-btn account" (click)="toggleUserMenu()" (keydown)="onIconKeydown($event, 'user')"
+		aria-label="Account" aria-haspopup="menu" [attr.aria-expanded]="isUserMenuOpen" aria-controls="user-menu">
+		<fa-icon [icon]="faUser"></fa-icon>
+	</button>
+
+	<!-- CART -->
+	<button type="button" class="icon-btn cart" (click)="toggleCartMenu()" (keydown)="onIconKeydown($event, 'cart')"
+		aria-label="Shopping Cart" aria-haspopup="menu" [attr.aria-expanded]="isCartMenuOpen" aria-controls="cart-menu">
 		<fa-icon [icon]="faShoppingCart"></fa-icon>
-		<span class="cart-badge" *ngIf="cart.totalItems > 0">{{ cart.totalItems }}</span>
-	</span>
+
+		<span class="cart-badge" *ngIf="cart.totalItems > 0" aria-label="Število izdelkov v košarici">
+			{{ cart.totalItems }}
+		</span>
+	</button>
 
 	<!-- USER DROPDOWN -->
-	<div class="dropdown user-dropdown" *ngIf="isUserMenuOpen">
+	<div id="user-menu" class="dropdown user-dropdown" *ngIf="isUserMenuOpen" role="menu" aria-label="Uporabniški meni">
 		<ng-container *ngIf="!isLoggedIn; else loggedInMenu">
-			<button type="button" (click)="openRegistration()">Ustvari račun</button>
-			<button type="button" (click)="openLogin()">Vpiši se</button>
+			<button type="button" role="menuitem" (click)="openRegistration()">Ustvari račun</button>
+			<button type="button" role="menuitem" (click)="openLogin()">Vpiši se</button>
 		</ng-container>
 
 		<ng-template #loggedInMenu>
-			<button type="button" (click)="routeToUserProfile()">Moj profil</button>
-			<button type="button" (click)="routeToOrderHistory()">Pretekla naročila</button>
-			<button type="button" class="logout" (click)="logout()">Odjava</button>
+			<button type="button" role="menuitem" (click)="routeToUserProfile()">Moj profil</button>
+			<button type="button" role="menuitem" (click)="routeToOrderHistory()">Pretekla naročila</button>
+			<button type="button" role="menuitem" class="logout" (click)="logout()">Odjava</button>
 		</ng-template>
 	</div>
 
 	<!-- CART DROPDOWN -->
-	<div class="dropdown cart-dropdown" *ngIf="isCartMenuOpen">
+	<div id="cart-menu" class="dropdown cart-dropdown" *ngIf="isCartMenuOpen" role="menu" aria-label="Košarica">
 		<p class="cart-title">Košarica</p>
 
 		<div class="cart-empty" *ngIf="cart.items.length === 0">
@@ -39,10 +45,11 @@
 			</div>
 
 			<div class="cart-total">
-				Skupaj: {{ cart.totalPrice | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
+				<span>Skupaj:</span>
+				<span>{{ cart.totalPrice | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}</span>
 			</div>
 
-			<button class="cart-open" type="button" (click)="goToCart()">
+			<button class="cart-open" type="button" role="menuitem" (click)="goToCart()">
 				Odpri košarico
 			</button>
 		</div>
@@ -50,11 +57,11 @@
 
 	<!-- LANGUAGE SWITCH -->
 	<button class="lang-switch notranslate" type="button" (click)="toggleLanguage()">
-		<img class="flag-img" [src]="currentLang === 'sl'
-        ? '/flag-for-flag-slovenia.svg'
-        : '/flag-for-flag-united-kingdom.svg'" [alt]="currentLang === 'sl' ? 'SLO' : 'ENG'" />
-		<span class="lang-code notranslate">
-			{{ currentLang.toUpperCase() }}
-		</span>
+		<img class="flag-img" [src]="currentLang === 'sl' ? '/flag-for-flag-slovenia.svg'
+            : currentLang === 'en' ? '/flag-for-flag-united-kingdom.svg'
+            : '/flag-for-flag-germany.svg'"
+			[alt]="currentLang === 'sl' ? 'SLO' : currentLang === 'en' ? 'ENG' : 'DEU'" />
+		<span class="lang-code notranslate">{{ currentLang.toUpperCase() }}</span>
 	</button>
+
 </div>

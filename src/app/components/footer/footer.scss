@@ -1,14 +1,19 @@
+:host {
+  position: relative;
+  z-index: 1;
+}
+
 footer {
-    background: #155724;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 1rem;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
-    margin-top: 40px;
+  background: #155724;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1rem;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+  margin-top: 40px;
 }
 
 .footer-content {
-    width: 100%;
-    margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
 }

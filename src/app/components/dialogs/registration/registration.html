@@ -1,6 +1,12 @@
-<div class="registration-backdrop">
-    <div class="registration-dialog">
-        <h2>Ustvari račun</h2>
+<div class="registration-backdrop" (click)="onBackdropClick($event)" (keydown)="onKeydown($event)" tabindex="-1">
+    <div class="registration-dialog" role="dialog" aria-modal="true" [attr.aria-labelledby]="titleId"
+        [attr.aria-describedby]="descId" (click)="$event.stopPropagation()">
+        <p class="sr-only" [id]="descId">
+            Registracijsko okno. Za zapiranje pritisni Escape. Premikaš se lahko s tipko Tab.
+        </p>
+
+        <h2 [id]="titleId" tabindex="-1" #dialogTitle>Ustvari račun</h2>
+
         <p class="subtitle">
             Ustvari svoj BiciklStore račun za hitrejše nakupe in pregled preteklih naročil.
         </p>
@@ -10,7 +16,7 @@
                 <div class="field">
                     <label for="firstName">Ime *</label>
                     <input id="firstName" name="firstName" type="text" required [(ngModel)]="formData.firstName"
-                        autocomplete="given-name" />
+                        autocomplete="given-name" #firstField />
                 </div>
 
                 <div class="field">
@@ -49,13 +55,17 @@
                     [(ngModel)]="formData.confirmPassword" autocomplete="new-password" />
             </div>
 
-            <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+            <p class="error" *ngIf="errorMessage" role="alert">
+                {{ errorMessage }}
+            </p>
 
             <div class="actions">
-                <button type="button" class="btn ghost" (click)="onCancel()">
+                <button type="button" class="btn ghost" (click)="onCancel()" aria-label="Prekliči">
                     Prekliči
                 </button>
-                <button type="submit" class="btn primary" [disabled]="isSubmitting">
+
+                <button type="submit" class="btn primary" [disabled]="isSubmitting"
+                    [attr.aria-disabled]="isSubmitting ? 'true' : null" aria-label="Ustvari račun">
                     {{ isSubmitting ? 'Pošiljanje...' : 'Ustvari račun' }}
                 </button>
             </div>

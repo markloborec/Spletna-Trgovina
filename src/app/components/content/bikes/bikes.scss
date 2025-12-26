@@ -1,271 +1,464 @@
 .bikes-page {
-    padding: 2rem 1.5rem 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
 
-    @media (min-width: 900px) {
-        padding: 2.5rem 2rem 3.5rem;
-    }
+  @media (min-width: 900px) {
+    padding: 2.5rem 2rem 3.5rem;
+  }
+
+  @media (max-width: 600px) {
+    padding: 1.25rem 1rem 2.25rem;
+  }
 }
 
 .bikes-header {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 0.4rem;
+  }
+
+  @media (max-width: 600px) {
+    margin-bottom: 1.25rem;
 
     h1 {
-        font-size: 2rem;
-        margin: 0 0 0.4rem;
+      font-size: 1.6rem;
+      margin: 0 0 0.35rem;
     }
+  }
 }
 
 .bikes-filters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    column-gap: 1rem;
-    row-gap: 0.75rem;
-    align-items: end;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  column-gap: 1rem;
+  row-gap: 0.75rem;
+  align-items: end;
 
-    background: #f5f7f6;
-    padding: 1rem 1.25rem;
-    border-radius: 0.9rem;
-    margin-bottom: 1.5rem;
+  background: #f5f7f6;
+  padding: 1rem 1.25rem;
+  border-radius: 0.9rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    padding: 0.9rem;
+    row-gap: 0.85rem;
+    column-gap: 0;
+    margin-bottom: 1.2rem;
+    border-radius: 0.85rem;
+  }
 }
 
 .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  @media (max-width: 600px) {
+    gap: 0.35rem;
+  }
 }
 
 .filter-group label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #111827;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111827;
+
+  @media (max-width: 600px) {
+    font-size: 0.88rem;
+  }
 }
 
 .filter-group input,
 .filter-group select {
-    width: 100%;
-    padding: 0.4rem 0.6rem;
-    border-radius: 0.45rem;
-    border: 1px solid #d1d5db;
-    font-size: 0.9rem;
-    outline: none;
-    background: #ffffff;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.45rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  outline: none;
+  background: #ffffff;
+
+  @media (max-width: 600px) {
+    padding: 0.55rem 0.7rem;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+  }
 }
 
 .filter-group input:focus,
 .filter-group select:focus {
-    border-color: #3daa56;
-    box-shadow: 0 0 0 1px rgba(61, 170, 86, 0.25);
+  border-color: #1f7a35; /* temnejša zelena za boljši kontrast */
+  box-shadow: 0 0 0 3px rgba(31, 122, 53, 0.25);
 }
 
+/* Gumb smeri sortiranja */
 .filter-group-button {
-    align-self: stretch;
+  align-self: stretch;
+
+  @media (max-width: 600px) {
+    align-self: auto;
+  }
 }
 
 .sort-dir {
-    width: 100%;
-    padding: 0.45rem 0.8rem;
-    border-radius: 0.55rem;
-    border: none;
-    cursor: pointer;
-    background: #3daa56;
-    color: #fff;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: background 0.18s ease, transform 0.12s ease,
-        box-shadow 0.15s ease;
-    text-align: center;
+  width: 100%;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.55rem;
+  border: none;
+  cursor: pointer;
+  background: #1f7a35; /* bolj kontrastno */
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+  }
 }
 
 .sort-dir:hover {
-    background: #2f8e44;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(47, 142, 68, 0.25);
+  background: #176129;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(23, 97, 41, 0.25);
 }
 
 .sort-dir:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(47, 142, 68, 0.2);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(23, 97, 41, 0.2);
+}
+
+.sort-dir:focus-visible {
+  outline: 3px solid rgba(15, 23, 42, 0.55);
+  outline-offset: 2px;
 }
 
 .bikes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.75rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  @media (min-width: 601px) and (max-width: 900px) {
+    gap: 1.3rem;
+  }
 }
 
 .bike-card {
-    background: #fff;
-    border-radius: 0.9rem;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  background: #fff;
+  border-radius: 0.9rem;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  }
+
+  @media (max-width: 600px) {
+    border-radius: 0.85rem;
 
     &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+      transform: none;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.1);
     }
+  }
+}
+
+/* Klikljiva površina kartice (da akcije ne prevzamejo klika) */
+.bike-card-click {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Fokus na kartici za tipkovnico */
+.bike-card-click:focus-visible {
+  outline: 3px solid rgba(15, 23, 42, 0.55);
+  outline-offset: 3px;
+  border-radius: 0.9rem;
 }
 
 .bike-image-wrapper {
-    position: relative;
-    background: #f6f7fb;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 220px;
-    overflow: hidden;
+  position: relative;
+  background: #f6f7fb;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    height: 190px;
+    padding: 0.95rem;
+  }
 }
 
 .bike-image {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .bike-image-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.6rem;
-    border: 1px dashed #cbd5e1;
-    background: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    text-align: center;
-    padding: 0.75rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.6rem;
+  border: 1px dashed #cbd5e1;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  text-align: center;
+  padding: 0.75rem;
+
+  .placeholder-icon {
+    font-size: 1.6rem;
+  }
+
+  .placeholder-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155; /* bolj kontrastno kot prej */
+  }
+
+  @media (max-width: 600px) {
+    padding: 0.85rem;
 
     .placeholder-icon {
-        font-size: 1.6rem;
+      font-size: 1.5rem;
     }
 
     .placeholder-name {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #475569;
+      font-size: 0.92rem;
     }
+  }
 }
 
 .badge {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    padding: 0.18rem 0.6rem;
-    border-radius: 999px;
-    font-size: 0.7rem;
-    color: #fff;
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.18rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: #fff;
+
+  @media (max-width: 600px) {
+    top: 0.65rem;
+    left: 0.65rem;
+    font-size: 0.74rem;
+    padding: 0.2rem 0.6rem;
+  }
 }
 
+/* temnejša sivina za boljši kontrast bel tekst */
 .badge-unavailable {
-    background: #94a3b8;
+  background: #475569;
 }
 
 .bike-info {
-    padding: 0.9rem 1rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  padding: 0.9rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  @media (max-width: 600px) {
+    padding: 0.95rem 0.95rem 1rem;
+    gap: 0.55rem;
+  }
 }
 
 .bike-name {
-    font-weight: 600;
-    font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.05rem;
+  }
 }
 
 .bike-description {
-    font-size: 0.85rem;
-    color: #555;
+  font-size: 0.88rem;
+  color: #334155; /* izboljšan kontrast proti belemu ozadju */
+
+  @media (max-width: 600px) {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
 }
 
 .bike-specs {
-    margin-top: 0.35rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.4rem 0.9rem;
+  margin-top: 0.35rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem 0.9rem;
+
+  .spec {
+    display: flex;
+    flex-direction: column;
+
+    .label {
+      font-size: 0.75rem;
+      color: #475569; /* bolj kontrastno kot #94a3b8 */
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
 
     .spec {
-        display: flex;
-        flex-direction: column;
+      .label {
+        font-size: 0.76rem;
+      }
 
-        .label {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .value {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #0f172a;
-        }
+      .value {
+        font-size: 0.98rem;
+      }
     }
+  }
 }
 
 .bike-bottom {
-    margin-top: 0.8rem;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 0.75rem;
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+
+  @media (max-width: 600px) {
+    margin-top: 0.9rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
 }
 
 .bike-price {
-    font-weight: 700;
-    font-size: 1.1rem;
+  font-weight: 800;
+  font-size: 1.1rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.15rem;
+  }
 }
 
 .actions {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.35rem;
+
+  @media (max-width: 600px) {
+    align-items: stretch;
+    gap: 0.5rem;
+  }
 }
 
 .add-to-cart {
-    padding: 0.55rem 1.15rem;
-    border-radius: 0.55rem;
-    border: none;
-    cursor: pointer;
-    background: #3daa56; // glavni zeleni (#3DAA56)
-    color: #fff;
-    font-size: 0.87rem;
-    font-weight: 600;
-    transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
+  padding: 0.55rem 1.15rem;
+  border-radius: 0.55rem;
+  border: none;
+  cursor: pointer;
+  background: #1f7a35; /* bolj kontrastno */
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #176129;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(23, 97, 41, 0.25);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(23, 97, 41, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(15, 23, 42, 0.55);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background: #d1d5db;
+    color: #374151; /* bolj kontrastno kot prej */
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 0.98rem;
 
     &:hover:not(:disabled) {
-        background: #2f8e44; // temnejša
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(47, 142, 68, 0.25);
+      transform: none;
+      box-shadow: 0 3px 10px rgba(23, 97, 41, 0.2);
     }
-
-    &:active:not(:disabled) {
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(47, 142, 68, 0.2);
-    }
-
-    &:disabled {
-        background: #c8d8c3;
-        color: #4b5e4a;
-        cursor: default;
-        transform: none;
-        box-shadow: none;
-    }
+  }
 }
 
 .official-link {
-    font-size: 0.78rem;
-    color: #1e88e5;
-    text-decoration: none;
+  font-size: 0.85rem;
+  color: #0b63ce; /* temnejši modri za kontrast */
+  text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba(15, 23, 42, 0.55);
+    outline-offset: 2px;
+    border-radius: 0.35rem;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 0.95rem;
+    padding: 0.2rem 0;
+    align-self: flex-start;
+  }
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

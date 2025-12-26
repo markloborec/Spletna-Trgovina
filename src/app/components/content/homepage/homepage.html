@@ -1,36 +1,43 @@
-<div class="homepage">
+<div class="homepage" aria-label="Domača stran">
 
     <!-- HERO SEKCIJA -->
-    <section class="hero">
+    <section class="hero" aria-labelledby="hero-title">
         <div class="hero-content">
-            <h1>Dobrodošli v BiciklStore</h1>
-            <p>
+            <h1 id="hero-title">Dobrodošli v BiciklStore</h1>
+
+            <p id="hero-desc">
                 Vse za kolesarjenje, opremo in športni stil – na enem mestu.
                 Odkrij vrhunska kolesa, oblačila in dodatke za vsak dan.
             </p>
-            <div class="hero-actions">
-                <a href="#" class="btn primary">Prebrskaj ponudbo</a>
-                <a href="#" class="btn ghost">Kolesa</a>
+
+            <div class="hero-actions" role="navigation" aria-label="Glavne akcije na domači strani">
+                <button type="button" class="btn primary" aria-label="Prebrskaj ponudbo" (click)="go('bikes')">
+                    Prebrskaj ponudbo
+                </button>
+
+                <button type="button" class="btn ghost" aria-label="Odpri kategorijo Kolesa" (click)="go('bikes')">
+                    Kolesa
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- KATEGORIJE -->
-    <section class="categories">
-        <h2>Priljubljene kategorije</h2>
+    <section class="categories" aria-labelledby="categories-title">
+        <h2 id="categories-title">Priljubljene kategorije</h2>
         <app-categories></app-categories>
     </section>
 
-
-    <!-- PROMO BLOK -->
-    <section class="promo">
+    <section class="promo" aria-labelledby="promo-title">
         <div class="promo-card">
-            <h2>Servis koles</h2>
+            <h2 id="promo-title">Servis koles</h2>
             <p>
                 Potrebuje tvoje kolo malo ljubezni? Naš servis poskrbi za hitre in
                 zanesljive popravke, da se lahko čim prej vrneš na cesto.
             </p>
-            <a href="#" class="btn secondary">Naroči se na servis</a>
+
+            <button type="button" class="btn secondary" aria-label="Naroči se na servis" (click)="go('contact')">
+                Naroči se na servis
+            </button>
         </div>
     </section>
 

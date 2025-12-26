@@ -1,33 +1,30 @@
-<div class="equipment-page">
-    <div class="equipment-header">
-        <h1>Oprema</h1>
+<div class="equipments-page" aria-labelledby="equipments-title">
+    <div class="equipments-header">
+        <h1 id="equipments-title">Oprema</h1>
     </div>
 
-    <div class="equipment-filters">
+    <div class="equipments-filters" role="region" aria-label="Filtri in razvrščanje">
         <div class="filter-group">
-            <label>Brand</label>
-            <input type="text" [(ngModel)]="filter.brand" placeholder="Npr. TrailSafe" />
+            <label for="equipmentBrand">Znamka</label>
+            <input id="equipmentBrand" name="equipmentBrand" type="text" [(ngModel)]="filter.brand"
+                placeholder="Npr. Shimano" autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Material</label>
-            <input type="text" [(ngModel)]="filter.material" placeholder="Npr. Carbon" />
+            <label for="equipmentCompatibility">Kompatibilnost</label>
+            <input id="equipmentCompatibility" name="equipmentCompatibility" type="text"
+                [(ngModel)]="filter.compatibility" placeholder="Npr. MTB" autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Združljivost</label>
-            <select [(ngModel)]="filter.compatibility">
-                <option value="">Vse</option>
-                <option value="MTB">MTB</option>
-                <option value="Road">Road</option>
-                <option value="City">City</option>
-                <option value="Gravel">Gravel</option>
-            </select>
+            <label for="equipmentMaterial">Material</label>
+            <input id="equipmentMaterial" name="equipmentMaterial" type="text" [(ngModel)]="filter.material"
+                placeholder="Npr. karbon" autocomplete="off" />
         </div>
 
         <div class="filter-group">
-            <label>Razpoložljivost</label>
-            <select [(ngModel)]="filter.availability">
+            <label for="equipmentAvailability">Razpoložljivost</label>
+            <select id="equipmentAvailability" name="equipmentAvailability" [(ngModel)]="filter.availability">
                 <option value="">Vse</option>
                 <option value="available">Na zalogi</option>
                 <option value="unavailable">Ni na zalogi</option>
@@ -35,8 +32,8 @@
         </div>
 
         <div class="filter-group">
-            <label>Sortiraj</label>
-            <select [(ngModel)]="sortBy">
+            <label for="equipmentSortBy">Sortiraj</label>
+            <select id="equipmentSortBy" name="equipmentSortBy" [(ngModel)]="sortBy">
                 <option value="name">Ime</option>
                 <option value="price">Cena</option>
                 <option value="weight">Teža</option>
@@ -44,72 +41,89 @@
         </div>
 
         <div class="filter-group filter-group-button">
-            <label>&nbsp;</label>
-            <button class="sort-dir" type="button" (click)="sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+            <span class="sr-only" id="equipmentSortDirHelp">Spremeni smer razvrščanja</span>
+            <button class="sort-dir" type="button" (click)="toggleSortDirection()"
+                [attr.aria-pressed]="sortDirection === 'desc'" aria-describedby="equipmentSortDirHelp">
                 {{ sortDirection === 'asc' ? '⬆ Naraščajoče' : '⬇ Padajoče' }}
             </button>
         </div>
     </div>
 
-    <div class="equipment-grid">
-        <div class="equipment-card" *ngFor="let item of filteredAndSortedEquipments; trackBy: trackByEquipmentId"
-            (dblclick)="openDetails(item)">
-            <div class="equipment-image-wrapper">
-                <img *ngIf="item.imageUrl" [src]="item.imageUrl" class="equipment-image" [alt]="item.name"
-                    loading="lazy" (error)="onImageError(item)" />
+    <div class="equipments-grid" role="list" aria-label="Seznam opreme">
+        <div class="equipment-card" role="listitem"
+            *ngFor="let item of filteredAndSortedEquipments; trackBy: trackByEquipmentId">
+            <!-- Tipkovnično dostopna klikljiva površina kartice -->
+            <div class="equipment-card-click" role="button" tabindex="0"
+                [attr.aria-label]="'Odpri podrobnosti: ' + (item.name || 'izdelek')"
+                (click)="openDetailsFromCard(item, $event)" (keydown)="onCardKeydown($event, item)">
+                <div class="equipment-image-wrapper">
+                    <img *ngIf="item.imageUrl" [src]="item.imageUrl" [alt]="getEquipmentImageAlt(item)"
+                        class="equipment-image" loading="lazy" (error)="onImageError(item)" />
 
-                <div class="equipment-image-placeholder" *ngIf="!item.imageUrl">
-                    <span class="placeholder-icon">🛠️</span>
-                    <span class="placeholder-name">{{ item.name }}</span>
+                    <div class="equipment-image-placeholder" *ngIf="!item.imageUrl" aria-hidden="true">
+                        <span class="placeholder-icon">🧰</span>
+                        <span class="placeholder-name">{{ item.name }}</span>
+                    </div>
+
+                    <span class="badge badge-unavailable" *ngIf="!item.isAvailable" aria-label="Ni na zalogi">Ni na
+                        zalogi</span>
                 </div>
 
-                <span class="badge badge-unavailable" *ngIf="!item.isAvailable">Ni na zalogi</span>
-            </div>
+                <div class="equipment-info">
+                    <div class="equipment-name">{{ item.name }}</div>
 
-            <div class="equipment-info">
-                <div class="equipment-name">{{ item.name }}</div>
-
-                <div class="equipment-description">
-                    {{ item.shortDescription || item.longDescription || '—' }}
-                </div>
-
-                <div class="equipment-specs">
-                    <div class="spec" *ngIf="item.weight !== undefined && item.weight !== null">
-                        <span class="label">Teža</span>
-                        <span class="value">{{ item.weight }} g</span>
+                    <div class="equipment-description">
+                        {{ item.shortDescription }}
                     </div>
 
-                    <div class="spec" *ngIf="item.material">
-                        <span class="label">Material</span>
-                        <span class="value">{{ item.material }}</span>
+                    <div class="equipment-specs" aria-label="Specifikacije">
+                        <div class="spec" *ngIf="item.brand">
+                            <span class="label">Znamka</span>
+                            <span class="value">{{ item.brand }}</span>
+                        </div>
+
+                        <div class="spec" *ngIf="item.material">
+                            <span class="label">Material</span>
+                            <span class="value">{{ item.material }}</span>
+                        </div>
+
+                        <div class="spec" *ngIf="item.weight != null">
+                            <span class="label">Teža</span>
+                            <span class="value">{{ item.weight }} g</span>
+                        </div>
+
+                        <div class="spec" *ngIf="item.compatibility?.length">
+                            <span class="label">Kompatibilnost</span>
+                            <span class="value">{{ item.compatibility.join(', ') }}</span>
+                        </div>
+
+                        <div class="spec">
+                            <span class="label">Garancija</span>
+                            <span class="value">{{ item.warrantyMonths }} mesecev</span>
+                        </div>
                     </div>
 
-                    <div class="spec" *ngIf="item.brand">
-                        <span class="label">Znamka</span>
-                        <span class="value">{{ item.brand }}</span>
-                    </div>
+                    <div class="equipment-bottom">
+                        <div class="equipment-price"
+                            [attr.aria-label]="'Cena: ' + (item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI')">
+                            {{ item.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'sl-SI' }}
+                        </div>
 
-                    <div class="spec">
-                        <span class="label">Garancija</span>
-                        <span class="value">{{ item.warrantyMonths }} mesecev</span>
-                    </div>
-                </div>
+                        <!-- Akcije: ustavijo propagacijo klika -->
+                        <div class="actions" (click)="$event.stopPropagation()">
+                            <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
+                                [attr.aria-disabled]="!item.isAvailable"
+                                [attr.aria-label]="item.isAvailable ? ('Dodaj v košarico: ' + item.name) : ('Ni na zalogi: ' + item.name)"
+                                (click)="addToCart(item)">
+                                {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
+                            </button>
 
-                <div class="equipment-bottom">
-                    <div class="equipment-price">
-                        {{ item.price | currency:'EUR':'symbol':'1.2-2':'sl-SI' }}
-                    </div>
-
-                    <div class="actions">
-                        <button class="add-to-cart" type="button" [disabled]="!item.isAvailable"
-                            (click)="addToCart(item)" (dblclick)="$event.stopPropagation()">
-                            {{ item.isAvailable ? 'Dodaj v košarico' : 'Obvesti me' }}
-                        </button>
-
-                        <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
-                            target="_blank" rel="noopener noreferrer" (dblclick)="$event.stopPropagation()">
-                            Uradna stran
-                        </a>
+                            <a *ngIf="item.officialProductSite" class="official-link" [href]="item.officialProductSite"
+                                target="_blank" rel="noopener noreferrer"
+                                [attr.aria-label]="'Odpri uradno stran za ' + (item.name || 'produkt') + ' (odpre se v novem zavihku)'">
+                                Uradna stran
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

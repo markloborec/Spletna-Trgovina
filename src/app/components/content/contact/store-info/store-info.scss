@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    position: relative;
 
     &:hover {
         transform: translateY(-4px);
@@ -17,9 +18,60 @@
     }
 
     &.active {
-        border-color: #3daa56;
+        border-color: #1f7a35;
+        /* bolj kontrastno kot #3daa56 */
         background: #eaf6ec;
-        box-shadow: 0 6px 18px rgba(61, 170, 86, 0.26);
+        box-shadow: 0 6px 18px rgba(31, 122, 53, 0.26);
+    }
+
+    &:focus-visible {
+        outline: 3px solid rgba(15, 23, 42, 0.55);
+        outline-offset: 3px;
+    }
+}
+
+/* ✅ IMAGE (manj rezanja) */
+.branch-image-wrap {
+    width: 100%;
+    height: 150px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.branch-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+    display: block;
+}
+
+.branch-image-placeholder {
+    width: 100%;
+    height: 150px;
+    border-radius: 0.75rem;
+    border: 1px dashed #cbd5e1;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #334155;
+    /* bolj kontrastno */
+    font-weight: 700;
+
+    .emoji {
+        font-size: 1.4rem;
+    }
+
+    .text {
+        font-size: 0.95rem;
     }
 }
 
@@ -27,7 +79,7 @@
     margin: 0;
     font-size: 1.2rem;
     color: #111827;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.3px;
 }
 
@@ -38,11 +90,9 @@
 }
 
 .branch-details strong {
-    font-weight: 600;
-    color: #1e293b;
+    font-weight: 700;
+    color: #0f172a;
 }
-
-// --- Delovni čas ---
 
 .hours {
     margin-top: 0.4rem;
@@ -52,7 +102,7 @@
 
 .hours-title {
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     color: #111827;
     margin-bottom: 0.25rem;
 }
@@ -63,4 +113,56 @@
     line-height: 1.45;
     font-size: 0.9rem;
     color: #374151;
+}
+
+/* NOTICE */
+@keyframes noticePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.26);
+    }
+
+    70% {
+        box-shadow: 0 0 0 9px rgba(220, 38, 38, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+    }
+}
+
+.notice-badge {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 3;
+
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+
+    background: #b91c1c;
+    /* temnejša rdeča (bolj kontrastno) */
+    color: #fff;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: default;
+    user-select: none;
+
+    transition: transform 160ms ease-out, box-shadow 160ms ease-out, background-color 160ms ease-out;
+
+    animation: noticePulse 2.6s ease-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+        animation: none;
+        transition: none;
+    }
+}
+
+.notice-icon {
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1;
 }
