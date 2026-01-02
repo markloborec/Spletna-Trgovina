@@ -1,8 +1,25 @@
 import { Router } from "express";
-import { priceCart } from "../controllers/cartController";
+import { authMiddleware } from "../middleware/authMiddleware";
+import {
+  priceCart,
+  getCart,
+  addItemToCart,
+  updateCartItem,
+  removeCartItem,
+  clearCart,
+} from "../controllers/cartController";
 
-const router = Router();
+export const cartRouter = Router();
 
-router.post("/price", priceCart);
+cartRouter.post("/price", priceCart);
 
-export default router;
+// ✅ prava košarica (persist)
+cartRouter.get("/", authMiddleware, getCart);
+cartRouter.post("/items", authMiddleware, addItemToCart);
+cartRouter.put("/items/:itemId", authMiddleware, updateCartItem);
+cartRouter.delete("/items/:itemId", authMiddleware, removeCartItem);
+cartRouter.delete("/", authMiddleware, clearCart);
+
+
+// obstoječi kalkulator cene (ostane!)
+cartRouter.post("/price", priceCart);

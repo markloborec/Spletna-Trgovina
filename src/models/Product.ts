@@ -2,6 +2,16 @@ import mongoose from "mongoose";
 
 export type ProductType = "cycles" | "equipment" | "clothing";
 
+const variantSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },           // npr. "M", "L", "Red"
+    sku: { type: String },                            // optional
+    priceDelta: { type: Number, default: 0 },         // optional (doplačilo)
+    stock: { type: Number, required: true, min: 0 },  // zaloga NA VARIANTI
+  },
+  { _id: true }
+);
+
 const productSchema = new mongoose.Schema(
   {
     type: {
@@ -29,10 +39,12 @@ const productSchema = new mongoose.Schema(
 
     officialProductSite: { type: String },
 
-    // ✅ equipment-specific (manjkalo)
     material: { type: String },
-    weight: { type: Number }, // grams
-    compatibility: { type: [String], default: [] }, // e.g. ["MTB","Road"]
+    weight: { type: Number },
+    compatibility: { type: [String], default: [] },
+
+    // ✅ NOVO: variante
+    variants: { type: [variantSchema], default: [] },
   },
   { timestamps: true }
 );

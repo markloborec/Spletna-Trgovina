@@ -9,6 +9,8 @@ import {
   optionalAuthMiddleware,
   AuthRequest,
 } from "../middleware/authMiddleware";
+import { cartRouter } from "./cart";
+
 
 export const router = Router();
 
@@ -17,6 +19,8 @@ router.get("/health", (req, res) => {
 });
 
 router.use("/auth", authRouter);
+router.use("/cart", cartRouter);
+
 
 type OrderItemInput = { productId: string; qty: number };
 
