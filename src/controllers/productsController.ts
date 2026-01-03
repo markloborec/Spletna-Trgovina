@@ -38,11 +38,22 @@ function toApiProduct(p: any) {
     warrantyMonths: typeof p.warrantyMonths === "number" ? p.warrantyMonths : 24,
     officialProductSite: p.officialProductSite || undefined,
 
-    // ✅ dodatna polja (oprema)
+    // dodatna polja
     brand: p.brand ?? undefined,
     material: p.material ?? undefined,
     weight: typeof p.weight === "number" ? p.weight : undefined,
     compatibility: Array.isArray(p.compatibility) ? p.compatibility : [],
+
+    // 🔥 KLJUČNO: VARIANTE
+    variants: Array.isArray(p.variants)
+      ? p.variants.map((v: any) => ({
+          id: (v._id ?? v.id)?.toString(),
+          name: v.variant_name ?? v.name ?? "",
+          sku: v.sku ?? "",
+          stock: v.stock_quantity ?? v.stock ?? 0,
+          extraPrice: v.extra_price ?? v.extraPrice ?? 0,
+        }))
+      : [],
   };
 }
 
