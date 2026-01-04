@@ -1,6 +1,7 @@
 import { Router } from "express";
 import mongoose from "mongoose";
 import { Product } from "../models/Product";
+import { Cart } from "../models/Cart";
 import { authRouter } from "./authRoutes";
 import { Order } from "../models/Order";
 import { User } from "../models/User";
@@ -106,130 +107,165 @@ function extractProfileAddress(user: any): ShippingAddress | null {
  *   items: [{ productId, qty }],
  *   payment: "card"|"cod"|"bank",
  *   delivery: "courier"|"pickup",
- *   shippingAddress?: { fullName, street, city, postalCode, phone } | null
- * }
- */
-router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => {
+ *   shippingAddress?: { fullName, street, citrouter.post("/orders", authMiddleware, async (req: AuthRequest, res) => {
+  const session = await mongoose.startSession();
+
   try {
+    if (!req.user) return res.status(401).json({ error: "AUTH_NOT_LOGGED_IN" });
+
     const body = req.body ?? {};
-    const itemsRaw = Array.isArray(body.items) ? body.items : [];
-
-    if (itemsRaw.length === 0) {
-      return res.status(400).json({ error: "ITEMS_REQUIRED" });
-    }
-
     const payment = (body.payment ?? "").toString().trim();
     const delivery = (body.delivery ?? "").toString().trim();
 
     if (!payment || !delivery) {
       return res.status(400).json({ error: "PAYMENT_AND_DELIVERY_REQUIRED" });
     }
-
-    // normalize items
-    const items: OrderItemInput[] = itemsRaw.map((it: any) => ({
-      productId: (it?.productId ?? "").toString().trim(),
-      qty: Number(it?.qty),
-    }));
-
-    for (const it of items) {
-      if (!it.productId || !mongoose.Types.ObjectId.isValid(it.productId)) {
-        return res.status(400).json({ error: "INVALID_PRODUCT_ID" });
-      }
-      if (!Number.isFinite(it.qty) || it.qty < 1) {
-        return res.status(400).json({ error: "INVALID_QTY" });
-      }
+    if (!["cod", "card", "bank"].includes(payment)) {
+      return res.status(400).json({ error: "INVALID_PAYMENT_METHOD" });
+    }
+    if (!["courier", "pickup"].includes(delivery)) {
+      return res.status(400).json({ error: "INVALID_DELIVERY_METHOD" });
     }
 
-    // shipping address
+    // shipping address (same rules as before)
     let shippingAddress: ShippingAddress | null = null;
     let addressSource: "none" | "guest" | "profile" = "none";
 
     if (delivery === "pickup") {
       shippingAddress = null;
       addressSource = "none";
-    } else if (delivery === "courier") {
-      // 1) guest form
+    } else {
       const guestAddr = normalizeGuestAddress(body.shippingAddress);
       if (guestAddr) {
         shippingAddress = guestAddr;
         addressSource = "guest";
       }
 
-      // 2) profile, če je user prijavljen in guest ni poslal
       if (!shippingAddress && req.user?.id) {
         const user: any = await User.findById(req.user.id).lean();
         if (!user) return res.status(401).json({ error: "AUTH_USER_NOT_FOUND" });
 
         const profileAddr = extractProfileAddress(user);
-        if (!profileAddr) {
-          return res.status(400).json({ error: "PROFILE_ADDRESS_MISSING" });
-        }
+        if (!profileAddr) return res.status(400).json({ error: "PROFILE_ADDRESS_MISSING" });
 
         shippingAddress = profileAddr;
         addressSource = "profile";
       }
 
-      // 3) validacija:
-      // - guest: mora imeti fullName + street + city + postalCode (že ureja normalizeGuestAddress)
-      // - profile: dovolimo fullName + street (city/postalCode sta optional)
-      if (!shippingAddress) {
-        return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
-      }
+      if (!shippingAddress) return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
 
       if (addressSource === "profile") {
         if (!shippingAddress.fullName || !shippingAddress.street) {
           return res.status(400).json({ error: "PROFILE_ADDRESS_MISSING" });
         }
       }
-    } else {
-      return res.status(400).json({ error: "INVALID_DELIVERY_METHOD" });
     }
 
-    // load products & compute totals
-    const productIds = items.map((i: OrderItemInput) => i.productId);
-    const products = await Product.find({ _id: { $in: productIds } });
+    // 🔒 Transaction: snapshot + stock decrement + clear cart + create order
+    await session.withTransaction(async () => {
+      const cart: any = await Cart.findOne({ userId: req.user!.id }).session(session);
+      const items = cart?.items ?? [];
 
-    if (products.length !== productIds.length) {
-      return res.status(400).json({ error: "PRODUCT_NOT_FOUND" });
-    }
+      if (!Array.isArray(items) || items.length === 0) {
+        throw { status: 400, body: { error: "CART_EMPTY" } };
+      }
 
-    let itemsTotal = 0;
+      const productIds = [...new Set(items.map((it: any) => it.productId.toString()))];
+      const products: any[] = await Product.find({ _id: { $in: productIds } }).session(session).lean();
 
-    const orderItems = items.map((it: OrderItemInput) => {
-      const product = products.find((p) => p._id.toString() === it.productId)!;
+      // build snapshot + validate + compute totals
+      const TAX_RATE = 0.22;
+      const SHIPPING_FEE = 2.99;
 
-      const unitPrice = Number(product.price);
-      const lineTotal = unitPrice * it.qty;
-      itemsTotal += lineTotal;
+      let itemsTotal = 0;
 
-      return {
-        productId: product._id.toString(),
-        name: product.name,
-        qty: it.qty,
-        unitPrice,
-        lineTotal,
-      };
+      const orderItems = items.map((it: any) => {
+        const p = products.find((x) => x._id.toString() === it.productId.toString());
+        if (!p) throw { status: 400, body: { error: "PRODUCT_NOT_FOUND", productId: it.productId.toString() } };
+
+        const v = (p.variants ?? []).find((vv: any) => vv._id.toString() === it.variantId.toString());
+        if (!v) throw { status: 400, body: { error: "VARIANT_NOT_FOUND", productId: p._id.toString(), variantId: it.variantId.toString() } };
+
+        const qty = Number(it.quantity);
+        if (!Number.isFinite(qty) || qty < 1) throw { status: 400, body: { error: "INVALID_QTY" } };
+
+        const unitPrice = Number(p.price) + Number(v.priceDelta ?? 0);
+        const lineTotal = unitPrice * qty;
+        itemsTotal += lineTotal;
+
+        return {
+          productId: p._id.toString(),
+          variantId: v._id.toString(),
+          variantName: v.name,
+          name: p.name,
+          qty,
+          unitPrice,
+          lineTotal,
+        };
+      });
+
+      const tax = Math.round(itemsTotal * TAX_RATE * 100) / 100;
+      const shipping = delivery === "courier" ? SHIPPING_FEE : 0;
+      const grandTotal = Math.round((itemsTotal + tax + shipping) * 100) / 100;
+
+      // stock decrement (atomic per item)
+      for (const it of items) {
+        const qty = Number(it.quantity);
+
+        const upd = await Product.updateOne(
+          {
+            _id: it.productId,
+            "variants._id": it.variantId,
+            "variants.stock": { $gte: qty },
+          },
+          { $inc: { "variants.$.stock": -qty } }
+        ).session(session);
+
+        if ((upd as any).matchedCount === 0) {
+          throw {
+            status: 409,
+            body: {
+              error: "OUT_OF_STOCK",
+              productId: it.productId.toString(),
+              variantId: it.variantId.toString(),
+            },
+          };
+        }
+      }
+
+      const order = await Order.create(
+        [
+          {
+            user_id: req.user!.id,
+            user_email: req.user!.email ?? "",
+            items: orderItems,
+            payment,
+            delivery,
+            totals: { itemsTotal, tax, shipping, grandTotal },
+            shippingAddress: shippingAddress ?? null,
+            status: "created",
+          },
+        ],
+        { session }
+      );
+
+      await Cart.updateOne({ userId: req.user!.id }, { $set: { items: [] } }).session(session);
+
+      (res as any)._orderId = order[0]._id.toString();
     });
 
-    const tax = 0;
-    const shipping = delivery === "courier" ? 2.99 : 0;
-    const grandTotal = itemsTotal + tax + shipping;
+    return res.status(201).json({ orderId: (res as any)._orderId });
+  } catch (error: any) {
+    const status = error?.status ?? 500;
+    const body = error?.body ?? { error: "ORDER_CREATE_FAILED" };
+    console.error("ORDER_CREATE_ERROR:", error);
+    return res.status(status).json(body);
+  } finally {
+    session.endSession();
+  }
+});
 
-    const order = await Order.create({
-      user_id: req.user?.id || null,
-      user_email: req.user?.email || "",
-      items: orderItems,
-      payment,
-      delivery,
-      totals: { itemsTotal, tax, shipping, grandTotal },
-      shippingAddress: shippingAddress ?? null,
-      status: "created",
-    });
 
-    return res.status(201).json({ orderId: order._id.toString() });
-  } catch (error) {
-    console.error("Error creating order:", error);
-    return res.status(500).json({ error: "ORDER_CREATE_FAILED" });
   }
 });
 

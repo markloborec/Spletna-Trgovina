@@ -45,6 +45,9 @@ const productSchema = new mongoose.Schema(
 
     // ✅ NOVO: variante
     variants: { type: [variantSchema], default: [] },
+
+    ratingAvg: { type: Number, default: 0, min: 0, max: 5 },
+    ratingCount: { type: Number, default: 0, min: 0 }
   },
   { timestamps: true }
 );

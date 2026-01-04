@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import { connectDB } from "./config/db";
 import { Category } from "./models/Category";
 import { Product } from "./models/Product";
-import { ProductVariant } from "./models/ProductVariant";
 
 dotenv.config();
 
@@ -32,7 +31,6 @@ async function seed() {
 
     if (SHOULD_RESET) {
       console.log("⚠️ RESET mode: clearing existing data...");
-      await ProductVariant.deleteMany({});
       await Product.deleteMany({});
       await Category.deleteMany({});
     } else {
@@ -391,52 +389,46 @@ async function seed() {
     // Variants (stable IDs)
     // -------------------------
     console.log("Upserting product variants...");
-    const variantDocs: any[] = [
-      {
-        _id: stableObjectId("var:allez-54"),
-        product: stableObjectId("prod:specialized-allez"),
-        variant_name: "Velikost 54",
-        sku: "ALLEZ-54",
-        stock_quantity: 5,
-        extra_price: 0,
-      },
-      {
-        _id: stableObjectId("var:allez-56"),
-        product: stableObjectId("prod:specialized-allez"),
-        variant_name: "Velikost 56",
-        sku: "ALLEZ-56",
-        stock_quantity: 3,
-        extra_price: 0,
-      },
-      {
-        _id: stableObjectId("var:tarmac-54"),
-        product: stableObjectId("prod:specialized-tarmac-sl7"),
-        variant_name: "Velikost 54",
-        sku: "TARMAC-54",
-        stock_quantity: 2,
-        extra_price: 0,
-      },
-      {
-        _id: stableObjectId("var:tarmac-56"),
-        product: stableObjectId("prod:specialized-tarmac-sl7"),
-        variant_name: "Velikost 56",
-        sku: "TARMAC-56",
-        stock_quantity: 1,
-        extra_price: 0,
-      },
-      {
-        _id: stableObjectId("var:marlin-m"),
-        product: stableObjectId("prod:trek-marlin-7"),
-        variant_name: "Velikost M",
-        sku: "MARLIN-M",
-        stock_quantity: 4,
-        extra_price: 0,
-      },
-    ];
+        // -------------------------
+    // ✅ Ensure embedded variants on every product (for Cart + Checkout)
+    // -------------------------
+    console.log("Ensuring embedded variants on products...");
 
-    for (const v of variantDocs) {
-      await ProductVariant.updateOne({ _id: v._id }, { $set: v }, { upsert: true });
+    const allProducts: any[] = await Product.find({}, { _id: 1, type: 1, variants: 1, price: 1 }).lean();
+
+    function round2(n: number) {
+      return Math.round(n * 100) / 100;
     }
+
+    function defaultVariantsForType(p: any) {
+      const type = (p.type ?? "").toString();
+      if (type === "cycles") {
+        return [
+          { _id: stableObjectId(`var:${p._id.toString()}:54`), name: "Velikost 54", sku: `SIZE-54-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 3 },
+          { _id: stableObjectId(`var:${p._id.toString()}:56`), name: "Velikost 56", sku: `SIZE-56-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 2 },
+        ];
+      }
+      if (type === "clothing") {
+        return [
+          { _id: stableObjectId(`var:${p._id.toString()}:S`), name: "S", sku: `S-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 5 },
+          { _id: stableObjectId(`var:${p._id.toString()}:M`), name: "M", sku: `M-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 5 },
+          { _id: stableObjectId(`var:${p._id.toString()}:L`), name: "L", sku: `L-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 5 },
+        ];
+      }
+      // equipment + fallback
+      return [
+        { _id: stableObjectId(`var:${p._id.toString()}:ONE`), name: "One size", sku: `ONE-${p._id.toString().slice(-4)}`, priceDelta: 0, stock: 10 },
+      ];
+    }
+
+    for (const p of allProducts) {
+      const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+      if (!hasVariants) {
+        const variants = defaultVariantsForType(p);
+        await Product.updateOne({ _id: p._id }, { $set: { variants } });
+      }
+    }
+
 
     console.log("✅ Seeding finished.");
     process.exit(0);
