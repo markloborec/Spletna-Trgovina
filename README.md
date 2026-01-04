@@ -125,31 +125,7 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 ### Arhitektura sistema (podrobno)
 
-frontend/
- ├── 📁 .vscode/                 # Visual Studio Code konfiguracija
- ├── 📁 public/                  # Statični javni fajli
-│   ├── 📁 flag-icons/          # 🌍 Zastavne ikone
-│   ├── 📁 leafset/             # 🍃 Leafset ikone/komponente
-│   ├── 📁 product-images/      # 🖼️ Slike izdelkov
-│   ├── 📁 store-images/        # 🏪 Slike trgovine
-│   ├── 📄 BicklStoreLogo.ico   # 🏷️ Favicon ICO
-│   ├── 📄 BicklStoreLogo.png   # 🏷️ Glavni logo
-│   └── 📄 favicon.ico          # 🏷️ Favicon
-├── 📁 src/                     # 📦 Izvorna koda aplikacije
-│   ├── 📁 app/                 # ⚡ Angular moduli in komponente
-│   ├── 📄 index.html           # 📄 Glavni HTML dokument
-│   ├── 📄 main.ts              # 🎯 Vstopna točka aplikacije
-│   └── 📄 styles.scss          # 🎨 Globalni stili (SCSS)
-├── 📄 .editorconfig            # 📝 Stil kodiranja
-├── 📄 .gitignore               # 🔒 Ignorirani fajli za Git
-├── 📄 README.md                # 📚 Dokumentacija projekta
-├── 📄 angular.json             # ⚙️ Angular CLI konfiguracija
-├── 📄 package-lock.json        # 📦 Točne verzije npm paketov
-├── 📄 package.json             # 📦 NPM paketi in skripte
-├── 📄 proxy.config.json        # 🔌 Proxy konfiguracija za razvoj
-├── 📄 tsconfig.app.json        # 📝 TypeScript konfiguracija za aplikacijo
-├── 📄 tsconfig.json            # 📝 Glavna TypeScript konfiguracija
-└── 📄 tsconfig.spec.json       # 🧪 TypeScript konfiguracija za teste
+<p>frontend/</p> <p>├── 📁 .vscode/ # Visual Studio Code konfiguracija</p> <p>├── 📁 public/ # Statični javni fajli</p> <p>│ ├── 📁 flag-icons/ # 🌍 Zastavne ikone</p> <p>│ ├── 📁 leafset/ # 🍃 Leafset ikone/komponente</p> <p>│ ├── 📁 product-images/ # 🖼️ Slike izdelkov</p> <p>│ ├── 📁 store-images/ # 🏪 Slike trgovine</p> <p>│ ├── 📄 BicklStoreLogo.ico # 🏷️ Favicon ICO</p> <p>│ ├── 📄 BicklStoreLogo.png # 🏷️ Glavni logo</p> <p>│ └── 📄 favicon.ico # 🏷️ Favicon</p> <p>├── 📁 src/ # 📦 Izvorna koda aplikacije</p> <p>│ ├── 📁 app/ # ⚡ Angular moduli in komponente</p> <p>│ ├── 📄 index.html # 📄 Glavni HTML dokument</p> <p>│ ├── 📄 main.ts # 🎯 Vstopna točka aplikacije</p> <p>│ └── 📄 styles.scss # 🎨 Globalni stili (SCSS)</p> <p>├── 📄 .editorconfig # 📝 Stil kodiranja</p> <p>├── 📄 .gitignore # 🔒 Ignorirani fajli za Git</p> <p>├── 📄 README.md # 📚 Dokumentacija projekta</p> <p>├── 📄 angular.json # ⚙️ Angular CLI konfiguracija</p> <p>├── 📄 package-lock.json # 📦 Točne verzije npm paketov</p> <p>├── 📄 package.json # 📦 NPM paketi in skripte</p> <p>├── 📄 proxy.config.json # 🔌 Proxy konfiguracija za razvoj</p> <p>├── 📄 tsconfig.app.json # 📝 TypeScript konfiguracija za aplikacijo</p> <p>├── 📄 tsconfig.json # 📝 Glavna TypeScript konfiguracija</p> <p>└── 📄 tsconfig.spec.json # 🧪 TypeScript konfiguracija za teste</p>
 
 ### /backend
 
