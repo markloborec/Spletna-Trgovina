@@ -124,6 +124,7 @@ Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno 
 Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
 
+### frontend/
 frontend/
 ├── 📁 .vscode/                 # Visual Studio Code konfiguracija
 ├── 📁 public/                  # Statični javni fajli
@@ -146,9 +147,13 @@ frontend/
 ├── 📄 package-lock.json        # 📦 Točne verzije npm paketov
 ├── 📄 package.json             # 📦 NPM paketi in skripte
 ├── 📄 proxy.config.json        # 🔌 Proxy konfiguracija za razvoj
+
 ├── 📄 tsconfig.app.json        # 📝 TypeScript konfiguracija za aplikacijo
+
 ├── 📄 tsconfig.json            # 📝 Glavna TypeScript konfiguracija
+
 └── 📄 tsconfig.spec.json       # 🧪 TypeScript konfiguracija za teste
+
 ### Razvijalci
 - **Matevž Koren** - Full Stack razvoj
 - **Mark Loborec** - Dokumentacija, frontend razvoj
