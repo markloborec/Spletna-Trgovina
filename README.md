@@ -6,7 +6,7 @@
 
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
-## Trenutne funkcionalnosti (stanje do 5. cikla)
+## Trenutne funkcionalnosti (stanje do 6. cikla)
 ### Uporabniki
 - Registracija in prijava uporabnika (JWT)
 - Pridobivanje uporabniških podatkov (profil)
@@ -126,8 +126,8 @@ Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 ### Arhitektura sistema (podrobno)
 
 frontend/
-├── 📁 .vscode/                 # Visual Studio Code konfiguracija
-├── 📁 public/                  # Statični javni fajli
+ ├── 📁 .vscode/                 # Visual Studio Code konfiguracija
+ ├── 📁 public/                  # Statični javni fajli
 │   ├── 📁 flag-icons/          # 🌍 Zastavne ikone
 │   ├── 📁 leafset/             # 🍃 Leafset ikone/komponente
 │   ├── 📁 product-images/      # 🖼️ Slike izdelkov
