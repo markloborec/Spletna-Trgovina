@@ -123,57 +123,35 @@ ng serve --open
 Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno preverjanje delovanja frontenda.
 Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
 
+### Arhitektura
 
 ### frontend/
-frontend/
+### ├── 📁 .vscode/                 # Visual Studio Code konfiguracija
+### ├── 📁 public/                  # Statični javni fajli
+### │   ├── 📁 flag-icons/          # 🌍 Zastavne ikone
+### │   ├── 📁 leafset/             # 🍃 Leafset ikone/komponente
+### │   ├── 📁 product-images/      # 🖼️ Slike izdelkov
+### │   ├── 📁 store-images/        # 🏪 Slike trgovine
+### │   ├── 📄 BicklStoreLogo.ico   # 🏷️ Favicon ICO
+### │   ├── 📄 BicklStoreLogo.png   # 🏷️ Glavni logo
+### │   └── 📄 favicon.ico          # 🏷️ Favicon
+### ├── 📁 src/                     # 📦 Izvorna koda aplikacije
+### │   ├── 📁 app/                 # ⚡ Angular moduli in komponente
+### │   ├── 📄 index.html           # 📄 Glavni HTML dokument
+### │   ├── 📄 main.ts              # 🎯 Vstopna točka aplikacije
+### │   └── 📄 styles.scss          # 🎨 Globalni stili (SCSS)
+### ├── 📄 .editorconfig            # 📝 Stil kodiranja
+### ├── 📄 .gitignore               # 🔒 Ignorirani fajli za Git
+### ├── 📄 README.md                # 📚 Dokumentacija projekta
+### ├── 📄 angular.json             # ⚙️ Angular CLI konfiguracija
+### ├── 📄 package-lock.json        # 📦 Točne verzije npm paketov
+### ├── 📄 package.json             # 📦 NPM paketi in skripte
+### ├── 📄 proxy.config.json        # 🔌 Proxy konfiguracija za razvoj
+### ├── 📄 tsconfig.app.json        # 📝 TypeScript konfiguracija za aplikacijo
+### ├── 📄 tsconfig.json            # 📝 Glavna TypeScript konfiguracija
+### └── 📄 tsconfig.spec.json       # 🧪 TypeScript konfiguracija za teste
 
-├── 📁 .vscode/                 # Visual Studio Code konfiguracija
-
-├── 📁 public/                  # Statični javni fajli
-
-│   ├── 📁 flag-icons/          # 🌍 Zastavne ikone
-
-│   ├── 📁 leafset/             # 🍃 Leafset ikone/komponente
-
-│   ├── 📁 product-images/      # 🖼️ Slike izdelkov
-
-│   ├── 📁 store-images/        # 🏪 Slike trgovine
-
-│   ├── 📄 BicklStoreLogo.ico   # 🏷️ Favicon ICO
-
-│   ├── 📄 BicklStoreLogo.png   # 🏷️ Glavni logo
-
-│   └── 📄 favicon.ico          # 🏷️ Favicon
-
-├── 📁 src/                     # 📦 Izvorna koda aplikacije
-
-│   ├── 📁 app/                 # ⚡ Angular moduli in komponente
-
-│   ├── 📄 index.html           # 📄 Glavni HTML dokument
-
-│   ├── 📄 main.ts              # 🎯 Vstopna točka aplikacije
-
-│   └── 📄 styles.scss          # 🎨 Globalni stili (SCSS)
-
-├── 📄 .editorconfig            # 📝 Stil kodiranja
-
-├── 📄 .gitignore               # 🔒 Ignorirani fajli za Git
-
-├── 📄 README.md                # 📚 Dokumentacija projekta
-
-├── 📄 angular.json             # ⚙️ Angular CLI konfiguracija
-
-├── 📄 package-lock.json        # 📦 Točne verzije npm paketov
-
-├── 📄 package.json             # 📦 NPM paketi in skripte
-
-├── 📄 proxy.config.json        # 🔌 Proxy konfiguracija za razvoj
-
-├── 📄 tsconfig.app.json        # 📝 TypeScript konfiguracija za aplikacijo
-
-├── 📄 tsconfig.json            # 📝 Glavna TypeScript konfiguracija
-
-└── 📄 tsconfig.spec.json       # 🧪 TypeScript konfiguracija za teste
+### /backend
 
 ### Razvijalci
 - **Matevž Koren** - Full Stack razvoj
