@@ -246,4 +246,4 @@ Filtri:
 </div>
 
 
-**PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicilstore.
+**PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila.
