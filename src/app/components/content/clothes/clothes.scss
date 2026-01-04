@@ -89,7 +89,6 @@
     }
 }
 
-/* bolj kontrastno fokus stanje */
 .filter-group input:focus,
 .filter-group select:focus {
     border-color: #1f7a35;
@@ -235,7 +234,6 @@
         font-size: 0.9rem;
         font-weight: 600;
         color: #334155;
-        /* bolj kontrastno */
     }
 
     @media (max-width: 600px) {
@@ -268,7 +266,6 @@
     }
 }
 
-/* bolj kontrastna oznaka */
 .badge-unavailable {
     background: #475569;
 }
@@ -278,6 +275,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
 
     @media (max-width: 600px) {
         padding: 0.95rem 0.95rem 1rem;
@@ -288,6 +287,12 @@
 .clothes-name {
     font-weight: 700;
     font-size: 1.1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.2;
+    min-height: calc(1.2em * 2);
 
     @media (max-width: 600px) {
         font-size: 1.05rem;
@@ -297,7 +302,12 @@
 .clothes-description {
     font-size: 0.9rem;
     color: #334155;
-    /* bolj kontrastno kot #555 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.35;
+    min-height: calc(1.35em * 2);
 
     @media (max-width: 600px) {
         font-size: 0.95rem;
@@ -318,7 +328,6 @@
         .label {
             font-size: 0.75rem;
             color: #475569;
-            /* bolj kontrastno */
             text-transform: uppercase;
             letter-spacing: 0.03em;
         }
@@ -347,11 +356,11 @@
 }
 
 .clothes-bottom {
-    margin-top: 0.8rem;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 0.75rem;
+    margin-top: auto;
 
     @media (max-width: 600px) {
         margin-top: 0.9rem;
@@ -388,11 +397,14 @@
     border: none;
     cursor: pointer;
     background: #1f7a35;
-    /* bolj kontrastno */
     color: #fff;
     font-size: 0.9rem;
     font-weight: 700;
     transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: center;
+    margin: 5px 0 10px 0;
 
     &:hover:not(:disabled) {
         background: #176129;
@@ -420,6 +432,7 @@
 
     @media (max-width: 600px) {
         width: 100%;
+        min-width: 100%;
         padding: 0.7rem 1rem;
         font-size: 0.98rem;
 
@@ -433,8 +446,8 @@
 .official-link {
     font-size: 0.88rem;
     color: #0b63ce;
-    /* temnejši modri */
     text-decoration: none;
+    min-height: 20px;
 
     &:hover {
         text-decoration: underline;
@@ -453,7 +466,6 @@
     }
 }
 
-/* Screen-reader only */
 .sr-only {
     position: absolute !important;
     width: 1px !important;

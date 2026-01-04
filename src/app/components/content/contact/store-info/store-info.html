@@ -1,35 +1,35 @@
 <div class="branch-card" [class.active]="selected" role="button" tabindex="0" [attr.aria-pressed]="selected"
-    [attr.aria-label]="'Poslovalnica v mestu ' + (store?.city || '')">
-    <div class="notice-badge" *ngIf="store?.notice" [attr.aria-label]="'Obvestilo poslovalnice: ' + store.notice"
+    [attr.aria-label]="'Poslovalnica v mestu ' + (store.city || '')">
+    <div class="notice-badge" *ngIf="store.notice" [attr.aria-label]="'Obvestilo poslovalnice: ' + store.notice"
         [attr.title]="store.notice">
         <span class="notice-icon" aria-hidden="true">!</span>
     </div>
 
-    <div class="branch-image-wrap" *ngIf="store?.imageUrl; else noImage">
+    <div class="branch-image-wrap" *ngIf="store.imageUrl; else noImage">
         <img class="branch-image" [src]="store.imageUrl"
-            [alt]="'Fotografija poslovalnice: ' + (store?.city || 'poslovalnica') + (store?.address ? ', ' + store.address : '')"
+            [alt]="'Fotografija poslovalnice: ' + (store.city || 'poslovalnica') + (store.address ? ', ' + store.address : '')"
             loading="lazy" />
     </div>
 
     <ng-template #noImage>
         <div class="branch-image-placeholder" aria-hidden="true">
             <span class="emoji">🏬</span>
-            <span class="text">{{ store?.city }}</span>
+            <span class="text">{{ store.city }}</span>
         </div>
     </ng-template>
 
-    <h3>{{ store?.city }}</h3>
+    <h3>{{ store.city }}</h3>
 
     <div class="branch-details">
-        <p><strong>Naslov:</strong> {{ store?.address }}</p>
-        <p><strong>Telefon:</strong> {{ store?.phone }}</p>
-        <p><strong>Vodja:</strong> {{ store?.manager }}</p>
+        <p><strong>Naslov:</strong> {{ store.address }}</p>
+        <p><strong>Telefon:</strong> {{ store.phone }}</p>
+        <p><strong>Vodja:</strong> {{ store.manager }}</p>
     </div>
 
     <div class="hours" aria-label="Delovni čas">
         <div class="hours-title">Delovni čas</div>
         <ul>
-            <li *ngFor="let h of store?.workingHours">{{ h }}</li>
+            <li *ngFor="let h of store.workingHours">{{ h }}</li>
         </ul>
     </div>
 </div>

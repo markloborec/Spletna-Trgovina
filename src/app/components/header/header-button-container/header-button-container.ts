@@ -28,12 +28,7 @@ export class HeaderButtonContainer {
 
   currentLang: 'sl' | 'en' | 'de' = 'sl';
 
-  constructor(
-    private elementRef: ElementRef,
-    private router: Router,
-    public cart: CartService,
-    private authService: AuthService
-  ) { }
+  constructor( private elementRef: ElementRef, private router: Router, public cart: CartService, private authService: AuthService ) { }
 
   ngOnInit() {
     this.authService.isLoggedIn$.subscribe((v) => (this.isLoggedIn = v));
@@ -73,7 +68,7 @@ export class HeaderButtonContainer {
     this.isLangMenuOpen = false;
   }
 
-  // Backward compatibility: če imaš še vedno kje v HTML OpenUser/OpenCard
+  // Backward compatibility: če imaš še vedno kje v HTML OpenUser
   OpenUser() {
     this.toggleUserMenu();
   }

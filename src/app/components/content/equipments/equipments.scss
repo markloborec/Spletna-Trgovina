@@ -279,6 +279,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
 
     @media (max-width: 600px) {
         padding: 0.95rem 0.95rem 1rem;
@@ -289,6 +291,12 @@
 .equipment-name {
     font-weight: 700;
     font-size: 1.1rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.2;
+    min-height: calc(1.2em * 2);
 
     @media (max-width: 600px) {
         font-size: 1.05rem;
@@ -299,6 +307,12 @@
     font-size: 0.9rem;
     color: #334155;
     /* bolj kontrastno */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    line-height: 1.35;
+    min-height: calc(1.35em * 2);
 
     @media (max-width: 600px) {
         font-size: 0.95rem;
@@ -349,11 +363,11 @@
 }
 
 .equipment-bottom {
-    margin-top: 0.8rem;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 0.75rem;
+    margin-top: auto;
 
     @media (max-width: 600px) {
         margin-top: 0.9rem;
@@ -386,6 +400,7 @@
 
 .add-to-cart {
     padding: 0.55rem 1.15rem;
+    margin: 5px 0 10px 0;
     border-radius: 0.55rem;
     border: none;
     cursor: pointer;
@@ -395,6 +410,9 @@
     font-size: 0.9rem;
     font-weight: 700;
     transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: center;
 
     &:hover:not(:disabled) {
         background: #176129;
@@ -422,6 +440,7 @@
 
     @media (max-width: 600px) {
         width: 100%;
+        min-width: 100%;
         padding: 0.7rem 1rem;
         font-size: 0.98rem;
 
@@ -437,6 +456,7 @@
     color: #0b63ce;
     /* temnejši modri */
     text-decoration: none;
+    min-height: 20px;
 
     &:hover {
         text-decoration: underline;

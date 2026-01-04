@@ -57,9 +57,9 @@
 
 	<!-- LANGUAGE SWITCH -->
 	<button class="lang-switch notranslate" type="button" (click)="toggleLanguage()">
-		<img class="flag-img" [src]="currentLang === 'sl' ? '/flag-for-flag-slovenia.svg'
-            : currentLang === 'en' ? '/flag-for-flag-united-kingdom.svg'
-            : '/flag-for-flag-germany.svg'"
+		<img class="flag-img" [src]="currentLang === 'sl' ? '/flag-icons/flag-for-flag-slovenia.svg'
+            : currentLang === 'en' ? '/flag-icons/flag-for-flag-united-kingdom.svg'
+            : '/flag-icons/flag-for-flag-germany.svg'"
 			[alt]="currentLang === 'sl' ? 'SLO' : currentLang === 'en' ? 'ENG' : 'DEU'" />
 		<span class="lang-code notranslate">{{ currentLang.toUpperCase() }}</span>
 	</button>

@@ -36,7 +36,7 @@ export class Contact implements AfterViewInit, OnDestroy {
       workingHours: ['Pon – Pet: 08:00 – 18:00', 'Sob: 09:00 – 13:00', 'Ned: zaprto'],
       location: { lat: 46.55465, lng: 15.645881 },
       notice: 'Zaprto 1. 1. 2026 (novo leto).',
-      imageUrl: '/biciklstore_poslovalnica_1.png',
+      imageUrl: '/store-images/biciklstore_poslovalnica_1.png',
     },
     {
       city: 'Slovenska Bistrica',
@@ -46,7 +46,7 @@ export class Contact implements AfterViewInit, OnDestroy {
       workingHours: ['Pon – Pet: 08:00 – 16:00', 'Sob: 08:00 – 12:00', 'Ned: zaprto'],
       location: { lat: 46.392281, lng: 15.5732907 },
       notice: 'Inventura: 30. 12. 2025 odprto samo do 12:00.',
-      imageUrl: '/biciklstore_poslovalnica_2.png',
+      imageUrl: '/store-images/biciklstore_poslovalnica_2.png',
     },
     {
       city: 'Celje',
@@ -56,7 +56,7 @@ export class Contact implements AfterViewInit, OnDestroy {
       workingHours: ['Pon – Pet: 09:00 – 17:00', 'Sob: 09:00 – 12:00', 'Ned: zaprto'],
       location: { lat: 46.23919, lng: 15.26439 },
       notice: 'Servisna delavnica: 27. 12. 2025 omejeno število terminov.',
-      imageUrl: '/biciklstore_poslovalnica_3.png',
+      imageUrl: '/store-images/biciklstore_poslovalnica_3.png',
     },
   ];
 
