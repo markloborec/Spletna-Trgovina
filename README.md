@@ -268,3 +268,13 @@ Filtri:
 </div>
 
 **ODDAJA MNENJA:** V oknu pretekla naročila lahko strana odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5).
+
+
+<div align="center">
+  
+![Podrobnosti](./img/podrobnosti.png)
+
+</div>
+
+**PODROBNOSTI:** V temu zavihku so vidne podrobnosti izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku.
+
