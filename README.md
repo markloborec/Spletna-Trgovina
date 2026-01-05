@@ -39,7 +39,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Interaktivni zemljevid poslovalnic
 - Kontaktna stran in obrazec
 
-### Košarica 
+### 🛒Košarica 
 - Definirana struktura košarice (productId, variantId, quantity)
 - Izračun vmesne vsote (subtotal)
 - Dodan izračun davka (DDV) in dostave
