@@ -116,7 +116,7 @@ ng serve --open
 - Frontend: http://localhost:4200
 - Backend API: http://localhost:4000/api
 
-## Arhitektura sistema
+### 🏗️Arhitektura sistema
 ### Frontend 
 - Angular aplikacija s komponentnim pristopom
 - Integriran Google Translate Website Widget
