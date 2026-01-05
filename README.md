@@ -151,7 +151,7 @@ Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
 - **Matevž Koren** - Full Stack razvoj
 - **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
-### Kontakt in informacije:
+### ℹ️Kontakt in informacije:
 - **Discord**
 - **E-mail**: bickilstore@gmail.com
 - **Telefonska številka**: +386 041 223 531
