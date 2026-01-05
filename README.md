@@ -147,7 +147,7 @@ Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bi
 
 
 ### Dodatne funkcije:
-Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
+👓 Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
 
 ### 🔧Razvijalci
 - **Matevž Koren** - Full Stack razvoj
