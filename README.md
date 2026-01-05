@@ -266,3 +266,5 @@ Filtri:
 ![Ocena](./img/ocena.png)
 
 </div>
+
+**ODDAJA MNENJA:** V oknu pretekla naročila lahko strana odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5).
