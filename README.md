@@ -271,7 +271,7 @@ Filtri:
 
 </div>
 
-**ODDAJA MNENJA:** V oknu pretekla naročila lahko strana odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5).
+**ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5).
 
 
 <div align="center">
