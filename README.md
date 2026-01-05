@@ -147,7 +147,7 @@ Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bi
 ### Dodatne funkcije:
 Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
 
-### Razvijalci
+### 🔧Razvijalci
 - **Matevž Koren** - Full Stack razvoj
 - **Mark Loborec** - Dokumentacija, frontend razvoj
 - **Naja Miličič** - Backend razvoj
@@ -159,7 +159,7 @@ Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-### ❓ UVOD ZA UPORABNIKA S SLIKAMI:
+### ❓UVOD ZA UPORABNIKA S SLIKAMI:
 
 ![Kolesa](./img/Kolesa.GIF)
 **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa.
