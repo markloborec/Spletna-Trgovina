@@ -276,5 +276,5 @@ Filtri:
 
 </div>
 
-**PODROBNOSTI:** V temu zavihku so vidne podrobnosti izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku.
+**PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku.
 
