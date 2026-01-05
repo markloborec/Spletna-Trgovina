@@ -160,7 +160,7 @@ Spletna stran je prilagodljiva za slepe in slabovidne uporabnike.
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-### UVOD ZA UPORABNIKA S SLIKAMI:
+### ❓ UVOD ZA UPORABNIKA S SLIKAMI:
 
 ![Kolesa](./img/Kolesa.GIF)
 **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa.
