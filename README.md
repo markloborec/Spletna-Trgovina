@@ -25,6 +25,12 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Backend podpira delo z variantami (zaloga, cena, izračun košarice)
 - urejanje seznama izdelkov (paginacija, filtriranje, sortiranje)
 
+### Mnenja in ocene
+- Dodajanje/posodabljanje mnenja in ocene za izdelek (prijavljen uporabnik)
+- Pridobivanje seznama mnenj za izdelek
+- Brisanje mnenja (avtor ali admin)
+- Povprečna ocena in število ocen na produktu (agregacija)
+
 ### Navigacija in jezik
 - Routing med stranmi
 - Globalna menjava jezika 
@@ -37,8 +43,15 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Izračun vmesne vsote (subtotal)
 - Dodan izračun davka (DDV) in dostave
 - Preverjanje zaloge na ravni variant
-- Podpora za variante izdelkov
-- Centralizirana logika izračuna cene (pripravljeno za orders)
+- Centralizirana logika izračuna cene
+
+### Naročila (Orders/Checkout)
+- Implementiran checkout proces, kjer se iz košarice ustvari naročilo
+- Validacija zaloge in pravilnosti izbrane variante ob nakupu
+- Podprte variante izdelkov z zalogo (velikost, količina)
+- Snapshot podatkov izdelkov ob naročilu (ime, cena, varianta, količina)
+- Samodejno znižanje zaloge po uspešno zaključenem checkoutu
+- Samodejno praznjenje košarice po nakupu
 
 ## Uporabljene tehnologije 
 ### Backend
