@@ -46,7 +46,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Preverjanje zaloge na ravni variant
 - Centralizirana logika izračuna cene
 
-### Naročila (Orders/Checkout)
+### 🛒Naročila (Orders/Checkout)
 - Implementiran checkout proces, kjer se iz košarice ustvari naročilo
 - Validacija zaloge in pravilnosti izbrane variante ob nakupu
 - Podprte variante izdelkov z zalogo (velikost, količina)
@@ -54,7 +54,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
 - Samodejno znižanje zaloge po uspešno zaključenem checkoutu
 - Samodejno praznjenje košarice po nakupu
 
-## Uporabljene tehnologije 
+## 💻Uporabljene tehnologije 
 ### Backend
 - Node.js + Express
 - MongoDB + Mongoose
