@@ -134,8 +134,7 @@ ng serve --open
 - MongoDB (lokalno ali preko Atlas)
 
 ## Testiranje
-Trenutno je vzpostavljeno ročno testiranje API endpointov (Postman) in osnovno preverjanje delovanja frontenda.
-Avtomatizirani testi bodo dodani v naslednjih ciklih projekta.
+Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bile odkrite manjše nepravilnosti, ki so bile kasneje odpravljene s strani razvijalcev.
 
 ### Arhitektura sistema (podrobno)
 
