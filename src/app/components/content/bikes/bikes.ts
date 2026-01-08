@@ -9,13 +9,25 @@ import { ProductInfo } from '../../dialogs/product-info/product-info';
 type BackendProduct = {
   id?: string;
   _id?: string;
+
   name: string;
   price: number;
+
+  // backend lahko pošilja camel ali snake:
   imageUrl?: string;
+  image_url?: string;
+
   shortDescription?: string;
+  short_description?: string;
+
   longDescription?: string;
+  long_description?: string;
+
   isAvailable?: boolean;
+  inStock?: boolean;
+
   officialProductSite?: string;
+  official_product_site?: string;
 };
 
 @Component({
@@ -45,6 +57,7 @@ export class Bikes {
     this.productService.getBicycles(100).subscribe({
       next: (items) => {
         this.bicycles = (items ?? []).map((p: any) => this.mapBackendToBicycle(p as BackendProduct));
+        this.logPriceStats(this.bicycles);
       },
       error: (err) => {
         console.error('Failed loading bicycles', err);
@@ -57,7 +70,6 @@ export class Bikes {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  /** Tipkovnična podpora za kartico: Enter / Space odpre podrobnosti */
   onCardKeydown(event: KeyboardEvent, bike: any) {
     const key = event.key;
     if (key === 'Enter' || key === ' ') {
@@ -66,12 +78,34 @@ export class Bikes {
     }
   }
 
-  /** Bolj opisni ALT (WAVE opozori, če je alt generičen ali manjka) */
   getBikeImageAlt(bike: Bicycle): string {
     const name = (bike?.name || '').trim();
     if (!name) return 'Fotografija kolesa';
     const availability = bike.isAvailable ? 'na zalogi' : 'ni na zalogi';
     return `Fotografija kolesa: ${name} (${availability})`;
+  }
+
+  private getImageUrl(p: BackendProduct): string {
+    const url = (p.imageUrl ?? (p as any).image_url ?? '').toString().trim();
+    return url;
+  }
+
+  private getShortDescription(p: BackendProduct): string {
+    return (p.shortDescription ?? (p as any).short_description ?? '').toString();
+  }
+
+  private getLongDescription(p: BackendProduct): string {
+    return (p.longDescription ?? (p as any).long_description ?? '').toString();
+  }
+
+  private getIsAvailable(p: BackendProduct): boolean {
+    // backend v seed uporablja inStock
+    const val = p.isAvailable ?? (p as any).inStock;
+    return typeof val === 'boolean' ? val : true;
+  }
+
+  private getOfficialSite(p: BackendProduct): string | undefined {
+    return (p.officialProductSite ?? (p as any).official_product_site) as any;
   }
 
   private mapBackendToBicycle(p: BackendProduct): Bicycle {
@@ -82,13 +116,16 @@ export class Bikes {
       id,
       name: p.name,
       price: Number(p.price ?? 0),
-      imageUrl: p.imageUrl ?? '',
-      shortDescription: p.shortDescription ?? '',
-      longDescription: p.longDescription ?? '',
+
+      imageUrl: this.getImageUrl(p),
+      shortDescription: this.getShortDescription(p),
+      longDescription: this.getLongDescription(p),
+
       type: 'cycles',
-      isAvailable: p.isAvailable ?? true,
+      isAvailable: this.getIsAvailable(p),
+
       warrantyMonths: 24,
-      officialProductSite: p.officialProductSite,
+      officialProductSite: this.getOfficialSite(p),
 
       wheelSize: derived.wheelSize,
       frameMaterial: derived.frameMaterial,
@@ -169,14 +206,35 @@ export class Bikes {
   }
 
   openDetailsFromCard(bike: any, event: Event) {
-    // če user klikne na button/link v kartici, tega NE štej kot open
     const target = event.target as HTMLElement | null;
     if (target && (target.closest('button') || target.closest('a'))) return;
-
     this.openDetails(bike);
   }
 
   closeDetails() {
     this.selectedBike = null;
+  }
+
+  private logPriceStats(list: Bicycle[]) {
+    const prices = (list ?? [])
+      .map((b) => Number(b.price))
+      .filter((p) => Number.isFinite(p));
+
+    if (prices.length === 0) {
+      console.log('[Bikes] Price stats: no valid prices');
+      return;
+    }
+
+    const sum = prices.reduce((acc, p) => acc + p, 0);
+    const avg = sum / prices.length;
+    const max = Math.max(...prices);
+    const min = Math.min(...prices);
+
+    console.log('[Bikes] Price stats', {
+      count: prices.length,
+      avg: Number(avg.toFixed(2)),
+      max,
+      min,
+    });
   }
 }

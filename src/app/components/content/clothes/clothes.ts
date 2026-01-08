@@ -14,10 +14,19 @@ type BackendProduct = {
   price: number;
 
   imageUrl?: string;
+  image_url?: string;
+
   shortDescription?: string;
+  short_description?: string;
+
   longDescription?: string;
+  long_description?: string;
+
   isAvailable?: boolean;
+  inStock?: boolean;
+
   officialProductSite?: string;
+  official_product_site?: string;
 
   size?: Clothing['size'];
   gender?: 'male' | 'female' | 'unisex';
@@ -33,7 +42,7 @@ type BackendProduct = {
   standalone: true,
   imports: [NgFor, NgIf, CurrencyPipe, FormsModule, ProductInfo],
   templateUrl: './clothes.html',
-  styleUrls: ['./clothes.scss'], // <-- FIX: styleUrl -> styleUrls
+  styleUrls: ['./clothes.scss'],
 })
 export class Clothes {
   constructor(private productService: ProductService, private cart: CartService) { }
@@ -68,7 +77,6 @@ export class Clothes {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }
 
-  /** Tipkovnična podpora za kartico: Enter / Space odpre podrobnosti */
   onCardKeydown(event: KeyboardEvent, item: Clothing) {
     const key = event.key;
     if (key === 'Enter' || key === ' ') {
@@ -77,7 +85,6 @@ export class Clothes {
     }
   }
 
-  /** Bolj opisni ALT (WAVE opozori, če je alt generičen ali manjka) */
   getClothesImageAlt(item: Clothing): string {
     const name = (item?.name || '').trim();
     if (!name) return 'Fotografija oblačila';
@@ -85,25 +92,46 @@ export class Clothes {
     return `Fotografija oblačila: ${name} (${availability})`;
   }
 
+  private getImageUrl(p: BackendProduct): string {
+    return (p.imageUrl ?? (p as any).image_url ?? '').toString().trim();
+  }
+
+  private getShortDescription(p: BackendProduct): string {
+    return (p.shortDescription ?? (p as any).short_description ?? '').toString();
+  }
+
+  private getLongDescription(p: BackendProduct): string {
+    return (p.longDescription ?? (p as any).long_description ?? '').toString();
+  }
+
+  private getIsAvailable(p: BackendProduct): boolean {
+    const val = p.isAvailable ?? (p as any).inStock;
+    return typeof val === 'boolean' ? val : true;
+  }
+
+  private getOfficialSite(p: BackendProduct): string | undefined {
+    return (p.officialProductSite ?? (p as any).official_product_site) as any;
+  }
+
   private mapBackendToClothing(p: BackendProduct): Clothing {
     const derived = this.deriveClothingSpecs(p);
 
     const id = String(p.id ?? p._id ?? '');
-    if (!id) {
-      console.warn('Clothing item WITHOUT id/_id from backend:', p);
-    }
+    if (!id) console.warn('Clothing item WITHOUT id/_id from backend:', p);
 
     return {
       id,
       name: p.name,
       price: Number(p.price ?? 0),
-      imageUrl: p.imageUrl ?? '',
-      shortDescription: p.shortDescription ?? '',
-      longDescription: p.longDescription ?? '',
+
+      imageUrl: this.getImageUrl(p),
+      shortDescription: this.getShortDescription(p),
+      longDescription: this.getLongDescription(p),
+
       type: 'clothing',
-      isAvailable: p.isAvailable ?? true,
+      isAvailable: this.getIsAvailable(p),
       warrantyMonths: 24,
-      officialProductSite: p.officialProductSite,
+      officialProductSite: this.getOfficialSite(p),
 
       size: p.size ?? derived.size,
       gender: p.gender ?? derived.gender,

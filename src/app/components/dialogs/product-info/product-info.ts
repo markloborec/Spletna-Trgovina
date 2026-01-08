@@ -128,20 +128,25 @@ export class ProductInfo implements OnChanges, AfterViewInit, OnDestroy {
     });
   }
 
-  get avgRating(): number {
-    const p = this.productFull ?? this.product;
-    const avg = p?.ratingAvg;
-    if (typeof avg === 'number') return avg;
+get avgRating(): number {
+  const p = this.productFull ?? this.product;
 
-    if (!this.reviews?.length) return 0;
-    const sum = this.reviews.reduce((acc, r) => acc + Number(r.rating || 0), 0);
-    return sum / this.reviews.length;
-  }
+  const avg = Number(p?.ratingAvg ?? NaN);
+  const cnt = Number(p?.ratingCount ?? NaN);
 
-  get ratingCount(): number {
-    const p = this.productFull ?? this.product;
-    const cnt = p?.ratingCount;
-    if (typeof cnt === 'number') return cnt;
-    return this.reviews?.length ?? 0;
-  }
+  if (Number.isFinite(avg) && Number.isFinite(cnt) && cnt > 0) return avg;
+
+  if (!this.reviews?.length) return 0;
+  const sum = this.reviews.reduce((acc, r) => acc + Number(r.rating || 0), 0);
+  return sum / this.reviews.length;
+}
+
+get ratingCount(): number {
+  const p = this.productFull ?? this.product;
+  const cnt = Number(p?.ratingCount ?? NaN);
+
+  if (Number.isFinite(cnt) && cnt > 0) return cnt;
+
+  return this.reviews?.length ?? 0;
+}
 }
