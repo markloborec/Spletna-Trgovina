@@ -5,13 +5,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
+const express_2 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Product_1 = require("../models/Product");
 const authRoutes_1 = require("./authRoutes");
 const Order_1 = require("../models/Order");
 const User_1 = require("../models/User");
+const Review_1 = require("../models/Review");
 const authMiddleware_1 = require("../middleware/authMiddleware");
 exports.router = (0, express_1.Router)();
+/**
+ * ✅ STATIC SERVING ZA SLIKE (backend/public/product-images/*)
+ * Dostopno na:
+ *   http://localhost:4000/api/product-images/<file>
+ *
+ * OPOMBA:
+ * Ker je ta router mountan na /api, bo pot /api/product-images/...
+ * Če želiš /product-images/... brez /api, to moraš dodati v glavnem app/server fajlu.
+ */
+exports.router.use("/product-images", express_2.default.static(path_1.default.join(process.cwd(), "public", "product-images")));
 exports.router.get("/health", (req, res) => {
     res.json({ status: "ok" });
 });
@@ -22,7 +35,6 @@ function buildFullName(user) {
     const full = `${first} ${last}`.trim();
     return full || (user?.fullName ?? user?.name ?? "").toString().trim();
 }
-// ✅ guest address mora imeti vse (street + city + postalCode)
 function normalizeGuestAddress(a) {
     if (!a || typeof a !== "object")
         return null;
@@ -35,21 +47,17 @@ function normalizeGuestAddress(a) {
         return null;
     return { fullName, street, city, postalCode, phone };
 }
-// ✅ profile address: podpiramo tvoj format deliveryAddress: string
 function extractProfileAddress(user) {
-    // 1) tvoj primer: deliveryAddress je string (npr. "Hmhlamd 123")
     const deliveryAddress = (user?.deliveryAddress ?? "").toString().trim();
     if (deliveryAddress) {
         return {
             fullName: buildFullName(user) || "Uporabnik",
             street: deliveryAddress,
-            // city/postalCode nimata smisla, ker jih nimaš v profilu
             city: (user?.city ?? "").toString().trim() || undefined,
             postalCode: (user?.postalCode ?? "").toString().trim() || undefined,
             phone: (user?.phone ?? "").toString().trim() || undefined,
         };
     }
-    // 2) če imaš kdaj objektne variante (za vsak slučaj)
     const candidates = [
         user?.shippingAddress,
         user?.address,
@@ -58,12 +66,17 @@ function extractProfileAddress(user) {
         user?.profile?.shippingAddress,
     ].filter(Boolean);
     for (const c of candidates) {
-        const fullName = (c.fullName ?? c.name ?? buildFullName(user) ?? "").toString().trim();
-        const street = (c.street ?? c.addressLine ?? c.line1 ?? "").toString().trim();
+        const fullName = (c.fullName ?? c.name ?? buildFullName(user) ?? "")
+            .toString()
+            .trim();
+        const street = (c.street ?? c.addressLine ?? c.line1 ?? "")
+            .toString()
+            .trim();
         const city = (c.city ?? c.town ?? "").toString().trim();
-        const postalCode = (c.postalCode ?? c.post ?? c.zip ?? "").toString().trim();
+        const postalCode = (c.postalCode ?? c.post ?? c.zip ?? "")
+            .toString()
+            .trim();
         const phone = (c.phone ?? user?.phone ?? "").toString().trim();
-        // pri profilu zahtevamo vsaj fullName + street
         if (fullName && street) {
             return {
                 fullName,
@@ -76,16 +89,6 @@ function extractProfileAddress(user) {
     }
     return null;
 }
-/**
- * POST /api/orders
- * Payload:
- * {
- *   items: [{ productId, qty }],
- *   payment: "card"|"cod"|"bank",
- *   delivery: "courier"|"pickup",
- *   shippingAddress?: { fullName, street, city, postalCode, phone } | null
- * }
- */
 exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (req, res) => {
     try {
         const body = req.body ?? {};
@@ -98,7 +101,6 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
         if (!payment || !delivery) {
             return res.status(400).json({ error: "PAYMENT_AND_DELIVERY_REQUIRED" });
         }
-        // normalize items
         const items = itemsRaw.map((it) => ({
             productId: (it?.productId ?? "").toString().trim(),
             qty: Number(it?.qty),
@@ -111,7 +113,6 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
                 return res.status(400).json({ error: "INVALID_QTY" });
             }
         }
-        // shipping address
         let shippingAddress = null;
         let addressSource = "none";
         if (delivery === "pickup") {
@@ -119,13 +120,11 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
             addressSource = "none";
         }
         else if (delivery === "courier") {
-            // 1) guest form
             const guestAddr = normalizeGuestAddress(body.shippingAddress);
             if (guestAddr) {
                 shippingAddress = guestAddr;
                 addressSource = "guest";
             }
-            // 2) profile, če je user prijavljen in guest ni poslal
             if (!shippingAddress && req.user?.id) {
                 const user = await User_1.User.findById(req.user.id).lean();
                 if (!user)
@@ -137,9 +136,6 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
                 shippingAddress = profileAddr;
                 addressSource = "profile";
             }
-            // 3) validacija:
-            // - guest: mora imeti fullName + street + city + postalCode (že ureja normalizeGuestAddress)
-            // - profile: dovolimo fullName + street (city/postalCode sta optional)
             if (!shippingAddress) {
                 return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
             }
@@ -152,7 +148,6 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
         else {
             return res.status(400).json({ error: "INVALID_DELIVERY_METHOD" });
         }
-        // load products & compute totals
         const productIds = items.map((i) => i.productId);
         const products = await Product_1.Product.find({ _id: { $in: productIds } });
         if (products.length !== productIds.length) {
@@ -192,9 +187,6 @@ exports.router.post("/orders", authMiddleware_1.optionalAuthMiddleware, async (r
         return res.status(500).json({ error: "ORDER_CREATE_FAILED" });
     }
 });
-/**
- * GET /api/orders/my
- */
 exports.router.get("/orders/my", authMiddleware_1.authMiddleware, async (req, res) => {
     try {
         if (!req.user)
@@ -202,14 +194,28 @@ exports.router.get("/orders/my", authMiddleware_1.authMiddleware, async (req, re
         const orders = await Order_1.Order.find({ user_id: req.user.id })
             .sort({ createdAt: -1 })
             .lean();
+        const productIdStrings = Array.from(new Set(orders
+            .flatMap((o) => (o.items ?? []).map((it) => it?.productId))
+            .filter((id) => typeof id === "string" && mongoose_1.default.Types.ObjectId.isValid(id))));
+        const productObjectIds = productIdStrings.map((id) => new mongoose_1.default.Types.ObjectId(id));
+        const reviews = await Review_1.Review.find({
+            user_id: req.user.id,
+            product_id: { $in: productObjectIds },
+        })
+            .select("product_id")
+            .lean();
+        const reviewedSet = new Set(reviews.map((r) => r.product_id.toString()));
         const mapped = orders.map((o) => ({
             orderId: o._id.toString(),
             status: o.status ?? "created",
             date: o.createdAt,
             total: o?.totals?.grandTotal ?? 0,
             items: (o.items ?? []).map((it) => ({
+                productId: (it?.productId ?? "").toString(),
                 name: it.name,
                 qty: it.qty,
+                reviewed: typeof it?.productId === "string" &&
+                    reviewedSet.has(it.productId.toString()),
             })),
         }));
         return res.json({ orders: mapped });

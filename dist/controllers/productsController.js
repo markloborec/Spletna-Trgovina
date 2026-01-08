@@ -1,9 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProductVariants = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProductById = exports.getProducts = void 0;
+exports.createProductReview = exports.getProductReviews = exports.getProductVariants = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProductById = exports.getProducts = void 0;
 const Product_1 = require("../models/Product");
 const mongoose_1 = require("mongoose");
 const ProductVariant_1 = require("../models/ProductVariant");
+const mongoose_2 = __importDefault(require("mongoose"));
+const Review_1 = require("../models/Review");
+const Order_1 = require("../models/Order");
 const ALLOWED_TYPES = new Set(["cycles", "equipment", "clothing"]);
 function normalizeCompatibility(value) {
     if (Array.isArray(value)) {
@@ -32,11 +38,23 @@ function toApiProduct(p) {
         isAvailable: Boolean(p.inStock),
         warrantyMonths: typeof p.warrantyMonths === "number" ? p.warrantyMonths : 24,
         officialProductSite: p.officialProductSite || undefined,
-        // ✅ dodatna polja (oprema)
         brand: p.brand ?? undefined,
         material: p.material ?? undefined,
         weight: typeof p.weight === "number" ? p.weight : undefined,
         compatibility: Array.isArray(p.compatibility) ? p.compatibility : [],
+        // ratings
+        ratingAvg: typeof p.ratingAvg === "number" ? p.ratingAvg : 0,
+        ratingCount: typeof p.ratingCount === "number" ? p.ratingCount : 0,
+    };
+}
+function toApiReview(r) {
+    return {
+        id: r._id.toString(),
+        productId: r.product_id.toString(),
+        userId: r.user_id.toString(),
+        rating: r.rating,
+        comment: r.comment ?? "",
+        createdAt: r.createdAt,
     };
 }
 // GET /api/products?type=cycles|equipment|clothing&page=1&pageSize=12&categoryId=...&priceMin=...&priceMax=...
@@ -138,9 +156,7 @@ exports.getProductById = getProductById;
 // POST /api/products (admin only)
 const createProduct = async (req, res) => {
     try {
-        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, 
-        // ✅ new
-        material, weight, compatibility, } = req.body;
+        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, material, weight, compatibility, } = req.body;
         if (typeof name !== "string" || name.trim() === "") {
             return res.status(400).json({ error: "PRODUCT_NAME_REQUIRED" });
         }
@@ -162,7 +178,6 @@ const createProduct = async (req, res) => {
                 return res.status(400).json({ error: "PRODUCT_CATEGORY_INVALID" });
             }
         }
-        // ✅ validate new fields
         if (material !== undefined && material !== null && typeof material !== "string") {
             return res.status(400).json({ error: "PRODUCT_MATERIAL_INVALID" });
         }
@@ -184,7 +199,6 @@ const createProduct = async (req, res) => {
             inStock: typeof inStock === "boolean" ? inStock : true,
             warrantyMonths: typeof warrantyMonths === "number" ? warrantyMonths : 24,
             officialProductSite: typeof officialProductSite === "string" ? officialProductSite : undefined,
-            // ✅ new
             material: typeof material === "string" ? material : "",
             weight: typeof weight === "number" ? weight : undefined,
             compatibility: compatArr,
@@ -204,9 +218,7 @@ const updateProduct = async (req, res) => {
         if (!(0, mongoose_1.isValidObjectId)(id)) {
             return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
         }
-        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, 
-        // ✅ new
-        material, weight, compatibility, } = req.body;
+        const { name, price, type, category, shortDescription, longDescription, brand, imageUrl, inStock, warrantyMonths, officialProductSite, material, weight, compatibility, } = req.body;
         const updateData = {};
         if (name !== undefined) {
             if (typeof name !== "string" || name.trim() === "") {
@@ -291,7 +303,6 @@ const updateProduct = async (req, res) => {
                 updateData.officialProductSite = officialProductSite;
             }
         }
-        // ✅ update new fields
         if (material !== undefined) {
             if (material === null || material === "")
                 updateData.material = undefined;
@@ -378,3 +389,87 @@ const getProductVariants = async (req, res) => {
     }
 };
 exports.getProductVariants = getProductVariants;
+// GET /api/products/:id/reviews
+const getProductReviews = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (!(0, mongoose_1.isValidObjectId)(id)) {
+            return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
+        }
+        const reviews = await Review_1.Review.find({ product_id: id })
+            .sort({ createdAt: -1 })
+            .limit(50)
+            .lean();
+        return res.status(200).json({ items: reviews.map(toApiReview) });
+    }
+    catch (err) {
+        console.error("PRODUCT_REVIEWS_LIST_ERROR:", err);
+        return res.status(500).json({ error: "PRODUCT_REVIEWS_LIST_ERROR" });
+    }
+};
+exports.getProductReviews = getProductReviews;
+// POST /api/products/:id/reviews (auth)
+const createProductReview = async (req, res) => {
+    try {
+        if (!req.user?.id) {
+            return res.status(401).json({ error: "AUTH_REQUIRED" });
+        }
+        const { id } = req.params; // product id
+        if (!(0, mongoose_1.isValidObjectId)(id)) {
+            return res.status(400).json({ error: "PRODUCT_ID_INVALID" });
+        }
+        const ratingRaw = req.body?.rating;
+        const commentRaw = req.body?.comment;
+        const rating = Number(ratingRaw);
+        if (!Number.isFinite(rating) || rating < 1 || rating > 5) {
+            return res.status(400).json({ error: "REVIEW_RATING_INVALID" });
+        }
+        const comment = typeof commentRaw === "string" ? commentRaw.trim() : "";
+        if (comment.length > 500) {
+            return res.status(400).json({ error: "REVIEW_COMMENT_TOO_LONG" });
+        }
+        // must be purchased by this user (and not cancelled)
+        const hasPurchased = await Order_1.Order.exists({
+            user_id: req.user.id,
+            status: { $ne: "cancelled" },
+            "items.productId": id,
+        });
+        if (!hasPurchased) {
+            return res.status(403).json({ error: "REVIEW_NOT_PURCHASED" });
+        }
+        // ensure product exists
+        const product = await Product_1.Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ error: "PRODUCT_NOT_FOUND" });
+        }
+        // one review per user per product
+        const already = await Review_1.Review.findOne({ user_id: req.user.id, product_id: id }).lean();
+        if (already) {
+            return res.status(409).json({ error: "REVIEW_ALREADY_EXISTS" });
+        }
+        const review = await Review_1.Review.create({
+            user_id: new mongoose_2.default.Types.ObjectId(req.user.id),
+            product_id: new mongoose_2.default.Types.ObjectId(id),
+            rating,
+            comment,
+        });
+        // update denormalized rating stats
+        const prevCount = typeof product.ratingCount === "number" ? product.ratingCount : 0;
+        const prevAvg = typeof product.ratingAvg === "number" ? product.ratingAvg : 0;
+        const nextCount = prevCount + 1;
+        const nextAvg = (prevAvg * prevCount + rating) / nextCount;
+        product.ratingCount = nextCount;
+        product.ratingAvg = Math.round(nextAvg * 100) / 100; // 2 decimals
+        await product.save();
+        return res.status(201).json({ review: toApiReview(review), product: toApiProduct(product) });
+    }
+    catch (err) {
+        // unique index violation
+        if (err?.code === 11000) {
+            return res.status(409).json({ error: "REVIEW_ALREADY_EXISTS" });
+        }
+        console.error("PRODUCT_REVIEW_CREATE_ERROR:", err);
+        return res.status(500).json({ error: "PRODUCT_REVIEW_CREATE_ERROR" });
+    }
+};
+exports.createProductReview = createProductReview;

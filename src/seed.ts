@@ -29,6 +29,8 @@ function stableObjectId(key: string) {
 async function seed() {
   try {
     await connectDB();
+    console.log("DB host:", mongoose.connection.host);
+    console.log("DB name:", mongoose.connection.name);
 
     if (SHOULD_RESET) {
       console.log("⚠️ RESET mode: clearing existing data...");
@@ -63,6 +65,9 @@ async function seed() {
     // Products (stable IDs)
     // -------------------------
     console.log("Upserting products...");
+
+    // ✅ FRONTEND public: /public/product-images/*
+    // Angular servira kot: /product-images/<file>
     const productDocs: any[] = [
       // SPECIALIZED – CESTNA KOLESA
       {
@@ -75,7 +80,7 @@ async function seed() {
           "Specialized Allez je vsestransko cestno kolo, idealno za začetnike in tiste, ki iščejo hitro in odzivno vožnjo.",
         price: 999.99,
         brand: "Specialized",
-        image_url: "",
+        image_url: "/product-images/SpecializedAllez.webp",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.specialized.com",
@@ -90,7 +95,7 @@ async function seed() {
           "Tarmac SL7 združuje aerodinamiko Venge-a in lahkotnost prejšnjih Tarmac modelov.",
         price: 5500,
         brand: "Specialized",
-        image_url: "",
+        image_url: "/product-images/TarmacSL7.webp",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.specialized.com",
@@ -105,7 +110,7 @@ async function seed() {
           "S-Works Tarmac SL8 je zasnovan za tekmovalce, ki želijo najboljše možno razmerje med aerodinamiko, težo in togostjo.",
         price: 14500,
         brand: "S-Works",
-        image_url: "",
+        image_url: "/product-images/Specialized S-Works Tarmac SL8.webp",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.specialized.com",
@@ -120,7 +125,7 @@ async function seed() {
           "S-Works Roubaix omogoča izjemno udobje na dolgih turah in slabih cestah.",
         price: 12000,
         brand: "S-Works",
-        image_url: "",
+        image_url: "/product-images/Specialized S-Works Roubaix.webp",
         inStock: false,
         warrantyMonths: 24,
         officialProductSite: "https://www.specialized.com",
@@ -136,7 +141,7 @@ async function seed() {
         long_description: "Trek Marlin 7 je odlično izhodišče za XC in trail vožnjo.",
         price: 899.95,
         brand: "Trek",
-        image_url: "",
+        image_url: "/product-images/Trek Marlin 7.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.trekbikes.com",
@@ -153,7 +158,7 @@ async function seed() {
           "MET Trenta 3K Carbon MIPS ponuja razmerje med težo, varnostjo in zračnostjo.",
         price: 299,
         brand: "MET",
-        image_url: "",
+        image_url: "/product-images/MET Trenta 3K Carbon MIPS.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://met-helmets.com",
@@ -168,7 +173,7 @@ async function seed() {
           "MET Rivale MIPS je odlična izbira za rekreativne in napredne kolesarje.",
         price: 159,
         brand: "MET",
-        image_url: "",
+        image_url: "/product-images/MET Rivale MIPS.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://met-helmets.com",
@@ -185,7 +190,7 @@ async function seed() {
           "Castelli Aero Race jersey je izdelan iz lahkih materialov in optimiziran za pretok zraka.",
         price: 119,
         brand: "Castelli",
-        image_url: "",
+        image_url: "/product-images/Castelli Aero Race Jersey.webp",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.castelli-cycling.com",
@@ -200,7 +205,7 @@ async function seed() {
           "Free Aero RC so ene najbolj udobnih kolesarskih hlač na trgu.",
         price: 169,
         brand: "Castelli",
-        image_url: "",
+        image_url: "/product-images/Castelli Free Aero RC Bibshort.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.castelli-cycling.com",
@@ -215,7 +220,7 @@ async function seed() {
           "Perfetto RoS nudi zaščito pred vetrom in rahlim dežjem, hkrati pa je zelo zračna.",
         price: 229,
         brand: "Castelli",
-        image_url: "",
+        image_url: "/product-images/Castelli Perfetto RoS Jacket1.jpg",
         inStock: false,
         warrantyMonths: 24,
         officialProductSite: "https://www.castelli-cycling.com",
@@ -232,7 +237,7 @@ async function seed() {
           "Giant Contend AR 1 je primeren za dolge ture, slabše ceste in vsestransko uporabo.",
         price: 1899,
         brand: "Giant",
-        image_url: "",
+        image_url: "/product-images/Giant Contend AR 1.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.giant-bicycles.com",
@@ -247,7 +252,7 @@ async function seed() {
           "Endurace CF 7 ponuja udobje in hitrost na daljših razdaljah ter odlično vrednost za denar.",
         price: 2399,
         brand: "Canyon",
-        image_url: "",
+        image_url: "/product-images/Canyon Endurace CF 7.png",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.canyon.com",
@@ -262,7 +267,7 @@ async function seed() {
           "Scott Scale 970 je lahek in odziven hardtail, odlična izbira za XC rekreacijo.",
         price: 1299,
         brand: "Scott",
-        image_url: "",
+        image_url: "/product-images/Scott Scale 970.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.scott-sports.com",
@@ -277,7 +282,7 @@ async function seed() {
           "Cube Reaction TM je pripravljen na zahtevnejše traile in agresivnejšo vožnjo.",
         price: 1599,
         brand: "Cube",
-        image_url: "",
+        image_url: "/product-images/Cube Reaction TM.jpg",
         inStock: false,
         warrantyMonths: 24,
         officialProductSite: "https://www.cube.eu",
@@ -295,7 +300,7 @@ async function seed() {
         material: "Polikarbonat",
         weight: 280,
         compatibility: ["Road", "Gravel"],
-        image_url: "",
+        image_url: "/product-images/Giro Syntax MIPS.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.giro.com",
@@ -313,7 +318,7 @@ async function seed() {
         material: "Polikarbonat",
         weight: 250,
         compatibility: ["Road", "Gravel"],
-        image_url: "",
+        image_url: "/product-images/POC Ventral Air MIPS.webp",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://poc.com",
@@ -331,7 +336,7 @@ async function seed() {
         material: "Polikarbonat",
         weight: 265,
         compatibility: ["Road"],
-        image_url: "",
+        image_url: "/product-images/Bell Z20 MIPS.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.bellhelmets.com",
@@ -346,7 +351,7 @@ async function seed() {
           "Rapha Core Jersey je zasnovana za udobje, dobro prileganje in zanesljivo uporabo.",
         price: 95,
         brand: "Rapha",
-        image_url: "",
+        image_url: "/product-images/Rapha Core Jersey1.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.rapha.cc",
@@ -361,7 +366,7 @@ async function seed() {
           "Assos Mille GT ponuja vrhunsko udobje in stabilnost pri večurnih vožnjah.",
         price: 199,
         brand: "Assos",
-        image_url: "",
+        image_url: "/product-images/Assos Mille GT Bib Shorts1.webp",
         inStock: false,
         warrantyMonths: 24,
         officialProductSite: "https://www.assos.com",
@@ -376,7 +381,7 @@ async function seed() {
           "Fiandre Light jakna je odlična za vetrovne razmere in hladnejše jutranje ture.",
         price: 179,
         brand: "Sportful",
-        image_url: "",
+        image_url: "/product-images/Sportful Fiandre Light Jacket1.jpg",
         inStock: true,
         warrantyMonths: 24,
         officialProductSite: "https://www.sportful.com",

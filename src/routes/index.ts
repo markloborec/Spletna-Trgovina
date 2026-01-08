@@ -1,9 +1,12 @@
 import { Router } from "express";
+import express from "express";
+import path from "path";
 import mongoose from "mongoose";
 import { Product } from "../models/Product";
 import { authRouter } from "./authRoutes";
 import { Order } from "../models/Order";
 import { User } from "../models/User";
+import { Review } from "../models/Review";
 import {
   authMiddleware,
   optionalAuthMiddleware,
@@ -11,6 +14,20 @@ import {
 } from "../middleware/authMiddleware";
 
 export const router = Router();
+
+/**
+ * ✅ STATIC SERVING ZA SLIKE (backend/public/product-images/*)
+ * Dostopno na:
+ *   http://localhost:4000/api/product-images/<file>
+ *
+ * OPOMBA:
+ * Ker je ta router mountan na /api, bo pot /api/product-images/...
+ * Če želiš /product-images/... brez /api, to moraš dodati v glavnem app/server fajlu.
+ */
+router.use(
+  "/product-images",
+  express.static(path.join(process.cwd(), "public", "product-images"))
+);
 
 router.get("/health", (req, res) => {
   res.json({ status: "ok" });
@@ -35,7 +52,6 @@ function buildFullName(user: any) {
   return full || (user?.fullName ?? user?.name ?? "").toString().trim();
 }
 
-// ✅ guest address mora imeti vse (street + city + postalCode)
 function normalizeGuestAddress(a: any): ShippingAddress | null {
   if (!a || typeof a !== "object") return null;
 
@@ -49,22 +65,18 @@ function normalizeGuestAddress(a: any): ShippingAddress | null {
   return { fullName, street, city, postalCode, phone };
 }
 
-// ✅ profile address: podpiramo tvoj format deliveryAddress: string
 function extractProfileAddress(user: any): ShippingAddress | null {
-  // 1) tvoj primer: deliveryAddress je string (npr. "Hmhlamd 123")
   const deliveryAddress = (user?.deliveryAddress ?? "").toString().trim();
   if (deliveryAddress) {
     return {
       fullName: buildFullName(user) || "Uporabnik",
       street: deliveryAddress,
-      // city/postalCode nimata smisla, ker jih nimaš v profilu
       city: (user?.city ?? "").toString().trim() || undefined,
       postalCode: (user?.postalCode ?? "").toString().trim() || undefined,
       phone: (user?.phone ?? "").toString().trim() || undefined,
     };
   }
 
-  // 2) če imaš kdaj objektne variante (za vsak slučaj)
   const candidates = [
     user?.shippingAddress,
     user?.address,
@@ -74,13 +86,18 @@ function extractProfileAddress(user: any): ShippingAddress | null {
   ].filter(Boolean);
 
   for (const c of candidates) {
-    const fullName = (c.fullName ?? c.name ?? buildFullName(user) ?? "").toString().trim();
-    const street = (c.street ?? c.addressLine ?? c.line1 ?? "").toString().trim();
+    const fullName = (c.fullName ?? c.name ?? buildFullName(user) ?? "")
+      .toString()
+      .trim();
+    const street = (c.street ?? c.addressLine ?? c.line1 ?? "")
+      .toString()
+      .trim();
     const city = (c.city ?? c.town ?? "").toString().trim();
-    const postalCode = (c.postalCode ?? c.post ?? c.zip ?? "").toString().trim();
+    const postalCode = (c.postalCode ?? c.post ?? c.zip ?? "")
+      .toString()
+      .trim();
     const phone = (c.phone ?? user?.phone ?? "").toString().trim();
 
-    // pri profilu zahtevamo vsaj fullName + street
     if (fullName && street) {
       return {
         fullName,
@@ -95,16 +112,6 @@ function extractProfileAddress(user: any): ShippingAddress | null {
   return null;
 }
 
-/**
- * POST /api/orders
- * Payload:
- * {
- *   items: [{ productId, qty }],
- *   payment: "card"|"cod"|"bank",
- *   delivery: "courier"|"pickup",
- *   shippingAddress?: { fullName, street, city, postalCode, phone } | null
- * }
- */
 router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => {
   try {
     const body = req.body ?? {};
@@ -121,7 +128,6 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
       return res.status(400).json({ error: "PAYMENT_AND_DELIVERY_REQUIRED" });
     }
 
-    // normalize items
     const items: OrderItemInput[] = itemsRaw.map((it: any) => ({
       productId: (it?.productId ?? "").toString().trim(),
       qty: Number(it?.qty),
@@ -136,7 +142,6 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
       }
     }
 
-    // shipping address
     let shippingAddress: ShippingAddress | null = null;
     let addressSource: "none" | "guest" | "profile" = "none";
 
@@ -144,14 +149,12 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
       shippingAddress = null;
       addressSource = "none";
     } else if (delivery === "courier") {
-      // 1) guest form
       const guestAddr = normalizeGuestAddress(body.shippingAddress);
       if (guestAddr) {
         shippingAddress = guestAddr;
         addressSource = "guest";
       }
 
-      // 2) profile, če je user prijavljen in guest ni poslal
       if (!shippingAddress && req.user?.id) {
         const user: any = await User.findById(req.user.id).lean();
         if (!user) return res.status(401).json({ error: "AUTH_USER_NOT_FOUND" });
@@ -165,9 +168,6 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
         addressSource = "profile";
       }
 
-      // 3) validacija:
-      // - guest: mora imeti fullName + street + city + postalCode (že ureja normalizeGuestAddress)
-      // - profile: dovolimo fullName + street (city/postalCode sta optional)
       if (!shippingAddress) {
         return res.status(400).json({ error: "SHIPPING_ADDRESS_REQUIRED" });
       }
@@ -181,7 +181,6 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
       return res.status(400).json({ error: "INVALID_DELIVERY_METHOD" });
     }
 
-    // load products & compute totals
     const productIds = items.map((i: OrderItemInput) => i.productId);
     const products = await Product.find({ _id: { $in: productIds } });
 
@@ -229,9 +228,6 @@ router.post("/orders", optionalAuthMiddleware, async (req: AuthRequest, res) => 
   }
 });
 
-/**
- * GET /api/orders/my
- */
 router.get("/orders/my", authMiddleware, async (req: AuthRequest, res) => {
   try {
     if (!req.user) return res.status(401).json({ error: "AUTH_NOT_LOGGED_IN" });
@@ -240,14 +236,41 @@ router.get("/orders/my", authMiddleware, async (req: AuthRequest, res) => {
       .sort({ createdAt: -1 })
       .lean();
 
+    const productIdStrings = Array.from(
+      new Set(
+        orders
+          .flatMap((o: any) => (o.items ?? []).map((it: any) => it?.productId))
+          .filter(
+            (id: any) => typeof id === "string" && mongoose.Types.ObjectId.isValid(id)
+          )
+      )
+    ) as string[];
+
+    const productObjectIds = productIdStrings.map(
+      (id) => new mongoose.Types.ObjectId(id)
+    );
+
+    const reviews = await Review.find({
+      user_id: req.user.id,
+      product_id: { $in: productObjectIds },
+    })
+      .select("product_id")
+      .lean();
+
+    const reviewedSet = new Set(reviews.map((r: any) => r.product_id.toString()));
+
     const mapped = orders.map((o: any) => ({
       orderId: o._id.toString(),
       status: o.status ?? "created",
       date: o.createdAt,
       total: o?.totals?.grandTotal ?? 0,
       items: (o.items ?? []).map((it: any) => ({
+        productId: (it?.productId ?? "").toString(),
         name: it.name,
         qty: it.qty,
+        reviewed:
+          typeof it?.productId === "string" &&
+          reviewedSet.has(it.productId.toString()),
       })),
     }));
 

@@ -29,10 +29,12 @@ const productSchema = new mongoose.Schema(
 
     officialProductSite: { type: String },
 
-    // ✅ equipment-specific (manjkalo)
     material: { type: String },
     weight: { type: Number }, // grams
     compatibility: { type: [String], default: [] }, // e.g. ["MTB","Road"]
+
+    ratingAvg: { type: Number, default: 0 },
+    ratingCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
