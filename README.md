@@ -216,14 +216,14 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | **Razložitev Registracija** |
-| <div align="center">![Registracija](./img/Registracija.GIF)</div> |
+| <div align="center"><img src="./img/Registracija.GIF" alt="Registracija" style="max-width: 100%; width: auto; height: auto;"></div> |
 | **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
 | |
 
 | |
 |:-:|
 | **Razložitev Prijava** |
-| <div align="center">![Prijava](./img/Prijava.GIF)</div> |
+| <div align="center"><img src="./img/Prijava.GIF" alt="Prijava" style="max-width: 100%; width: auto; height: auto;"></div> |
 | **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
 | |
 
