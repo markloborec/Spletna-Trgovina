@@ -216,18 +216,14 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Registracija</h3></div> |
-| <div align="center" style="padding: 20px; background-color: #f5f5f5; border-radius: 5px; margin: 10px 0;">
-  <img src="./img/Registracija.GIF" alt="Registracija" style="max-width: 800px; width: 100%; height: auto; display: block; margin: 0 auto;">
-</div> |
+| ![Registracija](./img/Registracija.GIF) |
 | **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
 | |
 
 | |
 |:-:|
 | <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Prijava</h3></div> |
-| <div align="center" style="padding: 20px; background-color: #f5f5f5; border-radius: 5px; margin: 10px 0;">
-  <img src="./img/Prijava.GIF" alt="Prijava" style="max-width: 800px; width: 100%; height: auto; display: block; margin: 0 auto;">
-</div> |
+| ![Prijava](./img/Prijava.GIF) |
 | **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
 | |
 
