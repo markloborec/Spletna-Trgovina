@@ -165,7 +165,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| **Razložitev strani Kolesa** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev strani Kolesa</h3> |
 | ![Kolesa](./img/Kolesa.GIF) |
 | **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa. |
 | **Filtri:** |
@@ -179,14 +179,14 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| **Razložitev strani Kontakt** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev strani Kontakt</h3> |
 | ![Kontakt](./img/Kontakt.GIF) |
 | **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
 | |
 
 | |
 |:-:|
-| **Razložitev strani Oblačila** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev strani Oblačila</h3> |
 | ![Oblačila](./img/Oblačila.GIF) |
 | **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
 | **Filtri:** |
@@ -201,7 +201,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| **Razložitev strani Oprema** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev strani Oprema</h3> |
 | ![Oprema](./img/Oprema.GIF) |
 | **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca. |
 | **Filtri:** |
@@ -215,70 +215,70 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| **Razložitev Registracija** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Registracija</h3> |
 | <div align="center"><img src="./img/Registracija.GIF" alt="Registracija" style="max-width: 100%; width: auto; height: auto;"></div> |
 | **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
 | |
 
 | |
 |:-:|
-| **Razložitev Prijava** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Prijava</h3> |
 | <div align="center"><img src="./img/Prijava.GIF" alt="Prijava" style="max-width: 100%; width: auto; height: auto;"></div> |
 | **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
 | |
 
 | |
 |:-:|
-| **Razložitev Košarica** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Košarica</h3> |
 | <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
 | **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
 | |
 
 | |
 |:-:|
-| **Razložitev Zaključek nakupa** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Zaključek nakupa</h3> |
 | <div align="center">![Kosarica2](./img/kosarica2.png)</div> |
 | **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spletna stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico". |
 | |
 
 | |
 |:-:|
-| **Razložitev Profil** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Profil</h3> |
 | <div align="center">![profil](./img/profil.png)</div> |
 | **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
 | |
 
 | |
 |:-:|
-| **Razložitev Informacije izdelka** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Informacije izdelka</h3> |
 | <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
 | **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
 | |
 
 | |
 |:-:|
-| **Razložitev Plačilo** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Plačilo</h3> |
 | <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
 | **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
 | |
 
 | |
 |:-:|
-| **Razložitev Pretekla naročila** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Pretekla naročila</h3> |
 | <div align="center">![Preteklanaročila](./img/Preteklanarocila.png)</div> |
 | **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila. |
 | |
 
 | |
 |:-:|
-| **Razložitev Oddaja mnenja** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Oddaja mnenja</h3> |
 | <div align="center">![Ocena](./img/ocena.png)</div> |
 | **ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5). |
 | |
 
 | |
 |:-:|
-| **Razložitev Podrobnosti izdelka** |
+| <h3 style="text-align: center; margin: 10px 0;">📌 Razložitev Podrobnosti izdelka</h3> |
 | <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
 | **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
 | |
