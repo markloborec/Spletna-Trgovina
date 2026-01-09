@@ -163,123 +163,108 @@ Projekt je licenciran pod MIT licenco.
 
 ### ❓UVOD ZA UPORABNIKA S SLIKAMI:
 
-![Kolesa](./img/Kolesa.GIF)
-**KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa.
-Filtri:
-- **Velikost obročev**: Omogoča filitrianje po velikosti obroča kolesa. Izbira velikosti obroča je odvisna od velikosti posamenzika in hkrati zaradi udobja v vožnji (Absorbiranje vibracij med vožnjo, oprijem gume...)
-- **Okvir**: Omogoča filitrianje po velikosti okvirja kolesa in materiala kolesa (Aluminij, karbon). To je pomembna zaradi velikosti uporabnika, saj je lahko večji okvir bolj udoben/primeren za kupca večje velikosti, hkrati pa lažji okvir iz karbona omogoča bolj udobno izkušnjo.
-- **Min. Prestav**: Omogoča filitirnaje po številu prestav. Uporabnik lahko tako najde primerno kolo glede na želje razmerja prestav.
-- **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva kolesa na lokacijah BicklStore. Če kolo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me.
-- **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
-- **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
+| |
+|:-:|
+| ![Kolesa](./img/Kolesa.GIF) |
+| **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa. |
+| **Filtri:** |
+| - **Velikost obročev**: Omogoča filitrianje po velikosti obroča kolesa. Izbira velikosti obroča je odvisna od velikosti posamenzika in hkrati zaradi udobja v vožnji (Absorbiranje vibracij med vožnjo, oprijem gume...) |
+| - **Okvir**: Omogoča filitrianje po velikosti okvirja kolesa in materiala kolesa (Aluminij, karbon). To je pomembna zaradi velikosti uporabnika, saj je lahko večji okvir bolj udoben/primeren za kupca večje velikosti, hkrati pa lažji okvir iz karbona omogoča bolj udobno izkušnjo. |
+| - **Min. Prestav**: Omogoča filitirnaje po številu prestav. Uporabnik lahko tako najde primerno kolo glede na želje razmerja prestav. |
+| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva kolesa na lokacijah BicklStore. Če kolo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me. |
+| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
+| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
+| |
 
-![Kontakt](./img/Kontakt.GIF)
-**KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore.
+| |
+|:-:|
+| ![Kontakt](./img/Kontakt.GIF) |
+| **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
+| |
 
-![Oblačila](./img/Oblačila.GIF)
-**OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup.
+| |
+|:-:|
+| ![Oblačila](./img/Oblačila.GIF) |
+| **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
+| **Filtri:** |
+| - **Velikost**: Omogoča filitrianje po velikosti oblačila ((XS, S, M, L, XL, XXL). |
+| - **Material**: Omogoča filtriranje po materialu oblačila (poliester, bombaž...) |
+| - **Spol**: Omogoča filtriranje oblačila glede na spol uporabinka (Moška, Ženska in Unisex oblačila). |
+| - **Barva**: Omogoča filtirnaje po barvi izdelka. Stranka lahko izbere oblačilo svoje barve. |
+| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva oblačila na lokacijah BicklStore. Če oblačilo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me. |
+| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
+| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
+| |
 
-- **Velikost**: Omogoča filitrianje po velikosti oblačila ((XS, S, M, L, XL, XXL).
-- **Material**: Omogoča filtriranje po materialu oblačila (poliester, bombaž...)
-- **Spol**: Omogoča filtriranje oblačila glede na spol uporabinka (Moška, Ženska in Unisex oblačila).
-- **Barva**: Omogoča filtirnaje po barvi izdelka. Stranka lahko izbere oblačilo svoje barve.
-- **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva oblačila na lokacijah BicklStore. Če oblačilo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me.
-- **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
-- **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
-  
-  ![Oprema](./img/Oprema.GIF)
-**OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca.
-- **Brand**: Omogoča filtriranje po zaželeni znamki.
-- **Material**: Omogoča filtriranje po materialu izdelka (plastika, aluminij, karbon,...) Vpliva na težo, trpežnost in zmogljivost opreme.
-- **Združljivost**: Omogoča filtirranje po združljivosti opreme.
-- **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljivo opremo na lokacijah BicklStore. Če oprema ni razpoložljiva lahko uporabnik klikne na gumb obvesti me.
-- **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni...
-- **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej).
+| |
+|:-:|
+| ![Oprema](./img/Oprema.GIF) |
+| **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca. |
+| **Filtri:** |
+| - **Brand**: Omogoča filtriranje po zaželeni znamki. |
+| - **Material**: Omogoča filtriranje po materialu izdelka (plastika, aluminij, karbon,...) Vpliva na težo, trpežnost in zmogljivost opreme. |
+| - **Združljivost**: Omogoča filtirranje po združljivosti opreme. |
+| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljivo opremo na lokacijah BicklStore. Če oprema ni razpoložljiva lahko uporabnik klikne na gumb obvesti me. |
+| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
+| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
+| |
 
-  <div align="center">
-  
-  ![Registracija](./img/Registracija.GIF)
-  
-  </div>
+| |
+|:-:|
+| <div align="center">![Registracija](./img/Registracija.GIF)</div> |
+| **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
+| |
 
-**REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno.
+| |
+|:-:|
+| <div align="center">![Prijava](./img/Prijava.GIF)</div> |
+| **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
+| |
 
+| |
+|:-:|
+| <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
+| **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se pravk tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
+| |
 
-  <div align="center">
-    
-  ![Prijava](./img/Prijava.GIF)
-  
-  </div>
-  
+| |
+|:-:|
+| <div align="center">![Kosarica2](./img/kosarica2.png)</div> |
+| **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spleta stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico". |
+| |
 
-**PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo".
+| |
+|:-:|
+| <div align="center">![profil](./img/profil.png)</div> |
+| **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
+| |
 
+| |
+|:-:|
+| <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
+| **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
+| |
 
-<div align="center">
-  
-![Kosarica1](./img/kosarica1.png)
+| |
+|:-:|
+| <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
+| **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
+| |
 
-</div>
+| |
+|:-:|
+| <div align="center">![Preteklanaročila](./img/Preteklanarocila.png)</div> |
+| **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila. |
+| |
 
-**KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se pravk tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa.
+| |
+|:-:|
+| <div align="center">![Ocena](./img/ocena.png)</div> |
+| **ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5). |
+| |
 
-<div align="center">
-
-![Kosarica2](./img/kosarica2.png)
-
-</div>
-
-**ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spleta stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico".
-
-
-<div align="center">
-  
-![profil](./img/profil.png)
-
-</div>
-
-**PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)...
-
-<div align="center">
-  
-![informacijeizdelka](./img/informacijeizdelka.png)
-
-</div>
-
-**INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka.
-
-<div align="center">
-  
-![Kosaricazakljucek](./img/Kosaricazakljucek.png)
-
-</div>
-
-**PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila.
-
-
-<div align="center">
-  
-![Preteklanaročila](./img/Preteklanarocila.png)
-
-</div>
-
-
-**PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila.
-
-<div align="center">
-  
-![Ocena](./img/ocena.png)
-
-</div>
-
-**ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5).
-
-
-<div align="center">
-  
-![Podrobnosti](./img/podrobnosti.png)
-
-</div>
-
-**PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku.
-
+| |
+|:-:|
+| <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
+| **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
+| |
