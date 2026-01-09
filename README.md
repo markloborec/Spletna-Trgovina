@@ -165,7 +165,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev strani Kolesa</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev strani Kolesa</h3></div> |
 | ![Kolesa](./img/Kolesa.GIF) |
 | **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa. |
 | **Filtri:** |
@@ -179,14 +179,14 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev strani Kontakt</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev strani Kontakt</h3></div> |
 | ![Kontakt](./img/Kontakt.GIF) |
 | **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev strani Oblačila</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev strani Oblačila</h3></div> |
 | ![Oblačila](./img/Oblačila.GIF) |
 | **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
 | **Filtri:** |
@@ -201,7 +201,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev strani Oprema</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev strani Oprema</h3></div> |
 | ![Oprema](./img/Oprema.GIF) |
 | **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca. |
 | **Filtri:** |
@@ -215,7 +215,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Registracija</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Registracija</h3></div> |
 | <div align="center" style="padding: 20px; background-color: #f5f5f5; border-radius: 5px; margin: 10px 0;">
   <img src="./img/Registracija.GIF" alt="Registracija" style="max-width: 800px; width: 100%; height: auto; display: block; margin: 0 auto;">
 </div> |
@@ -224,7 +224,7 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Prijava</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Prijava</h3></div> |
 | <div align="center" style="padding: 20px; background-color: #f5f5f5; border-radius: 5px; margin: 10px 0;">
   <img src="./img/Prijava.GIF" alt="Prijava" style="max-width: 800px; width: 100%; height: auto; display: block; margin: 0 auto;">
 </div> |
@@ -233,56 +233,56 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Košarica</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Košarica</h3></div> |
 | <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
 | **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Zaključek nakupa</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Zaključek nakupa</h3></div> |
 | <div align="center">![Kosarica2](./img/kosarica2.png)</div> |
 | **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spletna stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico". |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Profil</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Profil</h3></div> |
 | <div align="center">![profil](./img/profil.png)</div> |
 | **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Informacije izdelka</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Informacije izdelka</h3></div> |
 | <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
 | **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Plačilo</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Plačilo</h3></div> |
 | <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
 | **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Pretekla naročila</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Pretekla naročila</h3></div> |
 | <div align="center">![Preteklanaročila](./img/Preteklanarocila.png)</div> |
 | **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila. |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Oddaja mnenja</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Oddaja mnenja</h3></div> |
 | <div align="center">![Ocena](./img/ocena.png)</div> |
 | **ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5). |
 | |
 
 | |
 |:-:|
-| <h3 style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; color: white; border-radius: 5px;">Razložitev Podrobnosti izdelka</h3> |
+| <div style="text-align: center; margin: 10px 0; padding: 10px; background-color: #4CAF50; border-radius: 5px;"><h3 style="margin: 0; color: white;">Razložitev Podrobnosti izdelka</h3></div> |
 | <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
 | **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
 | |
