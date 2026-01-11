@@ -248,7 +248,7 @@ Projekt je licenciran pod MIT licenco.
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV REGISTRACIJA</h1> |
 | ![Registracija](./img/Registracija.GIF) |
-| **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
+| **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi zagotavljanje konstatne varnosti spletne strani je ta postopek nujen. |
 | |
 
 | |
