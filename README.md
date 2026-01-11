@@ -192,7 +192,9 @@ Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bi
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-### ❓UVOD ZA UPORABNIKA S SLIKAMI:
+# ❓ UVOD ZA UPORABNIKA S SLIKAMI
+
+## RAZLOŽITEV STRANI KOLESA
 
 | |
 |:-:|
@@ -208,12 +210,20 @@ Projekt je licenciran pod MIT licenco.
 | - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
 | |
 
+---
+
+## RAZLOŽITEV STRANI KONTAKT
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI KONTAKT</h1> |
 | ![Kontakt](./img/Kontakt.GIF) |
 | **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
 | |
+
+---
+
+## RAZLOŽITEV STRANI OBLAČILA
 
 | |
 |:-:|
@@ -230,6 +240,10 @@ Projekt je licenciran pod MIT licenco.
 | - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
 | |
 
+---
+
+## RAZLOŽITEV STRANI OPREMA
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OPREMA</h1> |
@@ -244,12 +258,20 @@ Projekt je licenciran pod MIT licenco.
 | - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
 | |
 
+---
+
+## RAZLOŽITEV REGISTRACIJA
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV REGISTRACIJA</h1> |
 | ![Registracija](./img/Registracija.GIF) |
 | **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi zagotavljanje konstatne varnosti spletne strani je ta postopek nujen. |
 | |
+
+---
+
+## RAZLOŽITEV PRIJAVA
 
 | |
 |:-:|
@@ -258,12 +280,20 @@ Projekt je licenciran pod MIT licenco.
 | **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
 | |
 
+---
+
+## RAZLOŽITEV KOŠARICA
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV KOŠARICA</h1> |
 | <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
 | **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
 | |
+
+---
+
+## RAZLOŽITEV ZAKLJUČEK NAKUPA
 
 | |
 |:-:|
@@ -272,12 +302,20 @@ Projekt je licenciran pod MIT licenco.
 | **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spletna stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico". |
 | |
 
+---
+
+## RAZLOŽITEV PROFIL
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PROFIL</h1> |
 | <div align="center">![profil](./img/profil.png)</div> |
 | **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
 | |
+
+---
+
+## RAZLOŽITEV INFORMACIJE IZDELKA
 
 | |
 |:-:|
@@ -286,12 +324,20 @@ Projekt je licenciran pod MIT licenco.
 | **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
 | |
 
+---
+
+## RAZLOŽITEV PLAČILO
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PLAČILO</h1> |
 | <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
 | **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
 | |
+
+---
+
+## RAZLOŽITEV PRETEKLA NAROČILA
 
 | |
 |:-:|
@@ -300,6 +346,10 @@ Projekt je licenciran pod MIT licenco.
 | **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila. |
 | |
 
+---
+
+## RAZLOŽITEV ODDAJA MNENJA
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV ODDAJA MNENJA</h1> |
@@ -307,12 +357,16 @@ Projekt je licenciran pod MIT licenco.
 | **ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5). |
 | |
 
+---
+
+## RAZLOŽITEV PODROBNOSTI IZDELKA
+
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PODROBNOSTI IZDELKA</h1> |
 | <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
 | **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
-| 
+| |
 # Pogosta vprašanja (FAQ)
 
 **Opomba:** Odgovori na naslednja vprašanja so tudi vizualno prikazani v [Uvodniku za uporabnika s slikami](#-uvod-za-uporabnika-s-slikami), kjer lahko poleg navodil vidite tudi posnetke zaslonov in konkretne primere uporabe.
