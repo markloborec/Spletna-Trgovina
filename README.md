@@ -16,7 +16,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
     - [Mnenja in ocene](#mnenja-in-ocene)
     - [Navigacija in jezik](#navigacija-in-jezik)
     - [Informacije in poslovalnice](#informacije-in-poslovalnice)
-    - [🛒Košarica](#košarica)
+    - [Košarica](#košarica)
     - [🛒Naročila (Orders/Checkout)](#naročila-orderscheckout)
   - [💻Uporabljene tehnologije](#uporabljene-tehnologije)
     - [Backend](#backend)
