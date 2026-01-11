@@ -6,6 +6,38 @@
 
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
+## Kazalo:
+
+# Kazalo
+
+- [Športna Trgovina s kolesarsko opremo Bicklstore](#športna-trgovina-s-kolesarsko-opremo-bicklstore)
+  - [Funkcionalnosti:](#funkcionalnosti)
+    - [Uporabniki](#uporabniki)
+    - [Izdelki in kategorije](#izdelki-in-kategorije)
+    - [Mnenja in ocene](#mnenja-in-ocene)
+    - [Navigacija in jezik](#navigacija-in-jezik)
+    - [Informacije in poslovalnice](#informacije-in-poslovalnice)
+    - [🛒Košarica](#košarica)
+    - [🛒Naročila (Orders/Checkout)](#naročila-orderscheckout)
+  - [💻Uporabljene tehnologije](#uporabljene-tehnologije)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+  - [Namestitev in zagon](#namestitev-in-zagon)
+    - [Kloniranje repozitorija](#kloniranje-repozitorija)
+    - [Backend](#backend-1)
+    - [Frontend](#frontend-1)
+  - [🏗️Arhitektura sistema](#arhitektura-sistema)
+    - [Frontend](#frontend-2)
+    - [Backend](#backend-2)
+    - [Baza podatkov](#baza-podatkov)
+    - [Struktura projekta:](#struktura-projekta)
+  - [Testiranje](#testiranje)
+  - [Dodatne funkcije:](#dodatne-funkcije)
+  - [🔧Razvijalci](#razvijalci)
+  - [ℹ️Kontakt in informacije:](#kontakt-in-informacije)
+  - [Licenca:](#licenca)
+  - [❓UVOD ZA UPORABNIKA S SLIKAMI:](#uvod-za-uporabnika-s-slikami)
+
 ## Funkcionalnosti:
 ### Uporabniki
 - Registracija in prijava uporabnika (JWT)
