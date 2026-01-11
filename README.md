@@ -192,127 +192,371 @@ Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bi
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-### ❓UVOD ZA UPORABNIKA S SLIKAMI:
+# Vizualni vodnik po Bicklstore
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI KOLESA</h1> |
-| ![Kolesa](./img/Kolesa.GIF) |
-| **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa. |
-| **Filtri:** |
-| - **Velikost obročev**: Omogoča filitrianje po velikosti obroča kolesa. Izbira velikosti obroča je odvisna od velikosti posamenzika in hkrati zaradi udobja v vožnji (Absorbiranje vibracij med vožnjo, oprijem gume...) |
-| - **Okvir**: Omogoča filitrianje po velikosti okvirja kolesa in materiala kolesa (Aluminij, karbon). To je pomembna zaradi velikosti uporabnika, saj je lahko večji okrir bolj udoben/primeren za kupca večje velikosti, hkrati pa lažji okvir iz karbona omogoča bolj udobno izkušnjo. |
-| - **Min. Prestav**: Omogoča filitirnaje po številu prestav. Uporabnik lahko tako najde primerno kolo glede na želje razmerja prestav. |
-| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva kolesa na lokacijah BicklStore. Če kolo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me. |
-| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
-| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
-| |
+<div align="center">
+  <h2>Interaktivni uvodnik za uporabnike</h2>
+  <p>Spodaj najdete podrobne razlage vseh funkcionalnosti s posnetki zaslona in GIF-animacijami</p>
+  <div style="display: flex; justify-content: center; gap: 10px; margin: 20px 0;">
+    <span style="background: #007bff; color: white; padding: 5px 15px; border-radius: 20px;">Nakupovanje</span>
+    <span style="background: #28a745; color: white; padding: 5px 15px; border-radius: 20px;">Račun</span>
+    <span style="background: #17a2b8; color: white; padding: 5px 15px; border-radius: 20px;">Oprema</span>
+    <span style="background: #6f42c1; color: white; padding: 5px 15px; border-radius: 20px;">Podpora</span>
+  </div>
+</div>
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI KONTAKT</h1> |
-| ![Kontakt](./img/Kontakt.GIF) |
-| **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
-| |
+---
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OBLAČILA</h1> |
-| ![Oblačila](./img/Oblačila.GIF) |
-| **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
-| **Filtri:** |
-| - **Velikost**: Omogoča filitrianje po velikosti oblačila ((XS, S, M, L, XL, XXL). |
-| - **Material**: Omogoča filtriranje po materialu oblačila (poliester, bombaž...) |
-| - **Spol**: Omogoča filtriranje oblačila glede na spol uporabinka (Moška, Ženska in Unisex oblačila). |
-| - **Barva**: Omogoča filtirnaje po barvi izdelka. Stranka lahko izbere oblačilo svoje barve. |
-| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljiva oblačila na lokacijah BicklStore. Če oblačilo ni razpoložljivo lahko uporabnik klikne na gumb obvesti me. |
-| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
-| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
-| |
+## RAZLOŽITEV STRANI KOLESA
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OPREMA</h1> |
-| ![Oprema](./img/Oprema.GIF) |
-| **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca. |
-| **Filtri:** |
-| - **Brand**: Omogoča filtriranje po zaželeni znamki. |
-| - **Material**: Omogoča filtriranje po materialu izdelka (plastika, aluminij, karbon,...) Vpliva na težo, trpežnost in zmogljivost opreme. |
-| - **Združljivost**: Omogoča filtirranje po združljivosti opreme. |
-| - **Razpoložljivost**: Omogoča filtiranje v trenutno razpoložljivo opremo na lokacijah BicklStore. Če oprema ni razpoložljiva lahko uporabnik klikne na gumb obvesti me. |
-| - **Sortiraj**: Omogoča vpogled spletne strani po Imenu, ceni... |
-| - **Naraščajoče/Padajoče**: Omogoča pregled spletne strani kot Naraščajoče ( npr. najcenjši izdelki so vidni najprej) in Padajoče (npr. najdražji izdelki so vidni najprej). |
-| |
+<div align="center">
+  <h3>Nakup koles z naprednimi filtri</h3>
+  <img src="./img/Kolesa.GIF" alt="Kolesa stran" width="800" style="border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+</div>
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV REGISTRACIJA</h1> |
-| ![Registracija](./img/Registracija.GIF) |
-| **REGISTRACIJA:** Preden lahko stranka kupuje preko spleta se mora registrirati. Zaradi varnosti je to nujno. |
-| |
+### Opis funkcionalnosti:
+Stran za nakup koles je opremljena s **6 vrstami filtrov**, ki omogočajo natančno iskanje glede na vaše potrebe.
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PRIJAVA</h1> |
-| ![Prijava](./img/Prijava.GIF) |
-| **PRIJAVA:** Za nakup je potrebna prijava zaradi varnostnih razlogov. Uporabnik mora vnesti svoj spletni naslov ter svoje izbrano geslo. Če je geslo pozabil je možnost nastavitve novega gesla z klikom na gumb "Pozabljeno geslo". |
-| |
+### Dostopni filtri:
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV KOŠARICA</h1> |
-| <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
-| **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
-| |
+<table>
+<tr>
+<td width="50%">
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV ZAKLJUČEK NAKUPA</h1> |
-| <div align="center">![Kosarica2](./img/kosarica2.png)</div> |
-| **ZAKLJUČEK:** Ko je stranka pripravljena kupiti izdelek je kliknila gumb odpri košarico. Ta gumb bo stranko napotil do strani za plačilo, kjer se vidi število in ceno izdelkov, ki jih želijo kupiti. Stranka bo imela možnost plačila glede na opcije, ki jih ponuja spletna stran. Če stranka noče kupiti izdelka lahko posamezno klikne na gumb "X" ali pa lahko zavrže vse izdelke z klikom na gumb "Izprazni Košarico". |
-| |
+#### Tehnični filtri:
+- **Velikost obročev** (16", 26", 27.5", 29")
+- **Material okvirja** (Aluminij, Karbon)
+- **Minimalno število prestav** (1-12)
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PROFIL</h1> |
-| <div align="center">![profil](./img/profil.png)</div> |
-| **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
-| |
+</td>
+<td width="50%">
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV INFORMACIJE IZDELKA</h1> |
-| <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
-| **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
-| |
+#### Praktični filtri:
+- **Razpoložljivost** (Trenutno na zalogi)
+- **Sortiranje** (Po imenu, ceni, popularnosti)
+- **Vrstni red** (Naraščajoče/Padajoče)
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PLAČILO</h1> |
-| <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
-| **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
-| |
+</td>
+</tr>
+</table>
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PRETEKLA NAROČILA</h1> |
-| <div align="center">![Preteklanaročila](./img/Preteklanarocila.png)</div> |
-| **PRETEKLA NAROČILA:** Tukaj lahko stranka pregleda vsa svoja naročila preko Bicklstore. Stranka ima zabeležen datum in čas nakupa, ceno izdelka, število izdelkov ter Št. naročila. |
-| |
+### Zakaj so filtri pomembni?
+- **Velikost obroča**: Vpliva na udobje in absorpcijo vibracij
+- **Material okvirja**: Karbon = lažji, aluminij = trpežnejši
+- **Prestave**: Več prestav = večja prilagodljivost terenu
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV ODDAJA MNENJA</h1> |
-| <div align="center">![Ocena](./img/ocena.png)</div> |
-| **ODDAJA MNENJA:** V oknu pretekla naročila lahko stranka odda še svoje mnenje o izdelku. Prav tako lahko oceni kvaliteto izdelka z klikom na zvezdice (1-5). |
-| |
+---
 
-| |
-|:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PODROBNOSTI IZDELKA</h1> |
-| <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
-| **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
-| |
+## RAZLOŽITEV STRANI KONTAKT
+
+<div align="center">
+  <h3>Povezava s podjetjem in poslovalnicami</h3>
+  <img src="./img/Kontakt.GIF" alt="Kontakt stran" width="800" style="border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+</div>
+
+### Dostopne informacije:
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+
+#### Podatki o podjetju:
+- **E-mail:** bickilstore@gmail.com
+- **Telefon:** +386 041 223 531
+- **Delovni čas:** Po dogovoru
+- **Naslov:** Različne lokacije po Sloveniji
+
+</div>
+
+<div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
+
+#### Google Maps integracija:
+- Interaktivni zemljevid
+- Vse poslovalnice Bicklstore
+- Iskanje po lokaciji
+- Mobilno prijazen vmesnik
+
+</div>
+
+</div>
+
+---
+
+## RAZLOŽITEV STRANI OBLAČILA
+
+<div align="center">
+  <h3>Modna kolesarska oblačila</h3>
+  <img src="./img/Oblačila.GIF" alt="Oblačila stran" width="800" style="border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+</div>
+
+### Specializirani filtri za oblačila:
+
+<table>
+<thead>
+<tr>
+<th>Filter</th>
+<th>Možnosti</th>
+<th>Namembnost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Velikost</strong></td>
+<td>XS, S, M, L, XL, XXL</td>
+<td>Ujemanje s telesno postavo</td>
+</tr>
+<tr>
+<td><strong>Material</strong></td>
+<td>Poliester, Bombaž, Mesh</td>
+<td>Dišavnost in udobje</td>
+</tr>
+<tr>
+<td><strong>Spol</strong></td>
+<td>Moška, Ženska, Unisex</td>
+<td>Kroj in dizajn</td>
+</tr>
+<tr>
+<td><strong>Barva</strong></td>
+<td>Vse barvne možnosti</td>
+<td>Osebni slog</td>
+</tr>
+</tbody>
+</table>
+
+### Posebne funkcije:
+- Multimedijski prikaz (več kot 1 slika na izdelek)
+- Ocene in mnenja uporabnikov
+- Obvesti me za naročilo izdelkov
+
+---
+
+## RAZLOŽITEV STRANI OPREMA
+
+<div align="center">
+  <h3>Kompletna kolesarska oprema</h3>
+  <img src="./img/Oprema.GIF" alt="Oprema stran" width="800" style="border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+</div>
+
+### Filtri za profesionalno opremo:
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin: 20px 0;">
+
+<div style="border-left: 4px solid #007bff; padding-left: 15px;">
+<h4>Brand filter</h4>
+<p>Iskanje po priljubljenih znamkah: Shimano, Giro, Specialized, itd.</p>
+</div>
+
+<div style="border-left: 4px solid #28a745; padding-left: 15px;">
+<h4>Material filter</h4>
+<p>Plastika, aluminij, karbon, jeklo - vsak za druge namene</p>
+</div>
+
+<div style="border-left: 4px solid #17a2b8; padding-left: 15px;">
+<h4>Združljivost</h4>
+<p>Filtrirajte po kompatibilnosti z vašim kolesom</p>
+</div>
+
+</div>
+
+---
+
+## UPORABNIŠKI RAČUN
+
+### Registracija
+<div align="center">
+  <img src="./img/Registracija.GIF" alt="Registracija" width="600" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Zahteve za registracijo:**
+- Veljaven e-poštni naslov
+- Geslo (min. 8 znakov)
+- Potrditev gesla
+- Sprejem pogojev uporabe
+
+### Prijava
+<div align="center">
+  <img src="./img/Prijava.GIF" alt="Prijava" width="600" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Funkcionalnosti prijave:**
+- Varna prijava s hashiranimi gesli
+- Pozabljeno geslo - povezava za ponastavitev
+- Obvestila o napačni prijavi
+- Samodejna preusmeritev po prijavi
+
+---
+
+## KOŠARICA IN NAKUP
+
+### Košarica
+<div align="center">
+  <img src="./img/kosarica1.png" alt="Košarica" width="700" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Funkcionalnosti košarice:**
+
+<table>
+<tr>
+<td width="50%">
+
+#### Osnovne funkcije:
+- Spreminjanje količine
+- Odstranjevanje posameznih izdelkov
+- Izprazni celotno košarico
+- Samodejno shranjevanje sprememb
+
+</td>
+<td width="50%">
+
+#### Izračuni:
+- Vmesna vsota
+- DDV (22%)
+- Stroški dostave
+- Skupna cena
+
+</td>
+</tr>
+</table>
+
+### Zaključek nakupa
+<div align="center">
+  <img src="./img/kosarica2.png" alt="Zaključek nakupa" width="700" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Postopek zaključka:**
+
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+<h4 style="color: white; text-align: center;">3-h korakov do uspešnega nakupa</h4>
+
+1. **Pregled košarice** - preverite izdelke in količine
+2. **Izberite način plačila** - kartica, Paypal, predračun
+3. **Potrdite naročilo** - prejmete potrdilo po e-pošti
+</div>
+
+---
+
+## PROFIL IN NAROČILA
+
+### Uporabniški profil
+<div align="center">
+  <img src="./img/profil.png" alt="Profil" width="600" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Nastavitve profila:**
+- Osebni podatki (ime, priimek)
+- Kontaktni podatki (e-pošta, telefon)
+- Naslov za dostavo
+- Sprememba gesla
+
+### Pretekla naročila
+<div align="center">
+  <img src="./img/Preteklanarocila.png" alt="Pretekla naročila" width="700" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Informacije o naročilih:**
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+
+<div style="text-align: center; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+<strong>Datum in čas</strong>
+<p>Natančno časovno označbo nakupa</p>
+</div>
+
+<div style="text-align: center; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+<strong>Cena izdelka</strong>
+<p>Cena ob času nakupa z DDV</p>
+</div>
+
+<div style="text-align: center; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+<strong>Št. naročila</strong>
+<p>Unikatna številka za sledenje</p>
+</div>
+
+<div style="text-align: center; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+<strong>Status dostave</strong>
+<p>Informacije o pošiljki</p>
+</div>
+
+</div>
+
+---
+
+## MNENJA IN OCENE
+
+### Oddaja mnenja
+<div align="center">
+  <img src="./img/ocena.png" alt="Oddaja mnenja" width="600" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Postopek ocenjevanja:**
+
+1. Izberite naročilo iz preteklih naročil
+2. Kliknite "Oceni izdelek"
+3. Izberite oceno (1-5 zvezdic)
+4. Dodajte komentar (neobvezno)
+5. Pošljite mnenje
+
+### Podrobnosti izdelka z mnenji
+<div align="center">
+  <img src="./img/podrobnosti.png" alt="Podrobnosti izdelka" width="700" style="border-radius: 10px; margin: 10px 0;">
+</div>
+
+**Informacije na strani izdelka:**
+
+<table>
+<thead>
+<tr>
+<th>Zavihek</th>
+<th>Vsebina</th>
+<th>Koristnost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Opis</strong></td>
+<td>Podrobne specifikacije</td>
+<td>Tehnične informacije</td>
+</tr>
+<tr>
+<td><strong>Specifikacije</strong></td>
+<td>Material, teža, kompatibilnost</td>
+<td>Primerjalne podatke</td>
+</tr>
+<tr>
+<td><strong>Mnenja</strong></td>
+<td>Ocene drugih kupcev</td>
+<td>Priporočila</td>
+</tr>
+<tr>
+<td><strong>Povezave</strong></td>
+<td>Uradna stran, navodila</td>
+<td>Dodatni viri</td>
+</tr>
+</tbody>
+</table>
+
+---
+
+<div align="center" style="margin-top: 40px; padding: 30px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-radius: 15px;">
+  <h3 style="color: #2c3e50;">Začnite z nakupovanjem še danes!</h3>
+  <p style="font-size: 1.1em; margin: 15px 0;">Bicklstore ponuja vse, kar potrebujete za popoln kolesarski doživljaj</p>
+  
+  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+    <a href="#" style="display: inline-block; background: #e74c3c; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+      Oglejte si kolesa
+    </a>
+    <a href="#" style="display: inline-block; background: #3498db; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+      Raziščite oblačila
+    </a>
+    <a href="#" style="display: inline-block; background: #2ecc71; color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s;">
+      Poglejte opremo
+    </a>
+  </div>
+  
+  <p style="margin-top: 25px; color: #7f8c8d; font-size: 0.9em;">
+    Potrebujete pomoč? Obrnite se na <a href="mailto:bickilstore@gmail.com" style="color: #3498db; text-decoration: none;">našo podporo</a>
+  </p>
+</div>
 # Pogosta vprašanja (FAQ)
 
 **Opomba:** Odgovori na naslednja vprašanja so tudi vizualno prikazani v [Uvodniku za uporabnika s slikami](#-uvod-za-uporabnika-s-slikami), kjer lahko poleg navodil vidite tudi posnetke zaslonov in konkretne primere uporabe.
