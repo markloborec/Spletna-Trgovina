@@ -313,3 +313,70 @@ Projekt je licenciran pod MIT licenco.
 | <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
 | **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
 | |
+
+Pogosta vprašanja (FAQ)
+Opomba: Odgovori na naslednja vprašanja so tudi vizualno prikazani v Uvodniku za uporabnika s slikami, kjer lahko poleg navodil vidite tudi posnetke zaslonov in konkretne primere uporabe.
+
+1. Kako se registriram in prijavim v aplikacijo?
+Za registracijo kliknite na ikono profila v zgornjem desnem kotu in izberite "Registracija". Vnesite svoj e-poštni naslov, geslo in druge zahtevane podatke. Po uspešni registraciji se lahko prijavite z istimi podatki. Če ste pozabili geslo, uporabite funkcijo "Pozabljeno geslo".
+
+(Vizualni prikaz: Glejte razdelek "RAZLOŽITEV REGISTRACIJA" in "RAZLOŽITEV PRIJAVA" v Uvodniku za uporabnika)
+
+2. Kako deluje filtriranje izdelkov?
+Vsaka kategorija (kolesa, oblačila, oprema) ima svoje specifične filtre. Filtre lahko najdete na levi strani vsake kategorije. Za kolesa lahko filtriate po velikosti obroča, materialu okvirja in številu prestav. Za oblačila po velikosti, materialu, spolu in barvi. Za opremo po znamki, materialu in združljivosti.
+
+(Vizualni prikaz: Glejte razdelke "RAZLOŽITEV STRANI KOLESA", "RAZLOŽITEV STRANI OBLAČILA" in "RAZLOŽITEV STRANI OPREMA" v Uvodniku za uporabnika)
+
+3. Kaj pomeni status "Razpoložljivost" pri izdelkih?
+Status "Razpoložljivost" označuje, ali je izdelek trenutno na zalogi v kateri koli od naših poslovalnic. Če izdelek ni razpoložljiv, lahko kliknete na gumb "Obvesti me", da vas obvestimo, ko bo izdelek ponovno na voljo.
+
+(Vizualni prikaz: Gumb "Obvesti me" je prikazan v filtru "Razpoložljivost" v vseh kategorijah v Uvodniku)
+
+4. Kako dodam izdelek v košarico?
+Na strani izdelka izberite želeno varianto (npr. velikost, barva) in količino, nato kliknite gumb "Dodaj v košarico". Ikona košarice v zgornjem desnem kotu se bo posodobila s številom izdelkov.
+
+(Vizualni prikaz: Glejte razdelek "RAZLOŽITEV KOŠARICA" v Uvodniku za uporabnika)
+
+5. Kaj vse vsebuje izračun cene v košarici?
+Košarica prikazuje vmesno vsoto, DDV (22%), stroške dostave in skupno ceno. Cene se samodejno posodabljajo, ko spreminjate količine ali odstranjujete izdelke.
+
+(Vizualni prikaz: Glejte sliko košarice v razdelku "RAZLOŽITEV KOŠARICA" in "RAZLOŽITEV ZAKLJUČEK NAKUPA" v Uvodniku)
+
+6. Kako poteka postopek nakupa?
+Dodajte izdelke v košarico
+
+Kliknite ikono košarice in nato "Odpri košarico"
+
+Preverite naročilo in kliknite "Nadaljuj na plačilo"
+
+Izberite način plačila in dostave
+
+Potrdite naročilo
+
+Po uspešnem plačilu se bo košarica samodejno izpraznila in zaloga posodobila
+
+(Vizualni prikaz: Celoten postopek je prikazan v razdelkih "RAZLOŽITEV KOŠARICA", "RAZLOŽITEV ZAKLJUČEK NAKUPA" in "RAZLOŽITEV PLAČILO" v Uvodniku)
+
+7. Kako lahko spremenim svoje podatke?
+Prijavite se v svoj račun in kliknite na ikono profila ter izberite "Moj profil". Tukaj lahko posodobite svoje osebne podatke, naslov dostave in kontaktne informacije.
+
+(Vizualni prikaz: Glejte razdelek "RAZLOŽITEV PROFIL" v Uvodniku za uporabnika)
+
+8. Kako dodam mnenje o izdelku?
+Mnenje lahko dodate le za izdelke, ki ste jih že kupili. V zavihku "Pretekla naročila" izberite ustrezno naročilo in kliknite "Oceni izdelek". Tukaj lahko dodate komentar in oceno od 1 do 5 zvezdic.
+
+(Vizualni prikaz: Glejte razdelek "RAZLOŽITEV ODDAJA MNENJA" v Uvodniku za uporabnika)
+
+9. Kje najdem svoja pretekla naročila?
+V svojem profilu izberite "Pretekla naročila". Tukaj lahko vidite zgodovino vseh svojih nakupov, vključno s podrobnostmi o izdelkih, ceni in statusu naročila.
+
+(Vizualni prikaz: Glejte razdelek "RAZLOŽITEV PRETEKLA NAROČILA" v Uvodniku za uporabnika)
+
+10. Kaj storiti, če imam tehnične težave z aplikacijo?
+Preverite, ali ste na najnovejši različici brskalnika
+
+Počistite predpomnilnik brskalnika
+
+Poskusite znova prijaviti v aplikacijo
+
+Če težave ostajajo, nas kontaktirajte na bickilstore@gmail.com ali pokličite na +386 041 223 531
