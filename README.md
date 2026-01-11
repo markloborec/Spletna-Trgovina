@@ -6,7 +6,7 @@
 
 Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča prikaz izdelkov, filtriranje, ogled kategorij, registracijo in prijavo uporabnika, večjezičnost ter osnovne podporne funkcije, potrebne za delovanje spletne trgovine. Projekt predstavlja temelje modernega spletnega trgovinskega sistema z ločenim frontendom in backendom.
 
-## Trenutne funkcionalnosti (stanje do 6. cikla)
+## Trenutne funkcionalnosti (stanje do 7. cikla)
 ### Uporabniki
 - Registracija in prijava uporabnika (JWT)
 - Pridobivanje uporabniških podatkov (profil)
