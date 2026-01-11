@@ -375,6 +375,3 @@ V svojem profilu izberite "Pretekla naročila". Tukaj lahko vidite zgodovino vse
 
 ---
 
-**Več vizualnih navodil in posnetkov zaslona:** Za podrobnejše navodila s konkretnimi primeri obiščite razdelek [❓ UVOD ZA UPORABNIKA S SLIKAMI](#-uvod-za-uporabnika-s-slikami), kjer je vsak korak prikazan z slikami in GIF-posnetki.
-
-Vaš 
