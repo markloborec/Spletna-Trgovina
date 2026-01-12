@@ -194,7 +194,6 @@ Projekt je licenciran pod MIT licenco.
 
 # ❓ UVOD ZA UPORABNIKA S SLIKAMI
 
-## RAZLOŽITEV STRANI KOLESA
 
 | |
 |:-:|
@@ -211,8 +210,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV STRANI KONTAKT
 
 | |
 |:-:|
@@ -222,8 +221,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV STRANI OBLAČILA
 
 | |
 |:-:|
@@ -241,8 +240,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV STRANI OPREMA
 
 | |
 |:-:|
@@ -259,8 +258,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV REGISTRACIJA
 
 | |
 |:-:|
@@ -270,8 +269,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV PRIJAVA
 
 | |
 |:-:|
@@ -281,8 +280,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV KOŠARICA
 
 | |
 |:-:|
@@ -292,8 +291,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV ZAKLJUČEK NAKUPA
 
 | |
 |:-:|
@@ -303,8 +302,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV PROFIL
 
 | |
 |:-:|
@@ -314,8 +313,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV INFORMACIJE IZDELKA
 
 | |
 |:-:|
@@ -325,8 +324,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV PLAČILO
 
 | |
 |:-:|
@@ -336,8 +335,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV PRETEKLA NAROČILA
 
 | |
 |:-:|
@@ -347,8 +346,8 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV ODDAJA MNENJA
 
 | |
 |:-:|
@@ -358,8 +357,9 @@ Projekt je licenciran pod MIT licenco.
 | |
 
 ---
+---
 
-## RAZLOŽITEV PODROBNOSTI IZDELKA
+
 
 | |
 |:-:|
