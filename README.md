@@ -199,7 +199,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI KOLESA</h1> |
-| ![Kolesa](./img/Kolesa.GIF) |
+| ![Kolesa](./img/Kolesa2.png) |
 | **KOLESA:** Zgoraj je stran za nakup kolesa. Opremljena je z veliko filtri za boljšo uporabniško izkušnjo in vsemi podrobnostmi glede tipa kolesa. |
 | **Filtri:** |
 | - **Velikost obročev**: Omogoča filitrianje po velikosti obroča kolesa. Izbira velikosti obroča je odvisna od velikosti posamenzika in hkrati zaradi udobja v vožnji (Absorbiranje vibracij med vožnjo, oprijem gume...) |
