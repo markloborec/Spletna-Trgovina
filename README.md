@@ -364,7 +364,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PODROBNOSTI IZDELKA</h1> |
-| <div align="center">![Podrobnosti](./img/podrobnosti.png)</div> |
+| <div align="center">![Podrobnosti](./img/podrobnosti2.png)</div> |
 | **PODROBNOSTI:** V temu zavihku so vidne podrobnosti (opis, uradna stran, znamka, material, teža, kompatibilnost) izdelka in zbrana mnenja posameznikov. Torej tukaj lahko stranka prebere mnenja drugih strank o posameznem izdelku. |
 | |
 # Pogosta vprašanja (FAQ)
