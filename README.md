@@ -174,7 +174,7 @@ ng serve --open
 
 
 ## Testiranje
-Aplikacija je bila testirana na zalednem in čelnem delu. Tekom testiranja so bile odkrite manjše nepravilnosti, ki so bile kasneje odpravljene s strani razvijalcev.
+Aplikacija je bila testirana na zalednem in čelnem delu z orodjem WAVE. Vse manjše nepravilnosti so bile odstranjene. Ključne funkcionalnosti delujejo brez napak.
 
 
 ### Dodatne funkcije:
