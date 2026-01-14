@@ -42,6 +42,10 @@
     border-radius: 0.9rem;
     margin-bottom: 1.5rem;
 
+    @media (min-width: 901px) {
+        grid-template-columns: repeat(6, minmax(160px, 1fr));
+    }
+
     @media (max-width: 600px) {
         grid-template-columns: 1fr;
         padding: 0.9rem;
@@ -97,6 +101,12 @@
 
 .filter-group-button {
     align-self: stretch;
+
+    @media (min-width: 901px) {
+        grid-column: 6 / 7;     /* 6. stolpec */
+        justify-self: end;      /* desna poravnava v celici */
+        align-self: end;
+    }
 
     @media (max-width: 600px) {
         align-self: auto;

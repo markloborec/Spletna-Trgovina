@@ -1,13 +1,13 @@
 <div class="header-button-container" (keydown.escape)="closeAllMenus()">
 
 	<!-- ACCOUNT -->
-	<button type="button" class="icon-btn account" (click)="toggleUserMenu()" (keydown)="onIconKeydown($event, 'user')"
+	<button title="User" type="button" class="icon-btn account" (click)="toggleUserMenu()" (keydown)="onIconKeydown($event, 'user')"
 		aria-label="Account" aria-haspopup="menu" [attr.aria-expanded]="isUserMenuOpen" aria-controls="user-menu">
 		<fa-icon [icon]="faUser"></fa-icon>
 	</button>
 
 	<!-- CART -->
-	<button type="button" class="icon-btn cart" (click)="toggleCartMenu()" (keydown)="onIconKeydown($event, 'cart')"
+	<button title="Shopping cart"  type="button" class="icon-btn cart" (click)="toggleCartMenu()" (keydown)="onIconKeydown($event, 'cart')"
 		aria-label="Shopping Cart" aria-haspopup="menu" [attr.aria-expanded]="isCartMenuOpen" aria-controls="cart-menu">
 		<fa-icon [icon]="faShoppingCart"></fa-icon>
 
@@ -56,7 +56,7 @@
 	</div>
 
 	<!-- LANGUAGE SWITCH -->
-	<button class="lang-switch notranslate" type="button" (click)="toggleLanguage()">
+	<button title="Pick language: Slovene | English | German" class="lang-switch notranslate" type="button" (click)="toggleLanguage()">
 		<img class="flag-img" [src]="currentLang === 'sl' ? '/flag-icons/flag-for-flag-slovenia.svg'
             : currentLang === 'en' ? '/flag-icons/flag-for-flag-united-kingdom.svg'
             : '/flag-icons/flag-for-flag-germany.svg'"
