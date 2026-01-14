@@ -227,7 +227,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OBLAČILA</h1> |
-| ![Oblačila](./img/Oblačila.GIF) |
+| ![Oblačila](./img/oblačila2.png) |
 | **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
 | **Filtri:** |
 | - **Velikost**: Omogoča filitrianje po velikosti oblačila ((XS, S, M, L, XL, XXL). |
@@ -246,7 +246,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OPREMA</h1> |
-| ![Oprema](./img/Oprema.GIF) |
+| ![Oprema](./img/oprema2.png) |
 | **OPREMA:**  Ker naša stran omogoča nakup vseh predmetov povezanih s kolesarjenjem smo naredili še stran za opremo. Opremo je prav tako mogoče filtirati glede na želje kupca. |
 | **Filtri:** |
 | - **Brand**: Omogoča filtriranje po zaželeni znamki. |
@@ -286,7 +286,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV KOŠARICA</h1> |
-| <div align="center">![Kosarica1](./img/kosarica1.png)</div> |
+| <div align="center">![Kosarica1](./img/kosarica2.png)</div> |
 | **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
 | |
 
