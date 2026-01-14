@@ -318,17 +318,6 @@ Projekt je licenciran pod MIT licenco.
 
 | |
 |:-:|
-| <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV INFORMACIJE IZDELKA</h1> |
-| <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
-| **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. Uporabniku poda Sliko, ceno, krajši in dolgi opis, garancijo za izdelek ter pozvezavo na uradno spletno stran.  |
-| |
-
----
----
-
-
-| |
-|:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PLAČILO</h1> |
 | <div align="center">![Kosaricazakljucek](./img/Kosaricazakljucek.png)</div> |
 | **PLAČILO:** Ko stranka zaključi z nakupom je potrebno plačilo. Tukaj se lahko odloči za vse opcije, ki so podane kot možnost plačila. |
