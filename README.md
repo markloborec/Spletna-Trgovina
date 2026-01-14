@@ -320,7 +320,7 @@ Projekt je licenciran pod MIT licenco.
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV INFORMACIJE IZDELKA</h1> |
 | <div align="center">![informacijeizdelka](./img/informacijeizdelka.png)</div> |
-| **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. |
+| **INFORMACIJE IZDELKA:** S tem stranka dostopa do dodatnih informacij glede izdelka. Uporabniku poda Sliko, ceno, krajši in dolgi opis, garancijo za izdelek ter pozvezavo na uradno spletno stran.  |
 | |
 
 ---
