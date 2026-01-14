@@ -192,7 +192,7 @@ Aplikacija je bila testirana na zalednem in čelnem delu z orodjem WAVE. Vse man
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-# ❓ UVOD ZA UPORABNIKA S SLIKAMI
+# ❓ Uvod za uporabnika:
 
 
 | |
