@@ -286,7 +286,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV KOŠARICA</h1> |
-| <div align="center">![Kosarica1](./img/kosarica2.png)</div> |
+| <div align="center">![Kosarica1](./img/Rkosarica2.png)</div> |
 | **KOŠARICA:** Košarica omogoča pregled izdelkov, ki jih stranka hoče kupiti ter njihovo skupno ceno. Izdelek se doda v košarico, ko stranka klikne na gumb "Dodaj v košarico" za določeni izdelek. Ikona košarice se prav tako posodobi glede na število izdelkov v njej. Ko je stranka prepričana, da je nakupila vse mora klikniti gumb "Odpri košarico" za zaključek nakupa. |
 | |
 
