@@ -217,7 +217,7 @@ Projekt je licenciran pod MIT licenco.
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI KONTAKT</h1> |
 | ![Kontakt](./img/Kontakt2.png) |
-| **KONTAKT:** Zgoraj je izgled strani za kontakt. Trenutno ima stran osnovne kontakne podatke o podjetju in Google maps mapo, ki kaže vse poslovalnice Biciklstore. |
+| **KONTAKT:** Zgoraj je izgled strani za kontakt. Stran vsebuje osnovne kontakne podatke o podjetju, slike poslovalnic podjetja in Google maps mapo, ki kaže vse lokacije poslovalnic Biciklstore. |
 | |
 
 ---
