@@ -227,7 +227,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV STRANI OBLAČILA</h1> |
-| ![Oblačila](./img/oblačila2.png) |
+| ![Oblačila](./img/oblacila2.png) |
 | **OBLAČILA:** Tako kot kolesa imajo tudi oblačila svoje filtre in podrobnosti, ki izboljšajo uporabniško izkušnjo in omogočijo lažji in hitrejši nakup. |
 | **Filtri:** |
 | - **Velikost**: Omogoča filitrianje po velikosti oblačila ((XS, S, M, L, XL, XXL). |
