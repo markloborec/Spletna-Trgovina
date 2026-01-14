@@ -35,7 +35,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
   - [Razvijalci](#razvijalci)
   - [Kontakt in informacije:](#kontakt-in-informacije)
   - [Licenca:](#licenca)
-  - [Uvod za uporabnika:](#uvod-za-uporabnika)
+  - [Uvod za uporabnika in FAQ:](#uvod-za-uporabnika)
 
 ## Funkcionalnosti:
 ### Uporabniki
@@ -192,7 +192,7 @@ Aplikacija je bila testirana na zalednem in čelnem delu z orodjem WAVE. Vse man
 ### Licenca:
 Projekt je licenciran pod MIT licenco.
 
-# ❓ Uvod za uporabnika:
+# ❓ Uvod za uporabnika in FAQ:
 
 
 | |
