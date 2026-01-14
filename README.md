@@ -309,7 +309,7 @@ Projekt je licenciran pod MIT licenco.
 |:-:|
 | <h1 style="text-align: center; margin: 15px 0;">RAZLOŽITEV PROFIL</h1> |
 | <div align="center">![profil](./img/profil.png)</div> |
-| **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje informacije. Lahko je pomembno zaradi dostave (npr. drugačna lokacija ali telefonska številka)... |
+| **PROFIL:** Stranka lahko dostopa do svojega profila in spreminja svoje podatke ( Ime in Priimek, Epošta, Naslov za dostavo in Telefonska številka). Spremembe podatkov so lahko pomembne zaradi dostave (npr. drugačna lokacija ali telefonska številka)... Po zaključku urejanja more uporabnik pritistnit gumb "Shrani spremembe" za potrditev sprememb znotraj profila.|
 | |
 
 ---
