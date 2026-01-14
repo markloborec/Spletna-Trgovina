@@ -35,7 +35,7 @@ Spletna trgovina s kolesarsko opremo, razvita kot akademski projekt. Omogoča pr
   - [Razvijalci](#razvijalci)
   - [Kontakt in informacije:](#kontakt-in-informacije)
   - [Licenca:](#licenca)
-  - [Uvod za uporabnika in FAQ:](#uvod-za-uporabnika)
+  - [Uvod za uporabnika in Pogosta vprašanja:](#uvod-za-uporabnika)
 
 ## Funkcionalnosti:
 ### Uporabniki
