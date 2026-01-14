@@ -358,7 +358,7 @@ Projekt je licenciran pod MIT licenco.
 | |
 # Pogosta vprašanja (FAQ)
 
-**Opomba:** Odgovori na naslednja vprašanja so tudi vizualno prikazani v [Uvodniku za uporabnika s slikami](#-uvod-za-uporabnika-s-slikami), kjer lahko poleg navodil vidite tudi posnetke zaslonov in konkretne primere uporabe.
+**Opomba:** Odgovori na naslednja vprašanja so tudi vizualno prikazani v [Uvodniku za uporabnika, kjer lahko poleg navodil vidite tudi posnetke zaslonov in konkretne primere uporabe.
 
 ## 1. Kako se registriram in prijavim v aplikacijo?
 Za registracijo kliknite na ikono profila v zgornjem desnem kotu in izberite "Registracija". Vnesite svoj e-poštni naslov, geslo in druge zahtevane podatke. Po uspešni registraciji se lahko prijavite z istimi podatki. Če ste pozabili geslo, uporabite funkcijo "Pozabljeno geslo".
